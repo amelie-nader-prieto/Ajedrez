@@ -1,11 +1,15 @@
 ﻿  Ajedrez.cpp
   Alfil.cpp
   Caballo.cpp
+  Casilla.cpp
   Peon.cpp
   Pieza.cpp
   Reina.cpp
   Rey.cpp
+  Tablero.cpp
   Torre.cpp
+C:\Users\LENOVO\Documents\GitHub\Ajedrez\Ajedrez\Ajedrez\Tablero.cpp(20,21): warning C4267: 'return': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\LENOVO\Documents\GitHub\Ajedrez\Ajedrez\Ajedrez\Tablero.cpp(23,24): warning C4267: 'return': conversión de 'size_t' a 'int'; posible pérdida de datos
   Generando código...
 C:\Users\LENOVO\Documents\GitHub\Ajedrez\Ajedrez\Ajedrez\Pieza.cpp(26,1): warning C4715: 'Pieza::columna_inicial': no todas las rutas de acceso de control devuelven un valor
   Ajedrez.vcxproj -> C:\Users\LENOVO\Documents\GitHub\Ajedrez\Ajedrez\x64\Debug\Ajedrez.exe

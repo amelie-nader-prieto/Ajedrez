@@ -25,15 +25,18 @@ int Pieza::columna_inicial(Tipo t, int num) {
 	}
 }
 
+// Constructor por defecto
 Pieza::Pieza(Color opc, Tipo t, int num) {
 	color = opc;
+	// pone cada pieza en su sitio correspondiente
 	ubi_fila = fila_inicial(t, opc, num);
 	ubi_columna = columna_inicial(t, num);
 	ubi_prox = vector<int>{};
 	buffer_coordenadas = vector<int>{};
-}
+}// Promoción
 Pieza::Pieza(Color opc, int fila, int columna) {
 	color = opc;
+	// crea la pieza en un sitio específico
 	ubi_fila = fila;
 	ubi_columna = columna;
 	ubi_prox = vector<int>{};
