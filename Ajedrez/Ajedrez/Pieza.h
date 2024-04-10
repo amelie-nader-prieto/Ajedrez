@@ -13,7 +13,7 @@ class Pieza
 {
 protected:
 	Color color; //el color determina a qué jugador pertenece
-	int ubi_fila, ubi_columna;
+	vector<int>ubi; //ubicación de la pieza
 	vector<int>ubi_prox; //vector que contiene las coordenadas de la posición siguiente
 	vector<int>buffer_coordenadas; //vector intermedio para las operaciones de movimiento
 

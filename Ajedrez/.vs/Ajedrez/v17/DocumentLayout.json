@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Ajedrez.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|solutionrelative:Ajedrez\\Ajedrez.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\LogicaAjedrez.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|solutionrelative:Ajedrez\\LogicaAjedrez.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Pieza.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|solutionrelative:Ajedrez\\Pieza.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Pieza.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|solutionrelative:Ajedrez\\Pieza.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Tablero.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|solutionrelative:Ajedrez\\Tablero.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Casilla.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|solutionrelative:Ajedrez\\Casilla.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\LogicaAjedrez.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|solutionrelative:Ajedrez\\LogicaAjedrez.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Ajedrez.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B6EAA071-ADDB-48D5-9CBD-585CDE3439DD}|Ajedrez\\Ajedrez.vcxproj|solutionrelative:Ajedrez\\Ajedrez.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,51 +39,77 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "Casilla.h",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Casilla.h",
+              "RelativeDocumentMoniker": "Ajedrez\\Casilla.h",
+              "ToolTip": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Casilla.h",
+              "RelativeToolTip": "Ajedrez\\Casilla.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-10T12:20:45.799Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Tablero.h",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Tablero.h",
+              "RelativeDocumentMoniker": "Ajedrez\\Tablero.h",
+              "ToolTip": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Tablero.h",
+              "RelativeToolTip": "Ajedrez\\Tablero.h",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAkAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-10T12:11:47.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Pieza.cpp",
               "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Pieza.cpp",
               "RelativeDocumentMoniker": "Ajedrez\\Pieza.cpp",
               "ToolTip": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Pieza.cpp",
               "RelativeToolTip": "Ajedrez\\Pieza.cpp",
-              "ViewState": "AQIAACcAAAAAAAAAAAAAACwAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-04-05T21:01:40.558Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Pieza.h",
               "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Pieza.h",
               "RelativeDocumentMoniker": "Ajedrez\\Pieza.h",
               "ToolTip": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Pieza.h",
               "RelativeToolTip": "Ajedrez\\Pieza.h",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAkAAABjAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAA0AAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-04-05T20:53:36.385Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "LogicaAjedrez.h",
               "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\LogicaAjedrez.h",
               "RelativeDocumentMoniker": "Ajedrez\\LogicaAjedrez.h",
               "ToolTip": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\LogicaAjedrez.h",
               "RelativeToolTip": "Ajedrez\\LogicaAjedrez.h",
-              "ViewState": "AQIAAAEAAAAAAAAAAAAIwBkAAAACAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-04-05T19:40:55.624Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "Ajedrez.cpp",
               "DocumentMoniker": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Ajedrez.cpp",
               "RelativeDocumentMoniker": "Ajedrez\\Ajedrez.cpp",
               "ToolTip": "C:\\Users\\LENOVO\\Documents\\GitHub\\Ajedrez\\Ajedrez\\Ajedrez\\Ajedrez.cpp",
               "RelativeToolTip": "Ajedrez\\Ajedrez.cpp",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAYAAAA4AAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-04-05T19:33:47.245Z",
               "EditorCaption": ""
