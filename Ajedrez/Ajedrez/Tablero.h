@@ -4,7 +4,7 @@
 class Tablero
 {
 protected:
-	vector<vector<Casilla>>tablero;
+	vector<vector<Casilla>> tablero;
 public:
 	Tablero(int filas = ROWS, int columnas = COLUMNS); //constructor por defecto
 	

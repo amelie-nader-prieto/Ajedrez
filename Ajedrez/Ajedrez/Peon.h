@@ -11,5 +11,6 @@ public:
     Peon(Color, int, int, int);
     void checkProm();
     void coordenadas_avance();
+    void coordenadas_comer();
 };
 

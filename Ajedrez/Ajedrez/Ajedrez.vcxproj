@@ -142,6 +142,7 @@
     <ClInclude Include="Alfil.h" />
     <ClInclude Include="Caballo.h" />
     <ClInclude Include="Casilla.h" />
+    <ClInclude Include="freeglut.h" />
     <ClInclude Include="LogicaAjedrez.h" />
     <ClInclude Include="Peon.h" />
     <ClInclude Include="Pieza.h" />

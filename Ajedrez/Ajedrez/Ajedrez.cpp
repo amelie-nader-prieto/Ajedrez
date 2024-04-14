@@ -1,7 +1,12 @@
 #include <iostream>
 #include "Tablero.h"
+#include "freeglut.h"
 
 using namespace std;
+
+
+
+
 
 int main(){
 	// codigo de prueba para ver si la clase se inicializa bien y tal

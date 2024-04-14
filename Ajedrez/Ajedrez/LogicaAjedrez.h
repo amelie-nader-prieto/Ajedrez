@@ -18,9 +18,11 @@ using std::vector;
 * - De las filas 3 y 6: columnas 0 y 10
 */
 
-enum class Color :char {
-	B,W
+enum class Color :char { //Tipo de Jugador
+	B,W //Siendo B=Jugador con las piezas Black (negras)
+	//Siendo W= Jugados con las piezas White (blancas)
 };
-enum class Tipo :char {
-	R,D,A,C,T,P
+enum class Tipo :char { //Tipo de pieza
+	R,D,A,C,T,P //Siendo R=Rey,  D=Dama, A=Alfil,  C=Caballo,  T=Torre, P=Peón
 };
+

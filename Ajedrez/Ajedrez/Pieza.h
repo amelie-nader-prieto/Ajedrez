@@ -17,6 +17,11 @@ protected:
 	vector<int>ubi_prox; //vector que contiene las coordenadas de la posición siguiente
 	vector<int>buffer_coordenadas; //vector intermedio para las operaciones de movimiento
 
+	
+	int ubi_fila;//Poner enteros para decir filas y columnas
+	int ubi_columna;
+	
+
 	//funciones para asignar las casillas en las que empieza cada pieza, según su tipo y color
 	int fila_inicial(Tipo, Color, int);
 	int columna_inicial(Tipo, int);

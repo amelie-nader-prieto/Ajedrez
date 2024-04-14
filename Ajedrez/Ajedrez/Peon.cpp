@@ -22,3 +22,12 @@ void Peon::coordenadas_avance() {
 	case Color::W:ubi_prox[0] = ubi_fila - 1;
 	}
 }
+
+//Peón come diagonalmente
+
+void Peon::coordenadas_comer() {
+	switch (color) {
+	case Color::B:ubi_prox[0] = ubi_fila + 1;
+	case Color::W:ubi_prox[0] = ubi_fila - 1;
+	}
+}
