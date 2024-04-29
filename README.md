@@ -1,2 +1,2 @@
-# Ajedrez
-Proyecto de informática industrial
+# REPOSITORIO AJEDREZ BALBO
+Proyecto de informática industrial con la plantilla de la ETSIDI
