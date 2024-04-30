@@ -13,9 +13,21 @@ protected:
 	Vector2D direccion{ fila,columna };
 
 public:
+	Pieza() = default;
 	Pieza(int fila, int columna, Tipo t): fila(fila), columna (columna), tipo (t){}
 
+	// Funciones de interfaz
 	Vector2D GetPosicion();
 	Tipo GetTipo();
+	int GetFila();
+	int GetColumna();
+	Tipo GetTipo();
+	Jugador GetJugador();
+	
+	void SetFila(int);
+	void SetColumna(int);
+	void SetTipo(Tipo);
+	void SetJugador(Jugador);
+
 };
 

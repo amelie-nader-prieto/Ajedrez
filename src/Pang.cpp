@@ -10,6 +10,7 @@
 #include "caballo.h"
 #include "No_pieza.h"
 
+#include "Casilla.h"
 
 #define FILA 10
 #define COLUMNA 11
@@ -17,8 +18,6 @@
 #include "Funciones_main.cpp"
 
 static Pieza* Tablero[FILA][COLUMNA] = { nullptr };
-
-
 
 void iniciar(Tipo tipo, Vector2D posicion)
 {
@@ -56,8 +55,6 @@ void cambio_casilla(Pieza pieza, Vector2D final) { ///ESTÁ MEDIO HECHA
 	
 
 }
-
-
 
 
 int main() 
