@@ -21,7 +21,6 @@ public:
 	Tipo GetTipo();
 	int GetFila();
 	int GetColumna();
-	Tipo GetTipo();
 	Jugador GetJugador();
 	
 	void SetFila(int);

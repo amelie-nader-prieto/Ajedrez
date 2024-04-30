@@ -17,9 +17,6 @@ int Pieza::GetFila() {
 int Pieza::GetColumna() {
 	return columna;
 }
-int Pieza::GetTipo() {
-	return tipo;
-}
 int Pieza::GetJugador() {
 	return jugador;
 }
