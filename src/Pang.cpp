@@ -15,7 +15,7 @@
 #define FILA 10
 #define COLUMNA 11
 
-#include "Funciones_main.cpp"
+//#include "Funciones_main.cpp"
 
 static Pieza* Tablero[FILA][COLUMNA] = { nullptr };
 

@@ -1,6 +1,8 @@
 #include "freeglut.h"
 #include "ETSIDI.h"
 
+#include "LogicaAjedrez.h"
+
 //NO HACE FALTA LLAMARLAS EXPLICITAMENTE
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
