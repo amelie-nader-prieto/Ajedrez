@@ -19,8 +19,11 @@
 
 static Pieza* Tablero[FILA][COLUMNA] = { nullptr };
 
+
+//Esta función hace que cuando se quiera iniciar una pieza se manda el tipo y dirección 
 void iniciar(Tipo tipo, Vector2D posicion)
 {
+	
 	switch (tipo)
 	{
 	case D:
@@ -41,17 +44,23 @@ void iniciar(Tipo tipo, Vector2D posicion)
 	case A:
 		Tablero[posicion.x][posicion.y] = new Alfil(posicion.x, posicion.y);
 		break;
+	case no_hay:
+		Tablero[posicion.x][posicion.y] = new No_pieza (posicion.x, posicion.y);
+		break;
+
 	default:
 		break;
 	}
 }
 
-
-void cambio_casilla(Pieza pieza, Vector2D final) { ///ESTÁ MEDIO HECHA
+//En esta función se mandará la pieza y se dará la dirección final 
+void cambio_casilla(Pieza& pieza, Vector2D final) { 
 	
 	Vector2D inicio = pieza.GetPosicion();
 
-	Tablero[inicio.x][inicio.y]= new No_pieza(inicio.x, inicio.y);
+	iniciar(no_hay, { inicio });
+	 
+	iniciar(pieza.GetTipo(), {final});
 	
 
 }
@@ -87,16 +96,24 @@ int main()
 			
 		}
 
+		//Creación de las fichas de la fila 2
+		//  T  C  A  C  T
 		iniciar(T, {1,3});
 		iniciar(C, { 1,4 });
 		iniciar(A, { 1,5 });
 		iniciar(C, { 1,6 });
 		iniciar(T, { 1,7 });
 		
+		//Creación de las fichas de la fila 2
+		//  R  C  D
 		iniciar(R, { 0,4 });
 		iniciar(A, { 0,5 });
 		iniciar(D, { 0,6 });
 
+
+
+		//Prueba de cambio de casilla
+		cambio_casilla(*Tablero[2][4], {3,4});
 
 
 	for (auto i = 9; i >= 0; i--)
@@ -104,12 +121,14 @@ int main()
 		for (auto j = 10; j >= 0; j--)
 		{
 			if (Tablero[i][j])
-				std::cout << "  " << Tablero[i][j]->GetTipo() << "  ";
+				std::cout << "[" << Tablero[i][j]->GetTipo() << "]";
 			else
-				std::cout << "     ";
+				std::cout << "   ";
 		}
 		std::cout << std::endl;
 	}
+
+
 
 	// Liberar la memoria al final del programa
 	for (int i = 0; i < 10; ++i) {
@@ -117,6 +136,9 @@ int main()
 			delete Tablero[i][j]; // Liberar la memoria de cada pieza
 		}
 	}
+
+
+
 
 	return 0;
 }
