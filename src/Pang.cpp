@@ -1,29 +1,13 @@
 #include <iostream>
-
-#include "pieza.h"
-
-#include "peon.h"
-#include "dama.h"
-#include "rey.h"
-#include "torre.h"
-#include "alfil.h"
-#include "caballo.h"
-#include "No_pieza.h"
-
-#include "Casilla.h"
+#include "LogicaAjedrez.h"
 
 #define FILA 10
 #define COLUMNA 11
-
-//#include "Funciones_main.cpp"
-
-static Pieza* Tablero[FILA][COLUMNA] = { nullptr };
 
 
 //Esta función hace que cuando se quiera iniciar una pieza se manda el tipo y dirección 
 void iniciar(Tipo tipo, Vector2D posicion)
 {
-	
 	switch (tipo)
 	{
 	case D:
@@ -45,26 +29,69 @@ void iniciar(Tipo tipo, Vector2D posicion)
 		Tablero[posicion.x][posicion.y] = new Alfil(posicion.x, posicion.y);
 		break;
 	case no_hay:
-		Tablero[posicion.x][posicion.y] = new No_pieza (posicion.x, posicion.y);
+		Tablero[posicion.x][posicion.y] = new No_pieza(posicion.x, posicion.y);
 		break;
-
 	default:
 		break;
 	}
 }
 
 //En esta función se mandará la pieza y se dará la dirección final 
-void cambio_casilla(Pieza& pieza, Vector2D final) { 
-	
+void cambio_casilla(Pieza& pieza, Vector2D final) {
+
+	// No permite acceder a casillas que se salgan del tablero o del rombo
+	if (no_se_usa(final.x, final.y) ||
+		(final.x < 0 || final.y < 0 || final.x >= COLUMNA || final.y >= FILA)) {
+		return void{};
+	}
+
+	bool movimiento_posible = false;
+
+	// No permite acceder a casillas que no estén entre los movimientos permitidos de la pieza
+	for (const auto& p : obtener_posibles_movimientos(pieza)) {
+		if (final.x == p.row && final.y == p.col) {
+			movimiento_posible = true;
+			break;
+		}
+	}
+
+	if (!movimiento_posible)return void{};
+
 	Vector2D inicio = pieza.GetPosicion();
 
+	// la casilla en la que estabas se queda vacía
 	iniciar(no_hay, { inicio });
-	 
-	iniciar(pieza.GetTipo(), {final});
-	
+	// vuelve a crear la pieza en la posición final
+	iniciar(pieza.GetTipo(), { final });
 
 }
 
+// BUCLE PARA DIBUJAR EL TABLERO
+void dibujar_tablero() {
+	/*for (auto i = 9; i >= 0; i--)
+	{
+		for (auto j = 10; j >= 0; j--)
+		{
+			if (Tablero[i][j])
+				std::cout << "[" << Tablero[i][j]->GetTipo() << "]";
+
+			else
+				std::cout << "   ";
+		}
+		std::cout << std::endl;
+	}*/
+
+	for (auto i = 0; i < FILA; i++) {
+		for (auto j = 0; j < COLUMNA; j++) {
+			if (Tablero[i][j])
+				std::cout << "[" << Tablero[i][j]->GetTipo() << "]";
+			else
+				std::cout << "   ";
+		}
+		std::cout << '\n';
+	}
+
+}
 
 int main() 
 {
@@ -75,6 +102,7 @@ int main()
 	{
 		for (auto j = 10; j >= 0; j--)
 		{
+			// CASILLAS EN LAS QUE INICIALMENTE NO HAY PIEZAS
 			if (
 				((j == 10 || j == 0) && (i == 4 || i == 5)) ||
 				((j == 9 || j == 1) && (i == 4 || i == 5 || i == 3 || i == 6)) ||
@@ -98,7 +126,7 @@ int main()
 
 		//Creación de las fichas de la fila 2
 		//  T  C  A  C  T
-		iniciar(T, {1,3});
+		iniciar(T, { 1,3 });
 		iniciar(C, { 1,4 });
 		iniciar(A, { 1,5 });
 		iniciar(C, { 1,6 });
@@ -110,25 +138,13 @@ int main()
 		iniciar(A, { 0,5 });
 		iniciar(D, { 0,6 });
 
-
+		dibujar_tablero();
+		std::cout << "\n\n";
 
 		//Prueba de cambio de casilla
 		cambio_casilla(*Tablero[2][4], {3,4});
 
-
-	for (auto i = 9; i >= 0; i--)
-	{
-		for (auto j = 10; j >= 0; j--)
-		{
-			if (Tablero[i][j])
-				std::cout << "[" << Tablero[i][j]->GetTipo() << "]";
-			else
-				std::cout << "   ";
-		}
-		std::cout << std::endl;
-	}
-
-
+		dibujar_tablero();
 
 	// Liberar la memoria al final del programa
 	for (int i = 0; i < 10; ++i) {
@@ -136,9 +152,6 @@ int main()
 			delete Tablero[i][j]; // Liberar la memoria de cada pieza
 		}
 	}
-
-
-
 
 	return 0;
 }

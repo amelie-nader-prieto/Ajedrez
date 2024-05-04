@@ -1,5 +1,5 @@
 #pragma once
-#pragma once
+
 #include <iostream>
 #include <vector>
 #include "pieza.h"
@@ -19,14 +19,32 @@ using std::vector;
 #define COLUMNA 11
 
 // Objeto TABLERO - se crea como vector de punteros a piezas
-static Pieza* tablero[FILA][COLUMNA];
+//static Pieza* tablero[FILA][COLUMNA];
+
+static Pieza* Tablero[FILA][COLUMNA] = { nullptr };
 
 /* Piezas blancas y negras */
 // FALTA INICIALIZARLOS
-vector<Pieza>piezas_bla{}; // piezas que pertenecen al jugador blanco
-vector<Pieza>piezas_neg{}; // piezas que pertenecen al jugador negro
+static vector<Pieza>piezas_bla{}; // piezas que pertenecen al jugador blanco
+static vector<Pieza>piezas_neg{}; // piezas que pertenecen al jugador negro
 
 using Color = Jugador;
+
+// Operador para imprimir los tipos de las piezas
+static std::ostream& operator<< (std::ostream& co, const Tipo& t) {
+
+    switch (t) {
+    case no_hay:co << " "; break;
+    case R:co << "R"; break;
+    case D:co << "D"; break;
+    case C:co << "C"; break;
+    case A:co << "A"; break;
+    case T:co << "T"; break;
+    case P:co << "P"; break;
+    }
+
+    return co;
+}
 
 // CASILLAS QUE NO SE USAN
 /*
@@ -35,7 +53,7 @@ using Color = Jugador;
 * - De las filas 2 y 7: columnas 0, 1, 9 y 10
 * - De las filas 3 y 6: columnas 0 y 10
 */
-bool no_se_usa(int i, int j) {
+static bool no_se_usa(int i, int j) {
     return ((i == 0 || i == 9) && (((j >= 0 && j <= 3) || (j >= 7 && j <= 10)))
         || ((i == 1 || i == 8) && ((j >= 0 && j <= 2) || (j >= 8 && j <= 10)))
         || ((i == 2 || i == 7) && ((j == 0 || j == 1) || (j == 9 || j == 10)))
@@ -49,13 +67,13 @@ bool no_se_usa(int i, int j) {
 * UP es sumar uno a la fila y es SUBIR, los peones BLANCOS avanzan en esta dirección
 * DOWN es restar uno a la fila y en BAJAR, los peones NEGROS avanzan en esta dirección
 */
-enum class Dir_t {
+static enum class Dir_t {
     LEFT, UPLEFT, UP, UPRIGHT, RIGHT, RIGHTDOWN, DOWN, DOWNLEFT
 }; //primitivas de movimiento
 
 /* A partir de una casilla y una dirección, te da las coordenadas
 de la que sería la siguiente casilla*/
-void siguienteCasilla(Dir_t dir, Casilla ini, Casilla& fin) {
+static void siguienteCasilla(Dir_t dir, Casilla ini, Casilla& fin) {
     // dir: dirección
     // ini: casilla de origen
     // fin: casilla de destino (por referencia)
@@ -91,6 +109,7 @@ void siguienteCasilla(Dir_t dir, Casilla ini, Casilla& fin) {
     }
 }
 
+
 /* Devuelve todas las casillas a las que podría moverse una pieza.
 * Por ahora tiene en cuenta
 * - Su tipo (reglas de movimiento)
@@ -98,7 +117,7 @@ void siguienteCasilla(Dir_t dir, Casilla ini, Casilla& fin) {
 */
 // ESTÁ SIN TERMINAR
 // debería tener en cuenta la ubicación de las otras piezas
-vector<Casilla>obtener_posibles_movimientos(Pieza p) {
+static vector<Casilla>obtener_posibles_movimientos(Pieza p) {
     vector<Casilla>v{};
     vector<Dir_t>direcciones{}; // posibles direcciones
     Casilla c_actual{ p.GetFila(),p.GetColumna() };
@@ -236,65 +255,65 @@ vector<Casilla>obtener_posibles_movimientos(Pieza p) {
 * Si está fuera del rombo o está vacía, se inicializa como nullptr
 * Si hay una pieza en esa casilla, se inicializa para que apunte a un objeto determinado del vector piezas_bla o piezas_neg
 */
-// ESTÁ INCOMPLETA
-void inicializar_tablero() {
-
-    for (int i = 0; i < FILA; i++) {
-        for (int j = 0; j < COLUMNA; j++) {
-            
-            if (no_se_usa(i, j) || (i >= 3 && i <= 6)) {
-                tablero[i][j] = nullptr; continue;
-            }
-
-            if (i == 2 || i == 7) {
-                // Inicializar punteros a los peones
-                // i == 2 -> negros
-                // i == 7 -> blancos
-            }
-            else {
-                switch (j) {
-                case 3:
-                    // inicializar punteros a las torres
-                    // i == 1 -> negras
-                    // si no, blancas
-                    break;
-                case 4: // en la columna 4 hay reyes y caballos
-                    switch (i) {
-                    case 0: // rey negro
-                        break;
-                    case 1: // caballo negro
-                        break;
-                    case 8: // caballo blanco
-                        break;
-                    case 9: // rey blanco
-                        break;
-                    }
-                    break;
-
-                case 5: //alfiles
-                    // inicializar punteros a los alfiles
-                    break;
-
-                case 6: // en la columna 6 hay reinas y caballos
-                    switch (i) {
-                    case 0: // reina negra
-                        break;
-                    case 1: // caballo negro
-                        break;
-                    case 8: // caballo blanco
-                        break;
-                    case 9: // reina blanca
-                        break;
-                    }
-                    break;
-
-                case 7: // torres
-                    // inicializar punteros a las torres
-                    break;
-                }
-            }
-
-        }
-    }
-
-}
+//// ESTÁ INCOMPLETA
+//void inicializar_tablero() {
+//
+//    for (int i = 0; i < FILA; i++) {
+//        for (int j = 0; j < COLUMNA; j++) {
+//            
+//            if (no_se_usa(i, j) || (i >= 3 && i <= 6)) {
+//                Tablero[i][j] = nullptr; continue;
+//            }
+//
+//            if (i == 2 || i == 7) {
+//                // Inicializar punteros a los peones
+//                // i == 2 -> negros
+//                // i == 7 -> blancos
+//            }
+//            else {
+//                switch (j) {
+//                case 3:
+//                    // inicializar punteros a las torres
+//                    // i == 1 -> negras
+//                    // si no, blancas
+//                    break;
+//                case 4: // en la columna 4 hay reyes y caballos
+//                    switch (i) {
+//                    case 0: // rey negro
+//                        break;
+//                    case 1: // caballo negro
+//                        break;
+//                    case 8: // caballo blanco
+//                        break;
+//                    case 9: // rey blanco
+//                        break;
+//                    }
+//                    break;
+//
+//                case 5: //alfiles
+//                    // inicializar punteros a los alfiles
+//                    break;
+//
+//                case 6: // en la columna 6 hay reinas y caballos
+//                    switch (i) {
+//                    case 0: // reina negra
+//                        break;
+//                    case 1: // caballo negro
+//                        break;
+//                    case 8: // caballo blanco
+//                        break;
+//                    case 9: // reina blanca
+//                        break;
+//                    }
+//                    break;
+//
+//                case 7: // torres
+//                    // inicializar punteros a las torres
+//                    break;
+//                }
+//            }
+//
+//        }
+//    }
+//
+//}
