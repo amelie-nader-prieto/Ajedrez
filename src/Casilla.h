@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "freeglut.h" //necesario para el dibujo de la casilla
 
 class Casilla
 {
@@ -10,4 +11,6 @@ public:
     void imprime() {
         std::cout << "( " << row << " , " << col << " )" << std::endl;
     }
+
+    void dibuja(int, int);
 };
