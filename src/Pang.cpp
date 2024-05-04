@@ -81,6 +81,7 @@ void dibujar_tablero() {
 		std::cout << std::endl;
 	}*/
 
+	
 	for (auto i = 0; i < FILA; i++) {
 		for (auto j = 0; j < COLUMNA; j++) {
 			if (Tablero[i][j])
@@ -88,8 +89,10 @@ void dibujar_tablero() {
 			else
 				std::cout << "   ";
 		}
-		std::cout << '\n';
+		std::cout << ' ' << FILA - i << std::endl;
 	}
+
+	std::cout << " a  b  c  d  e  f  g  h  i  j  k" << std::endl;
 
 }
 
@@ -138,13 +141,30 @@ int main()
 		iniciar(A, { 0,5 });
 		iniciar(D, { 0,6 });
 
+		// dibujamos el tablero
 		dibujar_tablero();
 		std::cout << "\n\n";
 
-		//Prueba de cambio de casilla
-		cambio_casilla(*Tablero[2][4], {3,4});
 
+		//Prueba de cambio de casilla
+		// movemos el peón
+		cambio_casilla(*Tablero[2][4], {3,4});
 		dibujar_tablero();
+		std::cout << "\n\n\n";
+
+		// probamos a mover más piezas
+		cambio_casilla(*Tablero[2][5], {
+			obtener_posibles_movimientos(*Tablero[2][5])[0].row,obtener_posibles_movimientos(*Tablero[2][5])[0].col
+			});
+		dibujar_tablero();
+		std::cout << "\n\n\n";
+
+		cambio_casilla(*Tablero[1][5], {
+			obtener_posibles_movimientos(*Tablero[1][5])[1].row,obtener_posibles_movimientos(*Tablero[1][5])[1].col
+			});
+		dibujar_tablero();
+		std::cout << "\n\n\n";
+
 
 	// Liberar la memoria al final del programa
 	for (int i = 0; i < 10; ++i) {
