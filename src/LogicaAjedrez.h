@@ -45,6 +45,17 @@ static std::ostream& operator<< (std::ostream& co, const Tipo& t) {
 
     return co;
 }
+// Operador para imprimir los colores (b ó n)
+static std::ostream& operator<<(std::ostream& co, const Jugador&_jugador) {
+
+    switch (_jugador) {
+    case B:co << "n"; break; // negro
+    case W:co << "b"; break; // blanco
+    default:break;
+    }
+
+    return co;
+}
 
 // CASILLAS QUE NO SE USAN
 /*
@@ -108,7 +119,6 @@ static void siguienteCasilla(Dir_t dir, Casilla ini, Casilla& fin) {
         break;
     }
 }
-
 
 /* Devuelve todas las casillas a las que podría moverse una pieza.
 * Por ahora tiene en cuenta
@@ -249,71 +259,101 @@ static vector<Casilla>obtener_posibles_movimientos(Pieza p) {
     return v;
 }
 
+/* INICIALIZAR PIEZAS */
+//Esta función hace que cuando se quiera iniciar una pieza se manda el tipo y dirección 
+static void iniciar(Tipo tipo, Vector2D posicion, Jugador j)
+{
+    switch (tipo)
+    {
+    case D:
+        Tablero[posicion.x][posicion.y] = new Dama(posicion.x, posicion.y, j);
+        break;
+    case P:
+        Tablero[posicion.x][posicion.y] = new Peon(posicion.x, posicion.y, j);
+        break;
+    case T:
+        Tablero[posicion.x][posicion.y] = new Torre(posicion.x, posicion.y, j);
+        break;
+    case C:
+        Tablero[posicion.x][posicion.y] = new Caballo(posicion.x, posicion.y, j);
+        break;
+    case R:
+        Tablero[posicion.x][posicion.y] = new Rey(posicion.x, posicion.y, j);
+        break;
+    case A:
+        Tablero[posicion.x][posicion.y] = new Alfil(posicion.x, posicion.y, j);
+        break;
+    case no_hay:
+        Tablero[posicion.x][posicion.y] = new No_pieza(posicion.x, posicion.y);
+        break;
+    default:
+        break;
+    }
+}
+
 /* INICIALIZAR TABLERO */
 // Función para crear el tablero al principio de la partida, con las piezas en sus sitios correspondientes
 /* Como el tablero es una matriz de punteros a pieza, las opciones son:
 * Si está fuera del rombo o está vacía, se inicializa como nullptr
 * Si hay una pieza en esa casilla, se inicializa para que apunte a un objeto determinado del vector piezas_bla o piezas_neg
 */
-//// ESTÁ INCOMPLETA
-//void inicializar_tablero() {
-//
-//    for (int i = 0; i < FILA; i++) {
-//        for (int j = 0; j < COLUMNA; j++) {
-//            
-//            if (no_se_usa(i, j) || (i >= 3 && i <= 6)) {
-//                Tablero[i][j] = nullptr; continue;
-//            }
-//
-//            if (i == 2 || i == 7) {
-//                // Inicializar punteros a los peones
-//                // i == 2 -> negros
-//                // i == 7 -> blancos
-//            }
-//            else {
-//                switch (j) {
-//                case 3:
-//                    // inicializar punteros a las torres
-//                    // i == 1 -> negras
-//                    // si no, blancas
-//                    break;
-//                case 4: // en la columna 4 hay reyes y caballos
-//                    switch (i) {
-//                    case 0: // rey negro
-//                        break;
-//                    case 1: // caballo negro
-//                        break;
-//                    case 8: // caballo blanco
-//                        break;
-//                    case 9: // rey blanco
-//                        break;
-//                    }
-//                    break;
-//
-//                case 5: //alfiles
-//                    // inicializar punteros a los alfiles
-//                    break;
-//
-//                case 6: // en la columna 6 hay reinas y caballos
-//                    switch (i) {
-//                    case 0: // reina negra
-//                        break;
-//                    case 1: // caballo negro
-//                        break;
-//                    case 8: // caballo blanco
-//                        break;
-//                    case 9: // reina blanca
-//                        break;
-//                    }
-//                    break;
-//
-//                case 7: // torres
-//                    // inicializar punteros a las torres
-//                    break;
-//                }
-//            }
-//
-//        }
-//    }
-//
-//}
+static void iniciar_tablero() {
+    
+    // Peones
+    for (int i = 2; i <= 8; i++)
+    {
+        iniciar(P, { 2,i }, B);//creación peones (negro)
+        iniciar(P, { 7,i }, W);//creación peones (blanco)
+    }
+
+    // Creación de las fichas en la fila intermedia
+    // T C A C T
+    vector<Tipo>tipos_fila_intermedia{ T,C,A,T,P };
+    int j = 3;
+    for (const auto& p : tipos_fila_intermedia) {
+        iniciar(p, { 1,j }, B); // creación fichas (negro)
+        iniciar(p, { 8,j }, W); // creación fichas (blanco)
+        j++;
+    }
+
+    // Creación de las fichas de la fila del fondo
+    // R A D
+    vector<Tipo>tipos_fila_3{ R,A,D };
+    j = 4;
+    for (const auto& p : tipos_fila_3) {
+        iniciar(p, { 0,j }, B); // creación fichas (negro)
+        iniciar(p, { 9,j }, W); // creación fichas (blanco)
+        j++;
+    }
+
+}
+
+//En esta función se mandará la pieza y se dará la dirección final 
+static void cambio_casilla(Pieza& pieza, Vector2D final) {
+
+    // No permite acceder a casillas que se salgan del tablero o del rombo
+    if (no_se_usa(final.x, final.y) ||
+        (final.x < 0 || final.y < 0 || final.x >= COLUMNA || final.y >= FILA)) {
+        return void{};
+    }
+
+    bool movimiento_posible = false;
+
+    // No permite acceder a casillas que no estén entre los movimientos permitidos de la pieza
+    for (const auto& p : obtener_posibles_movimientos(pieza)) {
+        if (final.x == p.row && final.y == p.col) {
+            movimiento_posible = true;
+            break;
+        }
+    }
+
+    if (!movimiento_posible)return void{};
+
+    Vector2D inicio = pieza.GetPosicion();
+
+    // la casilla en la que estabas se queda vacía
+    iniciar(no_hay, { inicio }, B);
+    // vuelve a crear la pieza en la posición final
+    iniciar(pieza.GetTipo(), { final }, pieza.GetJugador());
+
+}
