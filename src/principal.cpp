@@ -1,12 +1,20 @@
 #include "freeglut.h"
 #include "ETSIDI.h"
-
+#include "GLTablero.h"
 #include "LogicaAjedrez.h"
+
+//////////solo estoy comprobando si dibuja el sprite peon
+#include "peon.h"
+Peon pW(3, 4, Jugador::W);
+Peon pB(8, 6, Jugador::B);
+
 
 //NO HACE FALTA LLAMARLAS EXPLICITAMENTE
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
+
+GLTablero chess;
 
 /*
 
@@ -55,20 +63,11 @@ void OnDraw(void)
 	gluLookAt(5, 5, 17,  // posicion del ojo
 		5.0, 5.0, 0.0,      // hacia que punto mira  (0,0,0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)  
-	glEnable(GL_TEXTURE_2D);
-	//glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/fondo.png").id);
-	glDisable(GL_LIGHTING);
 
-	glBegin(GL_POLYGON);
-	glColor3f(1, 1, 1);
-	glTexCoord2d(0, 1); glVertex2f(-10, 0);
-	glTexCoord2d(1, 1); glVertex2f(10, 0);
-	glTexCoord2d(1, 0); glVertex2f(10, 15);
-	glTexCoord2d(0, 0); glVertex2f(-10, 15);
-	glEnd();
 
-	glEnable(GL_LIGHTING);
-	glDisable(GL_TEXTURE_2D);
+	pW.dibuja();
+	pB.dibuja();
+	chess.dibuja();
 
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
