@@ -6,5 +6,5 @@ class Dama :
     public Pieza
 {
 public:
-    Dama(int fila, int columna);
+    Dama(int fila, int columna,Jugador j=B);
 };

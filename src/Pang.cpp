@@ -6,27 +6,27 @@
 
 
 //Esta función hace que cuando se quiera iniciar una pieza se manda el tipo y dirección 
-void iniciar(Tipo tipo, Vector2D posicion)
+void iniciar(Tipo tipo, Vector2D posicion,Jugador j)
 {
 	switch (tipo)
 	{
 	case D:
-		Tablero[posicion.x][posicion.y] = new Dama(posicion.x, posicion.y);
+		Tablero[posicion.x][posicion.y] = new Dama(posicion.x, posicion.y,j);
 		break;
 	case P:
-		Tablero[posicion.x][posicion.y] = new Peon(posicion.x, posicion.y);
+		Tablero[posicion.x][posicion.y] = new Peon(posicion.x, posicion.y,j);
 		break;
 	case T:
-		Tablero[posicion.x][posicion.y] = new Torre(posicion.x, posicion.y);
+		Tablero[posicion.x][posicion.y] = new Torre(posicion.x, posicion.y,j);
 		break;
 	case C:
-		Tablero[posicion.x][posicion.y] = new Caballo(posicion.x, posicion.y);
+		Tablero[posicion.x][posicion.y] = new Caballo(posicion.x, posicion.y,j);
 		break;
 	case R:
-		Tablero[posicion.x][posicion.y] = new Rey(posicion.x, posicion.y);
+		Tablero[posicion.x][posicion.y] = new Rey(posicion.x, posicion.y,j);
 		break;
 	case A:
-		Tablero[posicion.x][posicion.y] = new Alfil(posicion.x, posicion.y);
+		Tablero[posicion.x][posicion.y] = new Alfil(posicion.x, posicion.y,j);
 		break;
 	case no_hay:
 		Tablero[posicion.x][posicion.y] = new No_pieza(posicion.x, posicion.y);
@@ -60,9 +60,9 @@ void cambio_casilla(Pieza& pieza, Vector2D final) {
 	Vector2D inicio = pieza.GetPosicion();
 
 	// la casilla en la que estabas se queda vacía
-	iniciar(no_hay, { inicio });
+	iniciar(no_hay, { inicio },B);
 	// vuelve a crear la pieza en la posición final
-	iniciar(pieza.GetTipo(), { final });
+	iniciar(pieza.GetTipo(), { final },pieza.GetJugador());
 
 }
 
@@ -96,6 +96,24 @@ void dibujar_tablero() {
 
 }
 
+// Dibujar según el color
+void dibujar_tablero(Jugador color) {
+
+	for (auto i = 0; i < FILA; i++) {
+		for (auto j = 0; j < COLUMNA; j++) {
+			if (Tablero[i][j]) {
+				if (Tablero[i][j]->GetJugador() == color)
+					std::cout << "[" << Tablero[i][j]->GetTipo() << "]";
+				else std::cout << "[ ]";
+			}
+			else
+				std::cout << "   ";
+		}
+		std::cout << '\n';
+	}
+
+}
+
 int main() 
 {
 
@@ -121,30 +139,45 @@ int main()
 
 	
 		//Establecer piezas en el tablero
+	// Peones
 		for (int i = 2; i <= 8;i++)
 		{
-			iniciar(P, {2,i});//creación peones
-			
+			iniciar(P, { 2,i },B);//creación peones (negro)
+			iniciar(P, { 7,i },W);//creación peones (blanco)
+		}
+		//Creación de las fichas de la fila intermedia
+		// T C A C T
+		vector<Tipo>tipos_fila_2{ T,C,A,C,T };
+		int j = 3;
+		for (const auto& p : tipos_fila_2) {
+			iniciar(p, { 1,j },B); // creación fichas (negro)
+			iniciar(p, { 8,j },W); // creación fichas (blanco)
+			j++;
+		}
+		//Creación de las fichas de la fila del fondo
+		//  R  A  D
+		vector<Tipo>tipos_fila_3{ R,A,D };
+		j = 4;
+		for (const auto& p : tipos_fila_3) {
+			iniciar(p, { 0,j }, B); // creación fichas (negro)
+			iniciar(p, { 9,j }, W); // creación fichas (blanco)
+			j++;
 		}
 
-		//Creación de las fichas de la fila 2
-		//  T  C  A  C  T
-		iniciar(T, { 1,3 });
-		iniciar(C, { 1,4 });
-		iniciar(A, { 1,5 });
-		iniciar(C, { 1,6 });
-		iniciar(T, { 1,7 });
-		
-		//Creación de las fichas de la fila 2
-		//  R  C  D
-		iniciar(R, { 0,4 });
-		iniciar(A, { 0,5 });
-		iniciar(D, { 0,6 });
+
+		// verificamos si se han inicializado los colores
+		//std::cout << "\n\n\n";
+		//std::cout << " blanco\n";
+		//dibujar_tablero(W);
+		//std::cout << "\n\n\n";
+		//std::cout << "negro\n";
+		//dibujar_tablero(B);
+		//std::cout << "\n\n\n";
+
 
 		// dibujamos el tablero
 		dibujar_tablero();
-		std::cout << "\n\n";
-
+		std::cout << "\n\n\n";
 
 		//Prueba de cambio de casilla
 		// movemos el peón
@@ -154,13 +187,15 @@ int main()
 
 		// probamos a mover más piezas
 		cambio_casilla(*Tablero[2][5], {
-			obtener_posibles_movimientos(*Tablero[2][5])[0].row,obtener_posibles_movimientos(*Tablero[2][5])[0].col
+			obtener_posibles_movimientos(*Tablero[2][5])[0].row,
+			obtener_posibles_movimientos(*Tablero[2][5])[0].col
 			});
 		dibujar_tablero();
 		std::cout << "\n\n\n";
 
 		cambio_casilla(*Tablero[1][5], {
-			obtener_posibles_movimientos(*Tablero[1][5])[1].row,obtener_posibles_movimientos(*Tablero[1][5])[1].col
+			obtener_posibles_movimientos(*Tablero[1][5])[2].row,
+			obtener_posibles_movimientos(*Tablero[1][5])[2].col
 			});
 		dibujar_tablero();
 		std::cout << "\n\n\n";

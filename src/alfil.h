@@ -6,6 +6,6 @@ class Alfil :
     public Pieza
 {
 public:
-    Alfil(int fila, int columna);
+    Alfil(int fila, int columna,Jugador j=B);
 
 };

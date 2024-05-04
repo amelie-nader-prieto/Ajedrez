@@ -6,5 +6,5 @@ class Torre :
     public Pieza
 {
 public:
-    Torre(int fila, int columna);
+    Torre(int fila, int columna,Jugador j=B);
 };

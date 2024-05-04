@@ -6,7 +6,7 @@ class Peon :
     public Pieza
 {
 public:
-    Peon(int fila, int columna);
+    Peon(int fila, int columna,Jugador j=B);
   
 };
 

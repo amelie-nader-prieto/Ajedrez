@@ -6,7 +6,7 @@ class Rey :
     public Pieza
 {
 public:
-    Rey(int fila, int columna);
+    Rey(int fila, int columna,Jugador j=B);
 
 };
 
