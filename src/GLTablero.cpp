@@ -2,8 +2,8 @@
 
 void GLTablero::dibuja() {
 	int sum = 0;
-	for (int i = 0; i < Columnas; i++) {
-		for (int j = 0; j < Filas; j++) {
+	for (int i = 0; i < COLUMNA; i++) {
+		for (int j = 0; j < FILA; j++) {
 			sum = i + j;
 			switch (j)
 			{
