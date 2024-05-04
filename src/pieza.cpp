@@ -1,5 +1,5 @@
 #include "pieza.h"
-#include "Tipos_piezas.h"
+//#include "Tipos_piezas.h" //no necesario
 
 // Funciones de interfaz
 Vector2D Pieza::GetPosicion() {

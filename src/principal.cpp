@@ -9,6 +9,7 @@ void OnTimer(int value); //esta funcion sera llamada cuando transcurra una tempo
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
 
 /*
+
 int main(int argc,char* argv[])
 {
 	//Inicializar el gestor de ventanas GLUT
@@ -16,7 +17,7 @@ int main(int argc,char* argv[])
 	glutInit(&argc, argv);
 	glutInitWindowSize(800,600);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutCreateWindow("MiJuego");
+	glutCreateWindow("Ajedrez BALBO");
 
 	//habilitar luces y definir perspectiva
 	glEnable(GL_LIGHT0);
@@ -51,11 +52,11 @@ void OnDraw(void)
 	
 	//funciones de dibujo
 
-	gluLookAt(0, 7.5, 20,  // posicion del ojo
-		0.0, 7.5, 0.0,      // hacia que punto mira  (0,0,0) 
+	gluLookAt(5, 5, 17,  // posicion del ojo
+		5.0, 5.0, 0.0,      // hacia que punto mira  (0,0,0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)  
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/fondo.png").id);
+	//glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/fondo.png").id);
 	glDisable(GL_LIGHTING);
 
 	glBegin(GL_POLYGON);

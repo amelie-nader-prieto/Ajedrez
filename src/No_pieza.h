@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "pieza.h"
 #include "Tipos_piezas.h"
 
