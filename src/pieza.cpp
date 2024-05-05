@@ -9,6 +9,7 @@ Tipo Pieza::GetTipo() {
 	return tipo;
 }
 int Pieza::GetFila() {
+	if (this == nullptr)return -1;
 	return fila;
 }
 int Pieza::GetColumna() {

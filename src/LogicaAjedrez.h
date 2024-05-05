@@ -56,6 +56,14 @@ static std::ostream& operator<<(std::ostream& co, const Jugador&_jugador) {
 
     return co;
 }
+// Operador para imprimir las casillas con número y letra
+static std::ostream& operator<<(std::ostream &co, const Casilla& _casilla) {
+    vector<char>letras_columnas = { 'a','b','c','d','e','f','g','h','i','j','k' };
+    int num_fila_0 = 10;
+    co << letras_columnas.at(_casilla.col) << num_fila_0 - _casilla.row;
+
+    return co;
+}
 
 // CASILLAS QUE NO SE USAN
 /*
@@ -125,29 +133,63 @@ static void siguienteCasilla(Dir_t dir, Casilla ini, Casilla& fin) {
 * - Su tipo (reglas de movimiento)
 * - Que las casillas estén dentro del tablero y que queden dentro del rombo
 */
-// ESTÁ SIN TERMINAR
-// debería tener en cuenta la ubicación de las otras piezas
-static vector<Casilla>obtener_posibles_movimientos(Pieza p) {
+static vector<Casilla>obtener_posibles_movimientos(Pieza _p) {
     vector<Casilla>v{};
     vector<Dir_t>direcciones{}; // posibles direcciones
-    Casilla c_actual{ p.GetFila(),p.GetColumna() };
+    Casilla c_actual{ _p.GetFila(),_p.GetColumna() };
     Casilla c_buffer{ c_actual }; // crea una copia de las coordenadas actuales para iterar sobre ellas sin modificarlas
     Casilla c_siguiente{}; // coordenadas siguientes según la dirección
 
-    switch (p.GetTipo()) {
+    bool pieza_tuya_en_medio=false;
+    bool pieza_rival_en_medio = false;
+
+    switch (_p.GetTipo()) {
     case no_hay:break; // omite la pieza nula
     case A:
         // el alfil se mueve por las diagonales
         direcciones = { Dir_t::UPLEFT,Dir_t::UPRIGHT,Dir_t::DOWNLEFT,Dir_t::RIGHTDOWN };
+
         for (const auto& p : direcciones) {
             do {
+                pieza_tuya_en_medio = false;
+                pieza_rival_en_medio = false;
+
                 siguienteCasilla(p, c_buffer, c_siguiente);
 
                 //condiciones para NO incluir la casilla siguiente
                 if ((c_siguiente.row < 0 || c_siguiente.row == FILA ||
                     c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col)))continue;
+                
+                // verifica si hay una pieza en la casilla siguiente
+                switch (_p.GetJugador()) {
+                case B:
+                    for (auto& p : piezas_neg) {
+                        // comprueba si hay pieza tuya
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_tuya_en_medio = true;
+                    }
+                    for (auto& p : piezas_bla) {
+                        // comprueba si hay pieza rival 
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+                    }
+                    break;
+                case W:
+                    for (auto& p : piezas_bla) {
+                        // comprueba si hay pieza tuya
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col)pieza_tuya_en_medio = true;
+                    }
+                    for (auto& p : piezas_neg) {
+                        // comprueba si hay pieza rival
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+                    }
+                    break;
+                default:break;
+                }
+
+                if (pieza_tuya_en_medio)break; // si hay una pieza tuya, se la salta
 
                 v.push_back(c_siguiente);
+                if (pieza_rival_en_medio)break; // si hay una pieza rival, la añade y se la salta
+
                 c_buffer = c_siguiente;
 
             } while (!(c_siguiente.row < 0 || c_siguiente.row == FILA || c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col)));
@@ -160,13 +202,44 @@ static vector<Casilla>obtener_posibles_movimientos(Pieza p) {
         direcciones= { Dir_t::UP,Dir_t::DOWN,Dir_t::RIGHT,Dir_t::LEFT };
 
         for (const auto& p : direcciones) {
+            pieza_tuya_en_medio = false;
+            pieza_rival_en_medio = false;
+
             do {
                 siguienteCasilla(p, c_buffer, c_siguiente);
                 //condiciones para no incluir la casilla siguiente
                 if ((c_siguiente.row < 0 || c_siguiente.row == FILA ||
                     c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col)))continue;
 
+                // verifica si hay una pieza en la casilla siguiente
+                switch (_p.GetJugador()) {
+                case B:
+                    for (auto& p : piezas_neg) {
+                        // comprueba si hay pieza tuya
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_tuya_en_medio = true;
+                    }
+                    for (auto& p : piezas_bla) {
+                        // comprueba si hay pieza rival 
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+                    }
+                    break;
+                case W:
+                    for (auto& p : piezas_bla) {
+                        // comprueba si hay pieza tuya
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col)pieza_tuya_en_medio = true;
+                    }
+                    for (auto& p : piezas_neg) {
+                        // comprueba si hay pieza rival
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+                    }
+                    break;
+                default:break;
+                }
+
+                if (pieza_tuya_en_medio)break; // si hay pieza tuya, se la salta
+
                 v.push_back(c_siguiente);
+                if (pieza_rival_en_medio)break; // si hay una pieza rival, la añade y se la salta
                 c_buffer = c_siguiente;
 
             } while (!(c_siguiente.row < 0 || c_siguiente.row == FILA || c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col)));
@@ -179,13 +252,45 @@ static vector<Casilla>obtener_posibles_movimientos(Pieza p) {
         direcciones = { Dir_t::UP,Dir_t::DOWN,Dir_t::RIGHT,Dir_t::LEFT,Dir_t::UPLEFT,Dir_t::UPRIGHT,Dir_t::DOWNLEFT,Dir_t::RIGHTDOWN };
 
         for (const auto& p : direcciones) {
+            pieza_tuya_en_medio = false;
+            pieza_rival_en_medio = false;
+
             do {
                 siguienteCasilla(p, c_buffer, c_siguiente);
                 //condiciones para no incluir la casilla siguiente
                 if ((c_siguiente.row < 0 || c_siguiente.row == FILA ||
                     c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col)))continue;
 
+                // verifica si hay una pieza en la casilla siguiente
+                switch (_p.GetJugador()) {
+                case B:
+                    for (auto& p : piezas_neg) {
+                        // comprueba si hay pieza tuya
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_tuya_en_medio = true;
+                    }
+                    for (auto& p : piezas_bla) {
+                        // comprueba si hay pieza rival 
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+                    }
+                    break;
+                case W:
+                    for (auto& p : piezas_bla) {
+                        // comprueba si hay pieza tuya
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col)pieza_tuya_en_medio = true;
+                    }
+                    for (auto& p : piezas_neg) {
+                        // comprueba si hay pieza rival
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+                    }
+                    break;
+                default:break;
+                }
+
+                if (pieza_tuya_en_medio)break; // si hay pieza tuya, se la salta
+
+
                 v.push_back(c_siguiente);
+                if (pieza_rival_en_medio)break; // si hay una pieza del rival, se la salta
                 c_buffer = c_siguiente;
 
             } while (!(c_siguiente.row < 0 || c_siguiente.row == FILA || c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col)));
@@ -198,10 +303,39 @@ static vector<Casilla>obtener_posibles_movimientos(Pieza p) {
         direcciones = { Dir_t::UP,Dir_t::DOWN,Dir_t::RIGHT,Dir_t::LEFT,Dir_t::UPLEFT,Dir_t::UPRIGHT,Dir_t::DOWNLEFT,Dir_t::RIGHTDOWN };
 
         for (const auto& p : direcciones) {
+            pieza_tuya_en_medio = false;
+
             siguienteCasilla(p, c_buffer, c_siguiente);
             //condiciones para no incluir la casilla siguiente
             if ((c_siguiente.row < 0 || c_siguiente.row == FILA ||
                 c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col)))continue;
+
+            // verifica si hay una pieza en la casilla siguiente
+            switch (_p.GetJugador()) {
+            case B:
+                for (auto& p : piezas_neg) {
+                    // comprueba si hay pieza tuya
+                    if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_tuya_en_medio = true;
+                }
+                for (auto& p : piezas_bla) {
+                    // comprueba si hay pieza rival 
+                    if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+                }
+                break;
+            case W:
+                for (auto& p : piezas_bla) {
+                    // comprueba si hay pieza tuya
+                    if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col)pieza_tuya_en_medio = true;
+                }
+                for (auto& p : piezas_neg) {
+                    // comprueba si hay pieza rival
+                    if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+                }
+                break;
+            default:break;
+            }
+
+            if (pieza_tuya_en_medio)break; // si hay pieza tuya, se la salta
 
             v.push_back(c_siguiente);
         }
@@ -211,23 +345,85 @@ static vector<Casilla>obtener_posibles_movimientos(Pieza p) {
         // movimiento del caballo - no sigue las primitivas de movimiento
         for (auto p : { -2,2 }) {
             for (auto u : { -1,1 }) {
+
+                pieza_tuya_en_medio = false;
+
                 c_siguiente = { c_actual.row + p,c_actual.col + u };
+
+                // verifica si hay una pieza en la casilla siguiente
+                switch (_p.GetJugador()) {
+                case B:
+                    for (auto& p : piezas_neg) {
+                        // comprueba si hay pieza tuya
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_tuya_en_medio = true;
+                    }
+                    for (auto& p : piezas_bla) {
+                        // comprueba si hay pieza rival 
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+                    }
+                    break;
+                case W:
+                    for (auto& p : piezas_bla) {
+                        // comprueba si hay pieza tuya
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col)pieza_tuya_en_medio = true;
+                    }
+                    for (auto& p : piezas_neg) {
+                        // comprueba si hay pieza rival
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+                    }
+                    break;
+                default:break;
+                } 
+
                 /*if ((c_siguiente.row < 0 || c_siguiente.row >= ROWS ||
                     c_siguiente.col < 0 || c_siguiente.col >= COLUMNS || no_se_usa(c_siguiente.row, c_siguiente.col)))continue;
                 else v.push_back(c_siguiente);*/
                 if (
+                    !(pieza_tuya_en_medio) && (
                     !((c_siguiente.row < 0 || c_siguiente.row == FILA ||
-                        c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col)))
+                        c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col))))
                     )v.push_back(c_siguiente);
 
+                pieza_tuya_en_medio = false;
+
                 c_siguiente = { c_actual.row + u,c_actual.col + p };
+
+                // verifica si hay una pieza en la casilla siguiente
+                switch (_p.GetJugador()) {
+                case B:
+                    for (auto& p : piezas_neg) {
+                        // comprueba si hay pieza tuya
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_tuya_en_medio = true;
+                    }
+                    for (auto& p : piezas_bla) {
+                        // comprueba si hay pieza rival 
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+                    }
+                    break;
+                case W:
+                    for (auto& p : piezas_bla) {
+                        // comprueba si hay pieza tuya
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col)pieza_tuya_en_medio = true;
+                    }
+                    for (auto& p : piezas_neg) {
+                        // comprueba si hay pieza rival
+                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+                    }
+                    break;
+                default:break;
+                }
+
                 /*if ((c_siguiente.row < 0 || c_siguiente.row >= ROWS ||
                     c_siguiente.col < 0 || c_siguiente.col >= COLUMNS || no_se_usa(c_siguiente.row, c_siguiente.col)))continue;
                 else v.push_back(c_siguiente);*/
                 if (
+                    !pieza_tuya_en_medio && (
                     !((c_siguiente.row < 0 || c_siguiente.row == FILA ||
-                        c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col)))
+                        c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col))))
                     )v.push_back(c_siguiente);
+
+                pieza_tuya_en_medio = false;
+
             }
         }
         break;
@@ -243,7 +439,7 @@ static vector<Casilla>obtener_posibles_movimientos(Pieza p) {
         * PROMOCIÓN: Si ha llegado a la última o penúltima fila, DEBE promocionar, no puede avanzar más
         */
 
-        switch (p.GetJugador()) {
+        switch (_p.GetJugador()) {
         case B: //Negro
             siguienteCasilla(Dir_t::UP, c_buffer, c_siguiente);
             v.push_back(c_siguiente);
@@ -263,6 +459,7 @@ static vector<Casilla>obtener_posibles_movimientos(Pieza p) {
 //Esta función hace que cuando se quiera iniciar una pieza se manda el tipo y dirección 
 static void iniciar(Tipo tipo, Vector2D posicion, Jugador j)
 {
+
     switch (tipo)
     {
     case D:
@@ -289,6 +486,16 @@ static void iniciar(Tipo tipo, Vector2D posicion, Jugador j)
     default:
         break;
     }
+
+    if (Tablero[posicion.x][posicion.y]->GetTipo() != no_hay) {
+        switch (Tablero[posicion.x][posicion.y]->GetJugador()) {
+        case B:piezas_neg.push_back(*Tablero[posicion.x][posicion.y]); break;
+        case W:piezas_bla.push_back(*Tablero[posicion.x][posicion.y]); break;
+        default:break;
+        }
+    }
+   
+
 }
 
 /* INICIALIZAR TABLERO */
@@ -308,7 +515,7 @@ static void iniciar_tablero() {
 
     // Creación de las fichas en la fila intermedia
     // T C A C T
-    vector<Tipo>tipos_fila_intermedia{ T,C,A,T,P };
+    vector<Tipo>tipos_fila_intermedia{ T,C,A,T,C };
     int j = 3;
     for (const auto& p : tipos_fila_intermedia) {
         iniciar(p, { 1,j }, B); // creación fichas (negro)
@@ -355,5 +562,25 @@ static void cambio_casilla(Pieza& pieza, Vector2D final) {
     iniciar(no_hay, { inicio }, B);
     // vuelve a crear la pieza en la posición final
     iniciar(pieza.GetTipo(), { final }, pieza.GetJugador());
+
+    switch (pieza.GetJugador()) {
+    case B:
+        for (auto& p : piezas_neg) {
+            if (p.GetFila() == pieza.GetFila() && p.GetColumna() == pieza.GetColumna()) {
+                p.SetFila(final.x);
+                p.SetColumna(final.y);
+            }
+        }
+        break;
+    case W:
+        for (auto& p : piezas_bla) {
+            if (p.GetFila() == pieza.GetFila() && p.GetColumna() == pieza.GetColumna()) {
+                p.SetFila(final.x);
+                p.SetColumna(final.y);
+            }
+        }
+        break;
+    default:break;
+    }
 
 }
