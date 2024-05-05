@@ -90,6 +90,14 @@ static enum class Dir_t {
     LEFT, UPLEFT, UP, UPRIGHT, RIGHT, RIGHTDOWN, DOWN, DOWNLEFT
 }; //primitivas de movimiento
 
+// Devuelve la casilla en la que está una pieza, para imprimirla
+static Casilla obtener_casilla(Pieza _p) {
+    Casilla c;
+    c.row = _p.GetFila();
+    c.col = _p.GetColumna();
+    return c;
+}
+
 /* A partir de una casilla y una dirección, te da las coordenadas
 de la que sería la siguiente casilla*/
 static void siguienteCasilla(Dir_t dir, Casilla ini, Casilla& fin) {
@@ -135,11 +143,18 @@ static void siguienteCasilla(Dir_t dir, Casilla ini, Casilla& fin) {
 */
 static vector<Casilla>obtener_posibles_movimientos(Pieza _p) {
     vector<Casilla>v{};
-    vector<Dir_t>direcciones{}; // posibles direcciones
+    vector<Dir_t>direcciones{}; // posibles direcciones, se inicializa según la pieza
+    vector<Vector2D>direcciones_caballo = { // posibles direcciones, sólo para C
+            {-2,-1},{-2,1},{2,-1},{2,1},
+            {-1,-2},{-1,2},{1,-2},{1,2}
+    };
+
     Casilla c_actual{ _p.GetFila(),_p.GetColumna() };
     Casilla c_buffer{ c_actual }; // crea una copia de las coordenadas actuales para iterar sobre ellas sin modificarlas
     Casilla c_siguiente{}; // coordenadas siguientes según la dirección
+    Casilla c_siguiente_2{}; // solo usar en el caso del caballo
 
+    
     bool pieza_tuya_en_medio=false;
     bool pieza_rival_en_medio = false;
 
@@ -185,10 +200,10 @@ static vector<Casilla>obtener_posibles_movimientos(Pieza _p) {
                 default:break;
                 }
 
-                if (pieza_tuya_en_medio)break; // si hay una pieza tuya, se la salta
+                if (pieza_tuya_en_medio)continue; // si hay una pieza tuya, se la salta
 
                 v.push_back(c_siguiente);
-                if (pieza_rival_en_medio)break; // si hay una pieza rival, la añade y se la salta
+                if (pieza_rival_en_medio)continue; // si hay una pieza rival, la añade y se la salta
 
                 c_buffer = c_siguiente;
 
@@ -343,89 +358,109 @@ static vector<Casilla>obtener_posibles_movimientos(Pieza _p) {
 
     case C:
         // movimiento del caballo - no sigue las primitivas de movimiento
-        for (auto p : { -2,2 }) {
-            for (auto u : { -1,1 }) {
 
-                pieza_tuya_en_medio = false;
+        for (auto p : direcciones_caballo) {
+            pieza_tuya_en_medio = false;
 
-                c_siguiente = { c_actual.row + p,c_actual.col + u };
+            c_siguiente = { c_actual.row + p.x,c_actual.col + p.y };
 
-                // verifica si hay una pieza en la casilla siguiente
-                switch (_p.GetJugador()) {
-                case B:
-                    for (auto& p : piezas_neg) {
-                        // comprueba si hay pieza tuya
-                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_tuya_en_medio = true;
-                    }
-                    for (auto& p : piezas_bla) {
-                        // comprueba si hay pieza rival 
-                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
-                    }
-                    break;
-                case W:
-                    for (auto& p : piezas_bla) {
-                        // comprueba si hay pieza tuya
-                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col)pieza_tuya_en_medio = true;
-                    }
-                    for (auto& p : piezas_neg) {
-                        // comprueba si hay pieza rival
-                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
-                    }
-                    break;
-                default:break;
-                } 
-
-                /*if ((c_siguiente.row < 0 || c_siguiente.row >= ROWS ||
-                    c_siguiente.col < 0 || c_siguiente.col >= COLUMNS || no_se_usa(c_siguiente.row, c_siguiente.col)))continue;
-                else v.push_back(c_siguiente);*/
-                if (
-                    !(pieza_tuya_en_medio) && (
-                    !((c_siguiente.row < 0 || c_siguiente.row == FILA ||
-                        c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col))))
-                    )v.push_back(c_siguiente);
-
-                pieza_tuya_en_medio = false;
-
-                c_siguiente = { c_actual.row + u,c_actual.col + p };
-
-                // verifica si hay una pieza en la casilla siguiente
-                switch (_p.GetJugador()) {
-                case B:
-                    for (auto& p : piezas_neg) {
-                        // comprueba si hay pieza tuya
-                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_tuya_en_medio = true;
-                    }
-                    for (auto& p : piezas_bla) {
-                        // comprueba si hay pieza rival 
-                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
-                    }
-                    break;
-                case W:
-                    for (auto& p : piezas_bla) {
-                        // comprueba si hay pieza tuya
-                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col)pieza_tuya_en_medio = true;
-                    }
-                    for (auto& p : piezas_neg) {
-                        // comprueba si hay pieza rival
-                        if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
-                    }
-                    break;
-                default:break;
+            // verifica si hay una pieza en la casilla de destino
+            switch (_p.GetJugador()) {
+            case B:
+                for (auto& p : piezas_neg) {
+                    // comprueba si hay pieza tuya
+                    if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_tuya_en_medio = true;
                 }
+                break;
+            case W:
+                for (auto& p : piezas_bla) {
+                    // comprueba si hay pieza tuya
+                    if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col)pieza_tuya_en_medio = true;
+                }
+                break;
+            default:break;
+            }
 
-                /*if ((c_siguiente.row < 0 || c_siguiente.row >= ROWS ||
-                    c_siguiente.col < 0 || c_siguiente.col >= COLUMNS || no_se_usa(c_siguiente.row, c_siguiente.col)))continue;
-                else v.push_back(c_siguiente);*/
-                if (
-                    !pieza_tuya_en_medio && (
+            // verifica que se cumplan las condiciones para poder mover a esa casilla
+            if (
+                !(pieza_tuya_en_medio) && (
                     !((c_siguiente.row < 0 || c_siguiente.row == FILA ||
                         c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col))))
-                    )v.push_back(c_siguiente);
+                )v.push_back(c_siguiente);
 
-                pieza_tuya_en_medio = false;
-
-            }
         }
+       
+        //for (auto p : { -2,2 }) {
+        //    for (auto u : { -1,1 }) {
+
+        //        pieza_tuya_en_medio = false;
+
+        //        c_siguiente = { c_actual.row + p,c_actual.col + u };
+        //        c_siguiente_2 = { c_actual.row + u,c_actual.col + p };
+
+        //        // verifica si hay una pieza en la casilla siguiente
+        //        switch (_p.GetJugador()) {
+        //        case B:
+        //            for (auto& p : piezas_neg) {
+        //                // comprueba si hay pieza tuya
+        //                if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_tuya_en_medio = true;
+        //            }
+        //            //for (auto& p : piezas_bla) {
+        //            //    // comprueba si hay pieza rival 
+        //            //    if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+        //            //}
+        //            break;
+        //        case W:
+        //            for (auto& p : piezas_bla) {
+        //                // comprueba si hay pieza tuya
+        //                if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col)pieza_tuya_en_medio = true;
+        //            }
+        //            //for (auto& p : piezas_neg) {
+        //            //    // comprueba si hay pieza rival
+        //            //    if (p.GetFila() == c_siguiente.row && p.GetColumna() == c_siguiente.col) pieza_rival_en_medio = true;
+        //            //}
+        //            break;
+        //        default:break;
+        //        }
+
+        //        /*if ((c_siguiente.row < 0 || c_siguiente.row >= ROWS ||
+        //            c_siguiente.col < 0 || c_siguiente.col >= COLUMNS || no_se_usa(c_siguiente.row, c_siguiente.col)))continue;
+        //        else v.push_back(c_siguiente);*/
+        //        if (
+        //            !(pieza_tuya_en_medio) && (
+        //                !((c_siguiente.row < 0 || c_siguiente.row == FILA ||
+        //                    c_siguiente.col < 0 || c_siguiente.col == COLUMNA || no_se_usa(c_siguiente.row, c_siguiente.col))))
+        //            )v.push_back(c_siguiente);
+
+        //        pieza_tuya_en_medio = false;
+
+        //        // verifica si hay una pieza en la casilla siguiente
+        //        switch (_p.GetJugador()) {
+        //        case B:
+        //            for (auto& p : piezas_neg) {
+        //                // comprueba si hay pieza tuya
+        //                if (p.GetFila() == c_siguiente_2.row && p.GetColumna() == c_siguiente_2.col) pieza_tuya_en_medio = true;
+        //            }
+        //            break;
+        //        case W:
+        //            for (auto& p : piezas_bla) {
+        //                // comprueba si hay pieza tuya
+        //                if (p.GetFila() == c_siguiente_2.row && p.GetColumna() == c_siguiente_2.col)pieza_tuya_en_medio = true;
+        //            }
+        //            break;
+        //        default:break;
+        //        }
+
+        //        if (
+        //            !pieza_tuya_en_medio && (
+        //                !((c_siguiente_2.row < 0 || c_siguiente_2.row == FILA ||
+        //                    c_siguiente_2.col < 0 || c_siguiente_2.col == COLUMNA || no_se_usa(c_siguiente_2.row, c_siguiente_2.col))))
+        //            )v.push_back(c_siguiente_2);
+
+        //    }
+        //    pieza_tuya_en_medio = false;
+        //}
+
         break;
 
     case P:
@@ -443,10 +478,23 @@ static vector<Casilla>obtener_posibles_movimientos(Pieza _p) {
         case B: //Negro
             siguienteCasilla(Dir_t::UP, c_buffer, c_siguiente);
             v.push_back(c_siguiente);
+
+            if (!_p.get_ha_movido()) {
+                c_buffer = c_siguiente;
+                siguienteCasilla(Dir_t::UP, c_buffer, c_siguiente);
+                v.push_back(c_siguiente);
+            }
+
             break;
         case W: //blanco
             siguienteCasilla(Dir_t::DOWN, c_buffer, c_siguiente);
             v.push_back(c_siguiente);
+
+            if (!_p.get_ha_movido()) {
+                c_buffer = c_siguiente;
+                siguienteCasilla(Dir_t::DOWN, c_buffer, c_siguiente);
+                v.push_back(c_siguiente);
+            }
         }
         break;
 
@@ -563,24 +611,8 @@ static void cambio_casilla(Pieza& pieza, Vector2D final) {
     // vuelve a crear la pieza en la posición final
     iniciar(pieza.GetTipo(), { final }, pieza.GetJugador());
 
-    switch (pieza.GetJugador()) {
-    case B:
-        for (auto& p : piezas_neg) {
-            if (p.GetFila() == pieza.GetFila() && p.GetColumna() == pieza.GetColumna()) {
-                p.SetFila(final.x);
-                p.SetColumna(final.y);
-            }
-        }
-        break;
-    case W:
-        for (auto& p : piezas_bla) {
-            if (p.GetFila() == pieza.GetFila() && p.GetColumna() == pieza.GetColumna()) {
-                p.SetFila(final.x);
-                p.SetColumna(final.y);
-            }
-        }
-        break;
-    default:break;
-    }
+    pieza = *Tablero[final.x][final.y];
+    
+    if (!pieza.get_ha_movido()) pieza.set_ha_movido();
 
 }
