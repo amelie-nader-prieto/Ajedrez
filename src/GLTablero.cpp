@@ -1,5 +1,19 @@
 #include "GLTablero.h"
 
+void GLTablero::init() {
+	//habilitar luces y definir perspectiva
+	/*
+		
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_COLOR_MATERIAL);
+	glMatrixMode(GL_PROJECTION);
+	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
+	*/
+
+}
+
 void GLTablero::dibuja() {
 	int sum = 0;
 	for (int i = 0; i < COLUMNA; i++) {
@@ -7,16 +21,16 @@ void GLTablero::dibuja() {
 			sum = i + j;
 			switch (j)
 			{
-			case 0: if (sum > 3 && sum < 7) cas.dibuja(i, j); break;
-			case 1: if (sum > 3 && sum < 9) cas.dibuja(i, j); break;
-			case 2: if (sum > 3 && sum < 11) cas.dibuja(i, j); break;
-			case 3: if (sum > 3 && sum < 13) cas.dibuja(i, j); break;
-			case 4: if (sum > 3 && sum <= 14) cas.dibuja(i, j); break;
-			case 5: if (sum > 4 && sum <= 15) cas.dibuja(i, j); break;
-			case 6: if (sum > 6 && sum < 16) cas.dibuja(i, j); break;
-			case 7: if (sum > 8 && sum < 16) cas.dibuja(i, j); break;
-			case 8: if (sum > 10 && sum < 16) cas.dibuja(i, j); break;
-			case 9: if (sum > 12 && sum < 16) cas.dibuja(i, j); break;
+			case 0: if (sum > 3 && sum < 7) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
+			case 1: if (sum > 3 && sum < 9) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
+			case 2: if (sum > 3 && sum < 11) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
+			case 3: if (sum > 3 && sum < 13) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
+			case 4: if (sum > 3 && sum <= 14) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
+			case 5: if (sum > 4 && sum <= 15) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
+			case 6: if (sum > 6 && sum < 16) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
+			case 7: if (sum > 8 && sum < 16) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
+			case 8: if (sum > 10 && sum < 16) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
+			case 9: if (sum > 12 && sum < 16) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
 			default:
 				break;
 
@@ -40,18 +54,18 @@ void GLTablero::dibuja() {
 	glDisable(GL_TEXTURE_2D);
 	//////////////////////////////////////////////////////
 
-	/////////////OPCIONAL MARCO DEL TABLERO////////////////7
+	/////////////OPCIONAL MARCO DEL TABLERO////////////////
 	/*
-	struct coordenadas {
+		struct coordenadas {
 		float x, y;
 	};
 	coordenadas limite1{ 12.0f,11.0f }, limite2{-1.0f,-1.0f};
-	int r1 = 54;//57; //55;
-	int g1 = 54;//59; //71; 
-	int b1 = 54;//73; //92;
-	int r2 = 124;//53;//155;
-	int g2 =23;//55;//148;
-	int b2 = 23;//65;//148;
+	int r1 = 57; //55;
+	int g1 = 59; //71; 
+	int b1 = 73; //92;
+	int r2 = 155;
+	int g2 = 148;
+	int b2 = 148;
 
 	glBegin(GL_POLYGON);
 	glColor3ub(r2, g2, b2); 
@@ -85,12 +99,12 @@ void GLTablero::dibuja() {
 	glVertex3f(limite1.x - 1.0f, limite2.y + 1.0f, -0.01f);
 	glEnd();
 
-	*/
 	
+	*/
 
 	///////////////////FUENTES///////////////
 	float despx = 0.25, despy = 0.65f;
-	ETSIDI::setTextColor(0,1,0); //85.0f, 224.0f, 68.0f
+	ETSIDI::setTextColor(1,1,0); //85.0f, 224.0f, 68.0f
 	ETSIDI::setFont("bin/fuentes/Tablero1.ttf", 18);
 	glTranslatef(-despx, 0.4, 0);
 	ETSIDI::printxy("  A", 0, -1);  ETSIDI::printxy("   B", 1, -1);
@@ -107,4 +121,50 @@ void GLTablero::dibuja() {
 	ETSIDI::printxy("  7", -1, 7); ETSIDI::printxy("  8", -1, 8);
 	ETSIDI::printxy("  9", -1, 9); ETSIDI::printxy("  10", -1, 10);
 	glTranslatef(0, despy, 0);
+}
+
+void GLTablero::MouseButton(int x, int y, int button, bool down, bool sKey, bool ctrlKey) {
+
+	GLint viewport[4];
+	GLdouble modelview[16];
+	GLdouble projection[16];
+	GLfloat winX, winY, winZ;
+	GLdouble posX, posY, posZ;
+
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+	glGetDoublev(GL_PROJECTION_MATRIX, projection);
+	glGetIntegerv(GL_VIEWPORT, viewport);
+
+	winX = (float)x;
+	winY = (float)viewport[3] - (float)y;
+	glReadPixels(x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+
+
+	//finally cell coordinates
+	world2cell(posX, posY, xcell_sel, ycell_sel);
+
+	//capture other mouse events
+
+	if (down) {
+		controlKey = ctrlKey;
+		shiftKey = sKey;
+	}
+	else {
+		controlKey = shiftKey = false;
+	}
+
+	if (button == MOUSE_LEFT_BUTTON)
+		leftButton = down;
+	else if (button == MOUSE_RIGHT_BUTTON)
+		rightButton = down;
+	else if (button == MOUSE_MIDDLE_BUTTON)
+		midButton = down;
+	///////////////////////////
+
+		//***WRITE ACTIONS CONNECTED TO MOUSE STATE HERE
+
+		//print cell coordinates after click
+	if (down)
+		std::cout << "(" << xcell_sel << "," << ycell_sel << ")" << std::endl;
 }

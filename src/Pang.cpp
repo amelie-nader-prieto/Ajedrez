@@ -4,10 +4,12 @@
 #define FILA 10
 #define COLUMNA 11
 
-/////////SOLO ES UNA PRUEBA/////////////////////7
+///////SOLO ES UNA PRUEBA (¿EN DÓNDE VA EL MAIN?)/////////////////////7
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
+///////////7SOLO ES UNA PRUEBA DE MOUSE////////////Ç
+void OnMouseClick(int button, int state, int x, int y);
 /////////////////////////////////////////////////////
 
 
@@ -233,11 +235,13 @@ int main(int argc, char* argv[])
 	glMatrixMode(GL_PROJECTION);
 	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
 
+	//scene.init(); //reempleza a (habilitar luces, cuando ya se defina en donde va el main;
+
 	//Registrar los callbacks
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(25, OnTimer, 0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
 	glutKeyboardFunc(OnKeyboardDown);
-
+	glutMouseFunc(OnMouseClick);///////////////PRUEBA MOUSE
 	//POSIBLE INICIALIZACION
 
 	//pasarle el control a GLUT,que llamara a los callbacks

@@ -14,7 +14,11 @@ void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
 
-GLTablero chess;
+//////////PRUEBA MOUSE//////////77
+//void OnMouseClick(int button, int state, int x, int y);
+
+
+GLTablero scene; //chess
 
 /*
 
@@ -34,6 +38,8 @@ int main(int argc,char* argv[])
 	glEnable(GL_COLOR_MATERIAL);	
 	glMatrixMode(GL_PROJECTION);
 	gluPerspective( 40.0, 800/600.0f, 0.1, 150);
+
+	//scene.init(); //Cundo ya e defina el main
 
 	//Registrar los callbacks
 	glutDisplayFunc(OnDraw);
@@ -67,7 +73,7 @@ void OnDraw(void)
 
 	pW.dibuja();
 	pB.dibuja();
-	chess.dibuja();
+	scene.dibuja();
 
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
@@ -88,4 +94,28 @@ void OnTimer(int value)
 	//no borrar estas lineas
 	glutTimerFunc(25,OnTimer,0);
 	glutPostRedisplay();
+}
+
+
+void OnMouseClick(int b, int state, int x, int y) {
+	//////////////
+//captures clicks with mouse with or without special keys (CTRL or SHIFT)
+//gives control to board scene
+	bool down = (state == GLUT_DOWN);
+	int button;
+	if (b == GLUT_LEFT_BUTTON) {
+		button = MOUSE_LEFT_BUTTON;
+	}
+	if (b == GLUT_RIGHT_BUTTON) {
+		button = MOUSE_RIGHT_BUTTON;
+		std::cout << "MOUSE_RIGHT_BUTTON" << std::endl;
+	}
+	int specialKey = glutGetModifiers();
+	bool ctrlKey = (specialKey & GLUT_ACTIVE_CTRL) ? true : false;
+	bool sKey = specialKey & GLUT_ACTIVE_SHIFT;
+
+
+	scene.MouseButton(x, y, b, down, sKey, ctrlKey);
+	glutPostRedisplay();
+
 }

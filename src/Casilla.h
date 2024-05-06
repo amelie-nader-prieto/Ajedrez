@@ -12,5 +12,6 @@ public:
         std::cout << "( " << row << " , " << col << " )" << std::endl;
     }
 
-    void dibuja(int, int);
+    void dibuja(int, int); //para el dibujo de una casilla
+    void dibujaGrid(int i, int j); //para las lineas (delimita las casillas)
 };
