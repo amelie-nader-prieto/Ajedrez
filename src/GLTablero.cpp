@@ -14,26 +14,16 @@ void GLTablero::init() {
 
 }
 
-void GLTablero::dibuja() {
-	int sum = 0;
+void GLTablero::dibuja() { // Si se incluye LogicaTablero a GLTablero se puede usar la función no_se_usa directamente
+	int sum1 = 0;
+	int sum2 = 0;
 	for (int i = 0; i < COLUMNA; i++) {
 		for (int j = 0; j < FILA; j++) {
-			sum = i + j;
-			switch (j)
-			{
-			case 0: if (sum > 3 && sum < 7) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
-			case 1: if (sum > 3 && sum < 9) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
-			case 2: if (sum > 3 && sum < 11) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
-			case 3: if (sum > 3 && sum < 13) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
-			case 4: if (sum > 3 && sum <= 14) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
-			case 5: if (sum > 4 && sum <= 15) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
-			case 6: if (sum > 6 && sum < 16) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
-			case 7: if (sum > 8 && sum < 16) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
-			case 8: if (sum > 10 && sum < 16) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
-			case 9: if (sum > 12 && sum < 16) { cas.dibuja(i, j); cas.dibujaGrid(i, j); }break;
-			default:
-				break;
-
+			sum1 = j + i;
+			sum2 = FILA - 1 - j + i;
+			if ((sum1>3) && (sum1<16) && (sum2>3) && (sum2<16)) {
+				cas.dibuja(i, j);
+				cas.dibujaGrid(i, j);
 			}
 		}
 	}

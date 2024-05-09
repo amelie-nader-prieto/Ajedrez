@@ -54,11 +54,9 @@ static std::ostream& operator<< (std::ostream& co, const Tipo& t) {
 * - De las filas 3 y 6: columnas 0 y 10
 */
 static bool no_se_usa(int i, int j) {
-    return ((i == 0 || i == 9) && (((j >= 0 && j <= 3) || (j >= 7 && j <= 10)))
-        || ((i == 1 || i == 8) && ((j >= 0 && j <= 2) || (j >= 8 && j <= 10)))
-        || ((i == 2 || i == 7) && ((j == 0 || j == 1) || (j == 9 || j == 10)))
-        || ((i == 3 || i == 6) && (j == 0 || j == 10))
-        ) ? true : false;
+    int sum1 = j + i;
+    int sum2 = FILA - 1 - j + i;
+    return ((sum1 > 3) && (sum1 < 16) && (sum2 > 3) && (sum2 < 16)) ? false : true;
 }
 
 // DIRECCIONES
