@@ -23,12 +23,14 @@
     <ClCompile Include="src\caballo.cpp" />
     <ClCompile Include="src\Casilla.cpp" />
     <ClCompile Include="src\dama.cpp" />
+    <ClCompile Include="src\LogicaAjedrez.cpp" />
     <ClCompile Include="src\No_pieza.cpp" />
     <ClCompile Include="src\Pang.cpp" />
     <ClCompile Include="src\peon.cpp" />
     <ClCompile Include="src\pieza.cpp" />
     <ClCompile Include="src\principal.cpp" />
     <ClCompile Include="src\rey.cpp" />
+    <ClCompile Include="src\Tablero.cpp" />
     <ClCompile Include="src\torre.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +43,7 @@
     <ClInclude Include="src\peon.h" />
     <ClInclude Include="src\pieza.h" />
     <ClInclude Include="src\rey.h" />
+    <ClInclude Include="src\Tablero.h" />
     <ClInclude Include="src\Tipos_piezas.h" />
     <ClInclude Include="src\torre.h" />
     <ClInclude Include="src\vector2D.h" />
