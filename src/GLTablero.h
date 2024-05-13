@@ -1,6 +1,7 @@
 #pragma once
 #include "Casilla.h"
 #include "ETSIDI.h"
+#include "LogicaAjedrez.h"
 #define FILA 10
 #define COLUMNA 11
 

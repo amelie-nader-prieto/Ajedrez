@@ -31,6 +31,7 @@ public:
 	void SetColumna(int _columna);
 	void SetTipo(Tipo t);
 	void SetJugador(Jugador j);
+	void dibuja();
 
 	//virtual void dibuja() = 0;
 };

@@ -30,3 +30,7 @@ void Pieza::SetTipo(Tipo t) {
 void Pieza::SetJugador(Jugador t) {
 	jugador = t;
 }
+
+void Pieza::dibuja() {
+
+}

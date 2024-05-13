@@ -1,4 +1,6 @@
 #include "GLTablero.h"
+#include "LogicaAjedrez.h"
+
 
 void GLTablero::init() {
 	//habilitar luces y definir perspectiva
@@ -14,17 +16,12 @@ void GLTablero::init() {
 
 }
 
-void GLTablero::dibuja() { // Si se incluye LogicaTablero a GLTablero se puede usar la función no_se_usa directamente
+void GLTablero::dibuja() {
 	int sum1 = 0;
 	int sum2 = 0;
 	for (int i = 0; i < COLUMNA; i++) {
 		for (int j = 0; j < FILA; j++) {
-			sum1 = j + i;
-			sum2 = FILA - 1 - j + i;
-			if ((sum1>3) && (sum1<16) && (sum2>3) && (sum2<16)) {
-				cas.dibuja(i, j);
-				cas.dibujaGrid(i, j);
-			}
+			if (no_se_usa(i, j) == false) cas.dibuja(i, j), cas.dibujaGrid(i, j);
 		}
 	}
 
@@ -91,6 +88,14 @@ void GLTablero::dibuja() { // Si se incluye LogicaTablero a GLTablero se puede u
 
 	
 	*/
+
+	//////////////////DIBUJO DE LAS PIEZAS////////////////////
+
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 11; j++) {
+			if (Tablero[i][j] != nullptr) Tablero[i][j]->dibuja();
+		}
+	}
 
 	///////////////////FUENTES///////////////
 	float despx = 0.25, despy = 0.65f;

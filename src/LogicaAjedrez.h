@@ -253,65 +253,65 @@ static vector<Casilla>obtener_posibles_movimientos(Pieza p) {
 * Si está fuera del rombo o está vacía, se inicializa como nullptr
 * Si hay una pieza en esa casilla, se inicializa para que apunte a un objeto determinado del vector piezas_bla o piezas_neg
 */
-//// ESTÁ INCOMPLETA
-//void inicializar_tablero() {
-//
-//    for (int i = 0; i < FILA; i++) {
-//        for (int j = 0; j < COLUMNA; j++) {
-//            
-//            if (no_se_usa(i, j) || (i >= 3 && i <= 6)) {
-//                Tablero[i][j] = nullptr; continue;
-//            }
-//
-//            if (i == 2 || i == 7) {
-//                // Inicializar punteros a los peones
-//                // i == 2 -> negros
-//                // i == 7 -> blancos
-//            }
-//            else {
-//                switch (j) {
-//                case 3:
-//                    // inicializar punteros a las torres
-//                    // i == 1 -> negras
-//                    // si no, blancas
-//                    break;
-//                case 4: // en la columna 4 hay reyes y caballos
-//                    switch (i) {
-//                    case 0: // rey negro
-//                        break;
-//                    case 1: // caballo negro
-//                        break;
-//                    case 8: // caballo blanco
-//                        break;
-//                    case 9: // rey blanco
-//                        break;
-//                    }
-//                    break;
-//
-//                case 5: //alfiles
-//                    // inicializar punteros a los alfiles
-//                    break;
-//
-//                case 6: // en la columna 6 hay reinas y caballos
-//                    switch (i) {
-//                    case 0: // reina negra
-//                        break;
-//                    case 1: // caballo negro
-//                        break;
-//                    case 8: // caballo blanco
-//                        break;
-//                    case 9: // reina blanca
-//                        break;
-//                    }
-//                    break;
-//
-//                case 7: // torres
-//                    // inicializar punteros a las torres
-//                    break;
-//                }
-//            }
-//
-//        }
-//    }
-//
-//}
+
+// NO ES UN ALGORITMO MUY OPTIMIZADO
+/*
+void inicializaTablero()
+{
+    int i_simetrica;
+    int j_simetrica;
+    for (int i = 0; i <= 2; i++)
+    {
+        for (int j = 0; j <= 5; j++)
+        {
+            i_simetrica = FILA - 1 - i;
+            j_simetrica = COLUMNA - 1 - j;
+            if (Tablero[i][j] == nullptr && no_se_usa(i, j) == false)
+            {
+                if (i == 0 && j == 4)
+                {
+                    if (j == 4) // creo los dos reyes
+                    {
+                        Tablero[i][j] = new Rey(i, j, W);
+                        Tablero[i_simetrica][j] = new Rey(i_simetrica, j, B);
+                        Tablero[i][j_simetrica] = new Dama(i, j_simetrica, W);
+                        Tablero[i_simetrica][j_simetrica] = new Dama(i_simetrica, j_simetrica, B);
+                    }
+                    if (j == 5) // creo los cuatro alfiles
+                    {
+                        Tablero[i][j] = new Alfil(i, j, W);
+                        Tablero[i + 1][j] = new Alfil(i + 1, j, W);
+                        Tablero[i_simetrica][j] = new Alfil(i_simetrica, j, B);
+                        Tablero[i_simetrica - 1][j] = new Alfil(i_simetrica - 1, j, B);
+                    }
+                }
+                if (i == 1)
+                {
+                    if (j == 3)
+                    {
+                        Tablero[i][j] = new Torre(i, j, W);
+                        Tablero[i_simetrica][j] = new Torre(i_simetrica, j, B);
+                        Tablero[i][j_simetrica] = new Torre(i, j_simetrica, W);
+                        Tablero[i_simetrica][j_simetrica] = new Torre(i_simetrica, j_simetrica, B);
+                    }
+                    if (j == 4)
+                    {
+                        Tablero[i][j] = new Caballo(i, j, W);
+                        Tablero[i_simetrica][j] = new Caballo(i_simetrica, j, B);
+                        Tablero[i][j_simetrica] = new Caballo(i, j_simetrica, W);
+                        Tablero[i_simetrica][j_simetrica] = new Caballo(i_simetrica, j_simetrica, B);
+                    }
+                }
+                if (i == 2)
+                {
+                    Tablero[i][j] = new Peon(i, j, B);
+                    Tablero[FILA - 1 - i][j] = new Peon(FILA - 1 - i, j, W);
+                }
+
+            }
+        }
+    }
+}
+*/
+
+

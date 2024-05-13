@@ -3,12 +3,6 @@
 #include "GLTablero.h"
 #include "LogicaAjedrez.h"
 
-//////////solo estoy comprobando si dibuja el sprite peon
-#include "peon.h"
-Peon pW(3, 4, Jugador::W);
-Peon pB(8, 6, Jugador::B);
-
-
 //NO HACE FALTA LLAMARLAS EXPLICITAMENTE
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
@@ -19,6 +13,8 @@ void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecl
 
 
 GLTablero scene; //chess
+
+
 
 /*
 
@@ -70,9 +66,6 @@ void OnDraw(void)
 		5.0, 5.0, 0.0,      // hacia que punto mira  (0,0,0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)  
 
-
-	pW.dibuja();
-	pB.dibuja();
 	scene.dibuja();
 
 	//no borrar esta linea ni poner nada despues
