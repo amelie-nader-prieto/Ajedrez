@@ -95,9 +95,14 @@ inline bool omitir_posicion(const Vector2D& _posicion) {
 // FUNCIONES QUE REVISAN EL TABLERO
 // Revisan los datos públicos de la clase Tablero
 // hay que pasarles el objeto Tablero junto con los demás parámetros
+/* Para saber si hay una pieza de tu color en una casilla determinada */
 bool hay_pieza_tuya(Vector2D _posicion, Jugador _jugador, Tablero tab);
+/* Para saber si hay una pieza del color opuesto en una casilla determinada */
 bool hay_pieza_rival(Vector2D _posicion, Jugador _jugador, Tablero tab);
-
+/* Para saber si se cumplen las condiciones para que un peón (pasado como argumento) haga una captura tradicional
+* Podrá hacer una captura tradicional si hay una pieza rival en la fila siguiente en diagonal
+*/
+bool condiciones_captura_peon(Pieza _peon, Tablero tab);
 
 // FUNCIONES DE MOVIMIENTO
 /*

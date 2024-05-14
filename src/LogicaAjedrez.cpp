@@ -12,6 +12,32 @@ bool hay_pieza_rival(Vector2D _posicion, Jugador _jugador, Tablero tab) {
     else if (tab.tablero[_posicion.x][_posicion.y]->GetJugador() != _jugador)return true;
     else return false;
 }
+bool condiciones_captura_peon(Pieza _peon, Tablero tab) {
+    vector<Dir_t>direcciones_diagonal{}; // direcciones en las que el peón puede capturar. se inicializa según el color
+    Vector2D posicion_siguiente;
+
+    switch (_peon.GetJugador()) {
+    case B:
+        direcciones_diagonal.push_back(Dir_t::UPLEFT);
+        direcciones_diagonal.push_back(Dir_t::UPRIGHT);
+        break;
+    case W:
+        direcciones_diagonal.push_back(Dir_t::DOWNLEFT);
+        direcciones_diagonal.push_back(Dir_t::RIGHTDOWN);
+        break;
+    default:break;
+    }
+
+    // Determina si el peón puede capturar
+    for (const auto& p : direcciones_diagonal) {
+        siguienteCasilla(p, _peon.GetPosicion(), posicion_siguiente);
+        if (omitir_posicion(posicion_siguiente))continue;
+        if(hay_pieza_rival(posicion_siguiente,_peon.GetJugador(),tab)) return true;
+    }
+
+    return false;
+
+}
 
 // FUNCIONES DE MOVIMIENTO
 void siguienteCasilla(Dir_t dir, Vector2D ini, Vector2D& fin) {
