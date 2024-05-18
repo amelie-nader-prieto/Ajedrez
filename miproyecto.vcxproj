@@ -21,8 +21,8 @@
   <ItemGroup>
     <ClCompile Include="src\alfil.cpp" />
     <ClCompile Include="src\caballo.cpp" />
-    <ClCompile Include="src\Casilla.cpp" />
     <ClCompile Include="src\dama.cpp" />
+    <ClCompile Include="src\GLTablero.cpp" />
     <ClCompile Include="src\LogicaAjedrez.cpp" />
     <ClCompile Include="src\No_pieza.cpp" />
     <ClCompile Include="src\Pang.cpp" />
@@ -38,6 +38,7 @@
     <ClInclude Include="src\caballo.h" />
     <ClInclude Include="src\Casilla.h" />
     <ClInclude Include="src\dama.h" />
+    <ClInclude Include="src\GLTablero.h" />
     <ClInclude Include="src\LogicaAjedrez.h" />
     <ClInclude Include="src\No_pieza.h" />
     <ClInclude Include="src\peon.h" />

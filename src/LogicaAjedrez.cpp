@@ -1,4 +1,4 @@
-#include "LogicaAjedrez.h"
+ #include "LogicaAjedrez.h"
 
 
 // FUNCIONES QUE REVISAN EL TABLERO

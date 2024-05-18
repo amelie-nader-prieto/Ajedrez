@@ -1,6 +1,10 @@
 #pragma once
 #include "Tipos_piezas.h"
 #include "vector2D.h"
+#include "ETSIDI.h"
+#include "freeglut.h"
+
+using ETSIDI::SpriteSequence; //facilita el uso de texturas, fuentes y sonidos 
 
 class Pieza
 {

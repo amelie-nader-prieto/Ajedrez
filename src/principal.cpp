@@ -1,12 +1,38 @@
 #include "freeglut.h"
 #include "ETSIDI.h"
+#include "GLTablero.h"
 
-#include "LogicaAjedrez.h"
+//#include "LogicaAjedrez.h" //¿NECESARIO?
+
+//////////solo estoy comprobando si dibuja el sprite peon
+#include "peon.h"
+#include "torre.h"
+#include "alfil.h"
+#include "rey.h"
+#include "dama.h"
+#include "caballo.h"
+Peon pW(3, 4, Jugador::W);
+Alfil aW(3, 5, Jugador::W);
+Torre tW(3, 6, Jugador::W);
+Dama dW(4, 8, Jugador::W);
+Caballo cW(4, 9, Jugador::W);
+Rey rW(4, 10, Jugador::W);
+
+Peon pB(8, 6, Jugador::B);
+Alfil aB(9, 5, Jugador::B);
+Torre tB(9, 6, Jugador::B);
+Dama dB(9, 8, Jugador::B);
+Caballo cB(9, 9, Jugador::B);
+Rey rB(9, 10, Jugador::B);
+
 
 //NO HACE FALTA LLAMARLAS EXPLICITAMENTE
-void OnDraw(void); //esta funcion sera llamada para dibujar
-void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
-void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
+//void OnDraw(void); //esta funcion sera llamada para dibujar
+//void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
+//void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
+
+
+GLTablero scene; //chess global
 
 /*
 int main(int argc,char* argv[])
@@ -43,35 +69,37 @@ int main(int argc,char* argv[])
 void OnDraw(void)
 {
 	//Borrado de la pantalla	
-   	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//Para definir el punto de vista
-	glMatrixMode(GL_MODELVIEW);	
+	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	
+
 	//funciones de dibujo
 
-	gluLookAt(0, 7.5, 20,  // posicion del ojo
-		0.0, 7.5, 0.0,      // hacia que punto mira  (0,0,0) 
+	gluLookAt(5, 5, 17,  // posicion del ojo
+		5.0, 5.0, 0.0,      // hacia que punto mira  (0,0,0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)  
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/fondo.png").id);
-	glDisable(GL_LIGHTING);
 
-	glBegin(GL_POLYGON);
-	glColor3f(1, 1, 1);
-	glTexCoord2d(0, 1); glVertex2f(-10, 0);
-	glTexCoord2d(1, 1); glVertex2f(10, 0);
-	glTexCoord2d(1, 0); glVertex2f(10, 15);
-	glTexCoord2d(0, 0); glVertex2f(-10, 15);
-	glEnd();
 
-	glEnable(GL_LIGHTING);
-	glDisable(GL_TEXTURE_2D);
+	pW.dibuja();
+	pB.dibuja();
+	//aW.dibuja();
+	//aB.dibuja();
+	//tB.dibuja();
+	//tW.dibuja();
+	//cB.dibuja();
+	//cW.dibuja();
+	//rB.dibuja();
+	//rW.dibuja();
+	//dW.dibuja();
+	//dB.dibuja();
+	scene.dibuja();
 
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
 }
+
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
 	//poner aqui el código de teclado
@@ -88,4 +116,28 @@ void OnTimer(int value)
 	//no borrar estas lineas
 	glutTimerFunc(25,OnTimer,0);
 	glutPostRedisplay();
+}
+
+
+void OnMouseClick(int b, int state, int x, int y) {
+	//////////////
+//captures clicks with mouse with or without special keys (CTRL or SHIFT)
+//gives control to board scene
+	bool down = (state == GLUT_DOWN);
+	int button;
+	if (b == GLUT_LEFT_BUTTON) {
+		button = MOUSE_LEFT_BUTTON;
+	}
+	if (b == GLUT_RIGHT_BUTTON) {
+		button = MOUSE_RIGHT_BUTTON;
+		std::cout << "MOUSE_RIGHT_BUTTON" << std::endl;
+	}
+	int specialKey = glutGetModifiers();
+	bool ctrlKey = (specialKey & GLUT_ACTIVE_CTRL) ? true : false;
+	bool sKey = specialKey & GLUT_ACTIVE_SHIFT;
+
+
+	scene.MouseButton(x, y, b, down, sKey, ctrlKey);
+	glutPostRedisplay();
+
 }

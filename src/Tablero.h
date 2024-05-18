@@ -35,5 +35,6 @@ public:
 	void mover_pieza(Vector2D p_ini, Vector2D p_fin);
 	void activar_captura(Vector2D _posicion);
 
+
 };
 
