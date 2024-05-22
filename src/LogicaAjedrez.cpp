@@ -115,7 +115,7 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab) {
     * y salirse del bucle (se pasa a evaluar la direcci�n siguiente)
     */
     bool fin_del_camino = false;
- 
+    
     switch (_p.GetTipo()) {
     case no_hay:break;
     case A: // Alfil
@@ -267,13 +267,17 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab) {
         // CAPTURA
         // (comprobar si hay condiciones de captura)
         // . . .
+        if (condiciones_captura_peon(_p, tab)) {
+
+        }
 
         // CAPTURA AL PASO
         // (comprobar si hay condiciones de captura al paso)
         // . . .
+        
 
-        // PROMOCI�N
-        // (si hay condiciones de promoci�n, es que no se puede mover)
+        // PROMOCIÓN
+        // (si hay condiciones de promoción, es que no se puede mover)
         // . . .
 
         break;
@@ -341,7 +345,7 @@ void dibujar(Tablero tab) {
         cout << ' ' << FILA - i << '\n';
     }
     cout << " a  b  c  d  e  f  g  h  i  j  k" << '\n';
-
+    cout << '\n';
 }
 
 void liberar_memoria(Tablero tab) {

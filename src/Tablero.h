@@ -34,6 +34,15 @@ public:
 
 	void mover_pieza(Vector2D p_ini, Vector2D p_fin);
 	void activar_captura(Vector2D _posicion);
+	void borrar_pieza_capturada(Jugador _jugador);
+
+	// Funciones de prueba
+	/* Estas funciones las uso para hacer pruebas.
+	* NO SE USAN durante la partida
+	*/
+	/* Vacía el tablero y borra las piezas */
+	void vaciar();
+	/* Para crear una pieza cualquiera en una casilla cualquiera */
+	void crear_pieza(Tipo _tipo, Jugador _jugador, Vector2D _posicion);
 
 };
-

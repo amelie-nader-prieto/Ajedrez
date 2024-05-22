@@ -24,6 +24,7 @@ public:
 	inline Tipo GetTipo()const { return tipo; }
 	inline Jugador GetJugador()const { return jugador; }
 	inline Vector2D GetPosicion()const { return posicion; }
+	inline bool GetCapturada()const { return capturada; }
 	/*
 	* Consulta si la pieza se ha movido o todavía no
 	* true si ya se ha movido, false si todavía no
