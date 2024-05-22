@@ -33,6 +33,7 @@ public:
 	Tablero();
 
 	void mover_pieza(Vector2D p_ini, Vector2D p_fin);
+	void mover_pieza(Pieza _p, Vector2D p_fin);
 	void activar_captura(Vector2D _posicion);
 	void borrar_pieza_capturada(Jugador _jugador);
 

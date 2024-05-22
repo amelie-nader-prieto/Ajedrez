@@ -72,7 +72,7 @@ Tablero::Tablero() {
 
 void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
 
-	tablero[p_fin.x][p_fin.y] = tablero[p_ini.x][p_ini.y];
+	tablero[p_fin.x][p_fin.y] = tablero[p_ini.x][p_ini.y]; // la posición final apuntará a lo que apuntaba la posición inicial
 	tablero[p_ini.x][p_ini.y] = &ninguna; // la posición inicial se queda vacía
 
 	// busca la pieza que ha movido para actualizar sus coordenadas
@@ -85,6 +85,30 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
 
 	case W:
 		for (auto&p : piezas_bla) {
+			if (p.GetPosicion() == p_ini)p.actualizar_coordenadas(p_fin);
+		}
+		break;
+
+	default:break;
+	}
+
+}
+void Tablero::mover_pieza(Pieza _p, Vector2D p_fin) {
+
+	auto p_ini = _p.GetPosicion();
+	tablero[p_fin.x][p_fin.y] = tablero[p_ini.x][p_ini.y]; // la posición final apuntará a lo que apuntaba la posición inicial
+	tablero[p_ini.x][p_ini.y] = &ninguna; // la posición inicial se queda vacía
+
+	// busca la pieza que ha movido para actualizar sus coordenadas
+	switch (tablero[p_fin.x][p_fin.y]->GetJugador()) {
+	case B:
+		for (auto& p : piezas_neg) {
+			if (p.GetPosicion() == p_ini)p.actualizar_coordenadas(p_fin);
+		}
+		break;
+
+	case W:
+		for (auto& p : piezas_bla) {
 			if (p.GetPosicion() == p_ini)p.actualizar_coordenadas(p_fin);
 		}
 		break;

@@ -106,13 +106,13 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab) {
 
     /* 
     Fin del camino
-    * Si este par�metro es true, se deja de evaluar una direcci�n
+    * Si este parámetro es true, se deja de evaluar una dirección
     * Se ha llegado al fin del camino cuando (alguna de las siguientes):
-    * - Hay pieza tuya en la casilla siguiente
-    * - La posici�n siguiente se sale del tablero
-    * - Hay una pieza rival en la casilla ACTUAL
-    * En caso de que se haya llegado al fin del camino, lo que se hace es NO A�ADIR LA POSICI�N SIGUIENTE
-    * y salirse del bucle (se pasa a evaluar la direcci�n siguiente)
+    * - Hay pieza tuya en la casilla siguiente (la descartará)
+    * - La posición siguiente se sale del tablero (la descartará)
+    * - Hay una pieza rival en la casilla ACTUAL (la guardará y no revisará la siguiente)
+    * En caso de que se haya llegado al fin del camino, lo que se hace es NO AÑADIR LA POSICIÓN SIGUIENTE
+    * y salirse del bucle (se pasaría a evaluar la DIRECCIÓN siguiente)
     */
     bool fin_del_camino = false;
     
@@ -124,24 +124,26 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab) {
         // Itera sobre las direcciones
         for (const auto& p : direcciones) {
 
-            // Itera sobre la MISMA direcci�n
+            // Itera sobre la MISMA dirección
             do {
-                // inicializa la posici�n siguiente
+                // inicializa la posición siguiente
                 siguienteCasilla(p, posicion_buffer, posicion_siguiente);
 
+                // si la posición siguiente es fin del camino, no la añadirá
                 fin_del_camino = (
                     omitir_posicion(posicion_siguiente) ||
                     hay_pieza_tuya(posicion_siguiente, _p.GetJugador(), tab) ||
                     hay_pieza_rival(posicion_buffer, _p.GetJugador(), tab)
                     ) ? true : false;
-
+                // si no es fin del camino, la añadirá
                 if (!fin_del_camino) posibles_movimientos.push_back(posicion_siguiente);
 
-                // antes de pasar a la direcci�n siguiente, actualiza las coordenadas para seguir iterando
+                // antes de pasar a la dirección siguiente, actualiza las coordenadas para seguir iterando
                 posicion_buffer = posicion_siguiente;
 
-            } while (!fin_del_camino);
-        }
+            } while (!fin_del_camino); // fin del bucle sobre la dirección
+            posicion_buffer = posicion_actual;
+        } // fin del bucle sobre todas las direcciones
         break;
     case T: // TORRE
         // la torre se mueve por las filas y columnas
@@ -288,6 +290,206 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab) {
     return posibles_movimientos;
 
 }
+vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
+    vector<Vector2D>posibles_movimientos{}; // aquí almacenará los posibles movimientos
+    vector<Dir_t>direcciones{}; // se inicializa según el tipo de pieza (excepto caballo)
+    vector<Vector2D>direcciones_caballo{
+        Vector2D(-2,-1),Vector2D(-2,1),Vector2D(2,-1),Vector2D(2,1),
+        Vector2D(-1,-2),Vector2D(-1,2),Vector2D(1,-2),Vector2D(1,2)
+    }; // direcciones del caballo
+
+    auto posicion_actual = casilla; // posición de la pieza - este dato no se modifica
+    auto posicion_buffer = posicion_actual; // crea una copia de la posición actual para iterar sobre ella
+    Vector2D posicion_siguiente; // posición siguiente
+
+    /*
+    * Fin del camino
+    * * Si este parámetro es true, se deja de evaluar una dirección
+    * Se ha llegado al fin del camino cuando (alguna de las siguientes):
+    * - Hay pieza tuya en la casilla siguiente
+    * - La posición siguiente se sale del tablero
+    * - Hay una pieza rival en la casilla ACTUAL
+    * En caso de que se haya llegado al fin del camino, lo que se hace es NO AÑADIR LA POSICIÓN SIGUIENTE
+    * y salirse del bucle (se pasa a evaluar la dirección siguiente)
+    */
+    bool fin_del_camino = false;
+
+    auto tipo_pieza = tab.tablero[casilla.x][casilla.y]->GetTipo();
+    auto jugador = tab.tablero[casilla.x][casilla.y]->GetJugador();
+
+    switch (tipo_pieza) {
+    case no_hay:break;
+    case A:// Alfil
+        // el alfil se mueve por las diagonales
+        direcciones = { Dir_t::UPLEFT,Dir_t::UPRIGHT,Dir_t::DOWNLEFT,Dir_t::RIGHTDOWN };
+        // Itera sobre las direcciones
+        for (const auto& p : direcciones) {
+            // Itera sobre la MISMA dirección
+             do{
+                // inicializa la posición siguiente en esa dirección
+                siguienteCasilla(p, posicion_buffer, posicion_siguiente);
+                // Evalúa si dicha posición es fin del camino
+                fin_del_camino = (
+                    omitir_posicion(posicion_siguiente) ||
+                    hay_pieza_tuya(posicion_siguiente, jugador, tab) ||
+                    hay_pieza_rival(posicion_buffer, jugador, tab)
+                    ) ? true : false;
+                if (!fin_del_camino) posibles_movimientos.push_back(posicion_siguiente);
+
+                posicion_buffer = posicion_siguiente;
+
+             } while (!fin_del_camino); // fin del bucle sobre la misma dirección
+             posicion_buffer = posicion_actual;
+        } // fin del bucle que itera sobre todas las direcciones
+        break;
+
+    case T: // Torre
+        // la torre se mueve por las filas y columnas
+        direcciones = { Dir_t::UP,Dir_t::DOWN,Dir_t::RIGHT,Dir_t::LEFT };
+        // Itera sobre las direcciones
+        for (const auto& p : direcciones) {
+            // Itera sobre la MISMA dirección
+            do {
+                // Inicializa la posición siguiente
+                siguienteCasilla(p, posicion_buffer, posicion_siguiente);
+                // Evalúa si dicha posición es fin del camino
+                fin_del_camino = (
+                    omitir_posicion(posicion_siguiente) ||
+                    hay_pieza_tuya(posicion_siguiente, jugador, tab) ||
+                    hay_pieza_rival(posicion_buffer, jugador, tab)
+                    ) ? true : false;
+
+                if (!fin_del_camino)posibles_movimientos.push_back(posicion_siguiente);
+                posicion_buffer = posicion_siguiente;
+            } while (!fin_del_camino); // fin del bucle sobre la misma dirección
+            posicion_buffer = posicion_actual;
+        } // fin del bucle sobre todas las direcciones
+        break;
+
+    case D: // Dama
+        // La dama se mueve en todas las direcciones
+        direcciones = { Dir_t::UP,Dir_t::DOWN,Dir_t::RIGHT,Dir_t::LEFT,
+            Dir_t::UPLEFT,Dir_t::UPRIGHT,Dir_t::DOWNLEFT,Dir_t::RIGHTDOWN };
+        // Itera sobre las direcciones
+        for (const auto& p : direcciones) {
+            // Itera sobre la MISMA dirección
+            do {
+                // Inicializa la posición siguiente
+                siguienteCasilla(p, posicion_buffer, posicion_siguiente);
+                // Evalúa si dicha posición es fin del camino
+                fin_del_camino = (
+                    omitir_posicion(posicion_siguiente) ||
+                    hay_pieza_tuya(posicion_siguiente, jugador, tab) ||
+                    hay_pieza_rival(posicion_buffer, jugador, tab)
+                    ) ? true : false;
+
+                if (!fin_del_camino)posibles_movimientos.push_back(posicion_siguiente);
+                posicion_buffer = posicion_siguiente;
+            } while (!fin_del_camino); // fin del bucle sobre la misma dirección
+            posicion_buffer = posicion_actual;
+        } // fin del bucle sobre las direcciones
+        break;
+
+    case R: // Rey
+        // El rey se mueve en todas direcciones, pero sólo avanza una casilla
+        // (no hace falta iterar sobre la misma dirección)
+        direcciones = { Dir_t::UP,Dir_t::DOWN,Dir_t::RIGHT,Dir_t::LEFT,
+            Dir_t::UPLEFT,Dir_t::UPRIGHT,Dir_t::DOWNLEFT,Dir_t::RIGHTDOWN };
+        // Itera sobre las direcciones
+        for (const auto& p : direcciones) {
+            // Inicializa la posición siguiente 
+            siguienteCasilla(p, posicion_buffer, posicion_siguiente);
+            // Si es final del camino, la descarta
+            if (omitir_posicion(posicion_siguiente) ||
+                hay_pieza_tuya(posicion_siguiente, jugador, tab))
+                continue;
+
+            posibles_movimientos.push_back(posicion_siguiente);
+        }
+        break;
+
+    case C: // Caballo
+        // El caballo sigue sus propias reglas
+
+        // Itera sobre SUS direcciones
+        for (const auto& p : direcciones_caballo) {
+            posicion_siguiente = posicion_buffer + p;
+            
+            if (omitir_posicion(posicion_siguiente) ||
+                hay_pieza_tuya(posicion_siguiente, jugador, tab))
+                continue;
+
+            posibles_movimientos.push_back(posicion_siguiente);
+        }
+        break;
+
+    case P: // Peón
+        // El peón sigue sus propias reglas y encima son rarísimas
+        /* AVANCE: El peón avanza una fila (o dos, si es su primer movimiento)
+        * CAPTURA: Si hay una pieza del color opuesto en la fila siguiente y columna adyacente, puede capturarla (se moverá a la casilla en la que estaba esa pieza)
+        * CAPTURA AL PASO: Si hay un peón del color opuesto:
+        * - En su misma fila
+        * - En una columna adyacente
+        * - Que ha avanzado dos filas en el turno anterior
+        * Puede capturarlo (se moverá a la casilla en la que estaría ese peón si sólo hubiese avanzado una fila)
+        * PROMOCIÓN: Si está en una posición en la que no puede avanzar más, debe promocionar
+        * (esta función no gestiona la promoción del peón)
+        */
+
+        // AVANCE
+        switch (jugador) {
+        case B: //negro
+            direcciones.push_back(Dir_t::UP);
+            break;
+        case W: // blanco
+            direcciones.push_back(Dir_t::DOWN);
+            break;
+        default:break;
+        }
+        siguienteCasilla(direcciones[0], posicion_buffer, posicion_siguiente);
+        // si la posición siguiente es válida, la añade
+        if (!(
+            omitir_posicion(posicion_siguiente) ||
+            hay_pieza_tuya(posicion_siguiente, jugador, tab)
+            ))posibles_movimientos.push_back(posicion_siguiente);
+
+        // si es su primer movimiento, el peón puede avanzar dos filas
+        // sabemos que aún no ha movido porque está en su fila de origen
+        if (
+            (posicion_actual.x == 2 && jugador == B) ||
+            (posicion_actual.y == 7 && jugador == W)
+            ) {
+            posicion_buffer = posicion_siguiente;
+            siguienteCasilla(direcciones[0], posicion_buffer, posicion_siguiente);
+
+            if (!(
+                omitir_posicion(posicion_siguiente) ||
+                hay_pieza_tuya(posicion_siguiente, jugador, tab)
+                ))posibles_movimientos.push_back(posicion_siguiente);
+
+        }
+
+        // CAPTURA
+        // comprobar si hay condiciones de captura
+        // . . .
+
+        // CAPTURA AL PASO
+        // (comprobar si hay condiciones de captura al paso)
+        // . . .
+
+
+        // PROMOCIÓN
+        // (si hay condiciones de promoción, es que no se puede mover más)
+        // . . .
+
+        break;
+
+    default:break;
+    }
+
+    return posibles_movimientos;
+
+}
 
 // INICIALIZAR PIEZAS
 
@@ -331,21 +533,6 @@ static void iniciar(Tipo tipo, Vector2D posicion, Jugador j,Tablero tab)
 
 
 
-}
-
-// FUNCIONES DE DIBUJO DEL TABLERO
-void dibujar(Tablero tab) {
-    for (int i = 0; i < FILA; i++) {
-        for (int j = 0; j < COLUMNA; j++) {
-            if (tab.tablero[i][j])
-                cout << "[" << tab.tablero[i][j]->GetTipo() << "]";
-            else // si es null es porque no se usa
-                cout << "   ";
-        }
-        cout << ' ' << FILA - i << '\n';
-    }
-    cout << " a  b  c  d  e  f  g  h  i  j  k" << '\n';
-    cout << '\n';
 }
 
 void liberar_memoria(Tablero tab) {

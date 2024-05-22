@@ -129,19 +129,18 @@ void siguienteCasilla(Dir_t dir, Vector2D ini, Vector2D& fin);
 * dónde están todas las demás
 */
 vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab);
-
+/*
+* Te da todas las posiciones a las que podría moverse una pieza
+* A partir de su posición y del tablero
+* Usad esta si podéis. A mí al menos me ha dado menos problemas
+*/
+vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab);
 
 // INICIALIZAR PIEZAS
 /*
 * Esta función hace que cuando se quiera iniciar una pieza se manda el tipo y dirección
 */
 static void iniciar(Tipo tipo, Vector2D posicion, Jugador j,Tablero tab);
-
-// FUNCIONES DE DIBUJO DEL TABLERO (lo dibujan en la consola)
-/*
-* Dibuja el tablero en la consola, con todas las piezas
-*/
-void dibujar(Tablero tab);
 
 // Liberar la memoria al final del programa
 void liberar_memoria(Tablero tab);
