@@ -5,7 +5,8 @@
 
 using std::cout;
 
-// operador para imprimir los tipos de piezas
+// OPERADORES
+/* Imprime el tipo de pieza */
 inline std::ostream& operator<<(std::ostream& co, const Tipo& t) {
 
     switch (t) {
@@ -22,7 +23,7 @@ inline std::ostream& operator<<(std::ostream& co, const Tipo& t) {
     return co;
 
 }
-// operador para imprimir el color de la pieza
+/* Imprime el color de la pieza */
 inline std::ostream& operator<<(std::ostream& co, const Jugador& _jugador) {
 
     switch (_jugador) {
@@ -34,7 +35,7 @@ inline std::ostream& operator<<(std::ostream& co, const Jugador& _jugador) {
     return co;
 
 }
-// operador para imprimir las coordenadas con número y letra
+/* Imprime las coordenadas con número y letra */
 inline std::ostream& operator<<(std::ostream& co, const Vector2D& _casilla) {
 
     vector<char>letras_columnas = { 'a','b','c','d','e','f','g','h','i','j','k' };
@@ -45,6 +46,7 @@ inline std::ostream& operator<<(std::ostream& co, const Vector2D& _casilla) {
 
 }
 // operador para imprimir toda la info de la pieza
+// Imprime tipo, color y casilla en la que está
 // (lo uso para comprobar que se han creado bien)
 inline std::ostream& operator<<(std::ostream& co, Pieza& _pieza) {
     if (_pieza.GetTipo() == no_hay) return co;
@@ -93,8 +95,8 @@ inline bool omitir_posicion(const Vector2D& _posicion) {
 
 
 // FUNCIONES QUE REVISAN EL TABLERO
-// Revisan los datos públicos de la clase Tablero
-// hay que pasarles el objeto Tablero junto con los demás parámetros
+/* Revisan los datos públicos de la clase Tablero
+// hay que pasarles el objeto Tablero junto con los demás parámetros */
 /* Para saber si hay una pieza de tu color en una casilla determinada */
 bool hay_pieza_tuya(Vector2D _posicion, Jugador _jugador, Tablero tab);
 /* Para saber si hay una pieza del color opuesto en una casilla determinada */
@@ -103,6 +105,17 @@ bool hay_pieza_rival(Vector2D _posicion, Jugador _jugador, Tablero tab);
 * Podrá hacer una captura tradicional si hay una pieza rival en la fila siguiente en diagonal
 */
 bool condiciones_captura_peon(Pieza _peon, Tablero tab);
+/*
+* Para saber si se cumplen las condiciones para una captura al paso
+* Si el peón de un jugador avanza dos filas, en el turno siguiente se llamará a
+esta función para evaluar la posibilidad del jugador opuesto de capturar dicho peón.
+* ARGUMENTOS:
+* Tablero
+* Posición del peón que acaba de avanzar dos filas (si es true, dicho peón podrá ser capturado en ese turno)
+* posicion_posible_capturador: si la función es true, se inicializará con la posición del peón qe podrá captuar en ese turno
+* Es un vector en caso de que por un casual haya varios posibles capturadores
+*/
+bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vector<Vector2D>posicion_posible_capturador);
 
 // FUNCIONES DE MOVIMIENTO
 /*
@@ -119,7 +132,9 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab);
 
 
 // INICIALIZAR PIEZAS
-// Esta función hace que cuando se quiera iniciar una pieza se manda el tipo y dirección 
+/*
+* Esta función hace que cuando se quiera iniciar una pieza se manda el tipo y dirección
+*/
 static void iniciar(Tipo tipo, Vector2D posicion, Jugador j,Tablero tab);
 
 // FUNCIONES DE DIBUJO DEL TABLERO (lo dibujan en la consola)

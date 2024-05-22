@@ -25,7 +25,7 @@ class Tablero
 
 public:
 	Pieza* tablero[FILA][COLUMNA] = { nullptr }; /* Esto es como la interfaz.
-	Tanto las funciones l�gicas como las de dibujo acceder�n S�LO a este dato.
+	Tanto las funciones lógicas como las de dibujo accederán SÓLO a este dato.
 	Con lo que hay en este dato basta para gestionar todo
 	*/
 
