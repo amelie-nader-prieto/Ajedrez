@@ -490,6 +490,11 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
     return posibles_movimientos;
 
 }
+void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab) {
+    auto jugador = tab[p_ini]->GetJugador();
+    if (hay_pieza_rival(p_fin, jugador, tab)) tab.activar_captura(p_fin); // sólo activa la captura si hay pieza rival en el destino
+    tab.mover_pieza(p_ini, p_fin);
+}
 
 // INICIALIZAR PIEZAS
 

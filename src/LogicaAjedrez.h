@@ -47,10 +47,10 @@ inline std::ostream& operator<<(std::ostream& co, const Vector2D& _casilla) {
 }
 // operador para imprimir toda la info de la pieza
 // Imprime tipo, color y casilla en la que está
-// (lo uso para comprobar que se han creado bien)
 inline std::ostream& operator<<(std::ostream& co, Pieza& _pieza) {
     if (_pieza.GetTipo() == no_hay) return co;
     co << (_pieza.GetTipo()) << (_pieza.GetJugador()) << " en " << (_pieza.GetPosicion());
+    if (_pieza.GetCapturada()) co << " (capturada)";
     return co;
 }
 
@@ -135,6 +135,10 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab);
 * Usad esta si podéis. A mí al menos me ha dado menos problemas
 */
 vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab);
+/* Para mover una pieza
+* Incluye la lógica de la captura (tienen que coincidir dos piezas opuestas en la posición de destino)
+*/
+void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab);
 
 // INICIALIZAR PIEZAS
 /*

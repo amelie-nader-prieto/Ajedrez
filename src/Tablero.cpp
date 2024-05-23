@@ -70,7 +70,15 @@ Tablero::Tablero() {
 
 }
 
+/* La función de mover pieza está sobrecargada porque:
+* Puedes pasarle la pieza; si es externa, se volverá parte del tablero
+* Puedes pasarle la ubicación, ya que el tablero sabe qué pieza hay ahí
+*/
 void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
+	// se asegura de que no intentes mover una pieza que no existe
+	if (
+		(!tablero[p_ini.x][p_ini.y]) || (tablero[p_ini.x][p_ini.y]->GetTipo() == no_hay)
+		)return void{};
 
 	tablero[p_fin.x][p_fin.y] = tablero[p_ini.x][p_ini.y]; // la posición final apuntará a lo que apuntaba la posición inicial
 	tablero[p_ini.x][p_ini.y] = &ninguna; // la posición inicial se queda vacía
@@ -93,7 +101,7 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
 	}
 
 }
-void Tablero::mover_pieza(Pieza _p, Vector2D p_fin) {
+void Tablero::mover_pieza(Pieza&_p, Vector2D p_fin) {
 
 	auto p_ini = _p.GetPosicion();
 	tablero[p_fin.x][p_fin.y] = tablero[p_ini.x][p_ini.y]; // la posición final apuntará a lo que apuntaba la posición inicial
@@ -117,9 +125,14 @@ void Tablero::mover_pieza(Pieza _p, Vector2D p_fin) {
 	}
 
 }
-void Tablero::activar_captura(Vector2D _posicion) {
-	tablero[_posicion.x][_posicion.y]->set_captura();
-	tablero[_posicion.x][_posicion.y] = &ninguna;
+// activa el evento captura en una posición determinada
+void Tablero::activar_captura(Vector2D _posicion) { 
+	auto jugador = tablero[_posicion.x][_posicion.y]->GetJugador();
+
+	tablero[_posicion.x][_posicion.y]->set_captura(); // la pieza que estaba primero en esa posición será capturada
+	tablero[_posicion.x][_posicion.y] = &ninguna; // cuando la pieza es capturada, ningún puntero volverá a apuntar a ella
+
+	borrar_pieza_capturada(jugador); // lo siguiente es borrar la pieza capturada
 }
 void Tablero::borrar_pieza_capturada(Jugador _jugador) {
 	int num_capturadas=0, nuevo_num_piezas;
@@ -137,14 +150,13 @@ void Tablero::borrar_pieza_capturada(Jugador _jugador) {
 		piezas_bla.clear(); // borramos el vector de piezas
 
 		// volvemos a llenar el vector, sólo con las que no están capturadas
-		for (const auto& p : piezas_copia) {
+		for (auto p : piezas_copia) {
 			if (!p.GetCapturada()) {
 				piezas_bla.push_back(p);
 			}
 		}
 		// nos cargamos los puestos libres que quedan al final
 		while (piezas_bla.size() > nuevo_num_piezas) piezas_bla.pop_back();
-		
 		break;
 
 	case B:
@@ -153,14 +165,13 @@ void Tablero::borrar_pieza_capturada(Jugador _jugador) {
 		piezas_neg.clear();
 		
 		// volvemos a llenar el vector, sólo con las que no están capturadas
-		for (const auto& p : piezas_copia) {
+		for (auto p : piezas_copia) {
 			if (!p.GetCapturada()) {
 				piezas_bla.push_back(p);
 			}
 		}
 		// nos cargamos los puestos libres que quedan al final
 		while (piezas_neg.size() > nuevo_num_piezas) piezas_neg.pop_back();
-
 		break;
 
 	default:break;

@@ -5,16 +5,27 @@
 void dibujar(Tablero tab);
 
 // Te da una lista de todas las piezas que hay en el tablero
+// consulta la interfaz PÚBLICA del tablero
 void lista_piezas(Tablero tab);
-// Te da una lista de los sitios a los que se puede mover una pieza
+// Te da una lista de los sitios a los que se puede mover una pieza (la inicializa y te la da)
 void lista_posibles_movimientos(Pieza p,Tablero tab,vector<Vector2D>& lista);
 // Dibuja el tablero y da una lista de las piezas que hay
 void imprime_info_tablero(Tablero tab);
-// Representa las posiciones a las que se puede mover una pieza
+// Dibuja el tablero y da una lista de las piezas que hay
+// te da la lista accediendo a lo público y luego a lo privado
+// la uso para ver si los datos se actualizan bien
+void imprime_info_tablero_completa(Tablero tab);
+// Representa sobre el tablero las posiciones a las que se puede mover
+// [.] si se puede mover
+// [x] si puede capturar
 void imprime_movimientos_pieza(Pieza p, Tablero tab, vector<Vector2D>& lista);
+
+// imprime las piezas (hace una copia de los datos PRIVADOS del tablero)
+void lista_piezas_privada(Tablero tab);
+
 // Bucle para mover una pieza a una casilla que elijas
 // Uso esta función para comprobar si se mueven bien
-void probar_movimientos_pieza(Pieza& p, Tablero &tab);
+void probar_movimientos_pieza(Pieza& p, Tablero& tab);
 
 int main(){
 	// Creamos y configuramos tableros de prueba
@@ -22,10 +33,25 @@ int main(){
 	tab2.vaciar();
 	tab2.crear_pieza(D, B, { 5,5 });
 	
-	auto &mi_pieza = *(tab2.tablero[5][5]);
+	//auto &mi_pieza = *(tab2.tablero[5][5]);
 	
 	// Bucle para mover la pieza varias veces
-	probar_movimientos_pieza(mi_pieza, tab2);
+	//probar_movimientos_pieza(mi_pieza, tab2);
+	
+	Tablero tab3;
+	tab3.vaciar();
+	tab3.crear_pieza(D, B, { 5,5 }); auto& mi_Dn = /**(tab3.tablero[5][5]);*/ *(tab3[{5, 5}]);
+	tab3.crear_pieza(T, W, { 2,5 }); auto& mi_Tb = /**(tab3.tablero[2][5]);*/ *(tab3[{2, 5}]);
+
+	// uso las dos para ver si dan la misma información
+	imprime_info_tablero_completa(tab3);
+
+	vector<Vector2D>movs{};
+
+	//probar_movimientos_pieza(mi_Dn, tab3);
+	probar_movimientos_pieza(mi_Tb, tab3);
+
+	return 0;
 	
 }
 
@@ -43,7 +69,7 @@ void dibujar(Tablero tab) {
 	cout << '\n';
 }
 void lista_piezas(Tablero tab) {
-	cout << "\n-------LISTA DE PIEZAS-------\n";
+	cout << "\n---LISTA DE PIEZAS (PÚBLICA)---\n";
 	for (int i = 0; i < FILA; i++) {
 		for (int j = 0; j < COLUMNA; j++) {
 			// comprobamos si se han creado las piezas correctamente
@@ -55,7 +81,7 @@ void lista_piezas(Tablero tab) {
 			}
 		}
 	}
-	cout << "\n-----------------------------\n\n";
+	cout << "\n--------------------------------\n\n";
 }
 void lista_posibles_movimientos(Pieza p,Tablero tab, vector<Vector2D>& lista) {
 	//auto movimientos = obtener_posibles_movimientos(*(tab.tablero[5][5]), tab);
@@ -73,9 +99,36 @@ void lista_posibles_movimientos(Pieza p,Tablero tab, vector<Vector2D>& lista) {
 	//cout << "\n\n";
 	lista = movimientos;
 }
+void lista_piezas_privada(Tablero tab) {
+	auto lista_bla = tab.get_piezas_bla();
+	auto lista_neg = tab.get_piezas_neg();
+	int tam = (lista_bla.size() > lista_neg.size()) ?
+		lista_bla.size() : lista_neg.size();
+	cout << "\n--LISTA DE PIEZAS (PRIVADAS)--\n";
+	cout << "  NEGRO  \t  BLANCO\n";
+	for (int i = 0; i < tam; i++) {
+		if (i < lista_neg.size()) cout << lista_neg.at(i);
+		else cout << "      ";
+
+		cout << '\t';
+
+		if (i < lista_bla.size())cout << lista_bla.at(i);
+		else cout << "      ";
+
+		cout << '\n';
+	}
+	cout << "\n------------------------------\n\n";
+}
+
 void imprime_info_tablero(Tablero tab) {
 	dibujar(tab);
 	lista_piezas(tab);
+}
+void imprime_info_tablero_completa(Tablero tab) {
+	
+	imprime_info_tablero(tab);
+	lista_piezas_privada(tab);
+	
 }
 void imprime_movimientos_pieza(Pieza p, Tablero tab,vector<Vector2D>&lista) {
 	
@@ -117,7 +170,8 @@ void imprime_movimientos_pieza(Pieza p, Tablero tab,vector<Vector2D>&lista) {
 	cout << '\n';
 	lista_posibles_movimientos(*(tab.tablero[posicion_pieza.x][posicion_pieza.y]),tab,lista);
 }
-void probar_movimientos_pieza(Pieza& _pieza, Tablero &tab) {
+
+void probar_movimientos_pieza(Pieza& _pieza, Tablero& tab) {
 	int opc = 0;
 	vector<Vector2D>v{}; // aquí almacenará los posibles movimientos
 	Vector2D posicion_destino; // posición a la que te vas a mover
@@ -133,7 +187,9 @@ void probar_movimientos_pieza(Pieza& _pieza, Tablero &tab) {
 		posicion_destino = v.at(opc - 1);
 
 		cout << '\n' << posicion_destino << "\n";
-		tab.mover_pieza(_pieza, posicion_destino);
-
+		
+		mover_pieza(_pieza.GetPosicion(), posicion_destino, tab);
+		imprime_info_tablero_completa(tab);
+		cout << "\n\n";
 	}
 }
