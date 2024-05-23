@@ -28,16 +28,8 @@ void lista_piezas_privada(Tablero tab);
 void probar_movimientos_pieza(Pieza& p, Tablero& tab);
 
 int main(){
-	// Creamos y configuramos tableros de prueba
-	Tablero tab2;
-	tab2.vaciar();
-	tab2.crear_pieza(D, B, { 5,5 });
 	
-	//auto &mi_pieza = *(tab2.tablero[5][5]);
-	
-	// Bucle para mover la pieza varias veces
-	//probar_movimientos_pieza(mi_pieza, tab2);
-	
+	// Creamos y configuramos un tablero de prueba
 	Tablero tab3;
 	tab3.vaciar();
 	tab3.crear_pieza(D, B, { 5,5 }); auto& mi_Dn = /**(tab3.tablero[5][5]);*/ *(tab3[{5, 5}]);
@@ -45,11 +37,13 @@ int main(){
 
 	// uso las dos para ver si dan la misma información
 	imprime_info_tablero_completa(tab3);
-
+	
 	vector<Vector2D>movs{};
 
 	//probar_movimientos_pieza(mi_Dn, tab3);
 	probar_movimientos_pieza(mi_Tb, tab3);
+
+	cout << mi_Tb << '\n' << mi_Dn << '\n';
 
 	return 0;
 	
@@ -108,12 +102,12 @@ void lista_piezas_privada(Tablero tab) {
 	cout << "  NEGRO  \t  BLANCO\n";
 	for (int i = 0; i < tam; i++) {
 		if (i < lista_neg.size()) cout << lista_neg.at(i);
-		else cout << "      ";
+		else cout << "         ";
 
 		cout << '\t';
 
 		if (i < lista_bla.size())cout << lista_bla.at(i);
-		else cout << "      ";
+		else cout << "         ";
 
 		cout << '\n';
 	}
@@ -128,7 +122,7 @@ void imprime_info_tablero_completa(Tablero tab) {
 	
 	imprime_info_tablero(tab);
 	lista_piezas_privada(tab);
-	
+
 }
 void imprime_movimientos_pieza(Pieza p, Tablero tab,vector<Vector2D>&lista) {
 	

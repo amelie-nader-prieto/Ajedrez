@@ -138,11 +138,6 @@ void Tablero::borrar_pieza_capturada(Jugador _jugador) {
 	int num_capturadas=0, nuevo_num_piezas;
 	vector<Pieza>piezas_copia{};
 
-	for (const auto& p : piezas_bla) {
-		if (p.GetCapturada()) num_capturadas++;
-	}
-	if (num_capturadas == 0)return void{};
-		
 	switch (_jugador) {
 	case W:
 		nuevo_num_piezas = piezas_bla.size() - num_capturadas;
