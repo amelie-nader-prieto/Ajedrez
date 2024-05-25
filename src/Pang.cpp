@@ -128,6 +128,7 @@ int main(int argc, char* argv[])
 
 	//Colocar los espacios donde puede haber piezas
 	//Espacio_tablero(Tablero[FILA][COLUMNA]);
+	std::cout << "Prueba" << std::endl;
 	for (auto i = 9; i >= 0; i--)
 	{
 		for (auto j = 10; j >= 0; j--)
