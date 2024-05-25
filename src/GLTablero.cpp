@@ -1,8 +1,13 @@
 #include "GLTablero.h"
 
 void GLTablero::init() {
-
-
+	//habilitar luces y definir perspectiva
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_COLOR_MATERIAL);
+	glMatrixMode(GL_PROJECTION);
+	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
 }
 
 void GLTablero::dibuja() {
@@ -66,10 +71,11 @@ void GLTablero::dibuja() {
 	glTranslatef(0, despy, 0);
 
 	
+
 }
 
 
-void GLTablero::MouseButton(int x, int y, int button, bool down, bool sKey, bool ctrlKey) {
+void GLTablero::MouseButton(int x, int y, int button, bool down) {
 
 	GLint viewport[4];
 	GLdouble modelview[16];

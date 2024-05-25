@@ -1,10 +1,14 @@
+
+
+/*
+
 #include "freeglut.h"
 #include "ETSIDI.h"
 #include "GLTablero.h"
 
 //#include "LogicaAjedrez.h" //¿NECESARIO?
 
-//////////solo estoy comprobando si dibuja el sprite peon
+//////////solo estoy comprobando si dibuja el sprite
 #include "peon.h"
 #include "torre.h"
 #include "alfil.h"
@@ -29,12 +33,11 @@ Rey rB(9, 10, Jugador::B);
 //NO HACE FALTA LLAMARLAS EXPLICITAMENTE
 //void OnDraw(void); //esta funcion sera llamada para dibujar
 //void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
-//void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
+//void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla
 
 
 GLTablero scene; //chess global
 
-/*
 int main(int argc,char* argv[])
 {
 	//Inicializar el gestor de ventanas GLUT
@@ -66,9 +69,15 @@ int main(int argc,char* argv[])
 }
 */
 
+
+
+
+
+/*
+
 void OnDraw(void)
 {
-	//Borrado de la pantalla	
+	//Borrado de la pantalla
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//Para definir el punto de vista
@@ -78,8 +87,8 @@ void OnDraw(void)
 	//funciones de dibujo
 
 	gluLookAt(5, 5, 17,  // posicion del ojo
-		5.0, 5.0, 0.0,      // hacia que punto mira  (0,0,0) 
-		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)  
+		5.0, 5.0, 0.0,      // hacia que punto mira  (0,0,0)
+		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)
 
 
 	pW.dibuja();
@@ -100,7 +109,7 @@ void OnDraw(void)
 	glutSwapBuffers();
 }
 
-void OnKeyboardDown(unsigned char key, int x_t, int y_t)
+ void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
 	//poner aqui el código de teclado
 
@@ -117,8 +126,6 @@ void OnTimer(int value)
 	glutTimerFunc(25,OnTimer,0);
 	glutPostRedisplay();
 }
-
-
 void OnMouseClick(int b, int state, int x, int y) {
 	//////////////
 //captures clicks with mouse with or without special keys (CTRL or SHIFT)
@@ -141,3 +148,4 @@ void OnMouseClick(int b, int state, int x, int y) {
 	glutPostRedisplay();
 
 }
+*/

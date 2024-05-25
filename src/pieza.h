@@ -43,4 +43,8 @@ public:
 		posicion = _posicion;
 	}
 
+
+
+
+	virtual void dibuja(){}
 };
