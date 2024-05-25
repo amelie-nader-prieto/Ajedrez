@@ -80,11 +80,13 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
 		(!tablero[p_ini.x][p_ini.y]) || (tablero[p_ini.x][p_ini.y]->GetTipo() == no_hay)
 		)return void{};
 
+	auto jugador = tablero[p_ini.x][p_ini.y]->GetJugador();
+
 	tablero[p_fin.x][p_fin.y] = tablero[p_ini.x][p_ini.y]; // la posición final apuntará a lo que apuntaba la posición inicial
 	tablero[p_ini.x][p_ini.y] = &ninguna; // la posición inicial se queda vacía
 
 	// busca la pieza que ha movido para actualizar sus coordenadas
-	switch (tablero[p_fin.x][p_fin.y]->GetJugador()) {
+	switch (jugador) {
 	case B:
 		for (auto&p : piezas_neg) {
 			if (p.GetPosicion() == p_ini)p.actualizar_coordenadas(p_fin);
@@ -132,7 +134,7 @@ void Tablero::activar_captura(Vector2D _posicion) {
 	tablero[_posicion.x][_posicion.y]->set_captura(); // la pieza que estaba primero en esa posición será capturada
 	tablero[_posicion.x][_posicion.y] = &ninguna; // cuando la pieza es capturada, ningún puntero volverá a apuntar a ella
 
-	borrar_pieza_capturada(jugador); // lo siguiente es borrar la pieza capturada
+	//borrar_pieza_capturada(jugador); // lo siguiente es borrar la pieza capturada
 }
 void Tablero::borrar_pieza_capturada(Jugador _jugador) {
 	int num_capturadas=0, nuevo_num_piezas;
@@ -162,7 +164,7 @@ void Tablero::borrar_pieza_capturada(Jugador _jugador) {
 		// volvemos a llenar el vector, sólo con las que no están capturadas
 		for (auto p : piezas_copia) {
 			if (!p.GetCapturada()) {
-				piezas_bla.push_back(p);
+				piezas_neg.push_back(p);
 			}
 		}
 		// nos cargamos los puestos libres que quedan al final

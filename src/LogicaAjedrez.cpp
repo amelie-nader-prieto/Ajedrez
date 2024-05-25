@@ -436,7 +436,11 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
         * (esta función no gestiona la promoción del peón)
         */
 
-        // AVANCE
+        // PROMOCIÓN
+        /* Si puede promocionar, es porque no puede avanzar más.
+        * Comprobar esto antes de nada. Si se cumple, salir del bucle
+        */
+
         switch (jugador) {
         case B: //negro
             direcciones.push_back(Dir_t::UP);
@@ -446,42 +450,62 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
             break;
         default:break;
         }
+
+        // Inicializa la posición siguiente
         siguienteCasilla(direcciones[0], posicion_buffer, posicion_siguiente);
-        // si la posición siguiente es válida, la añade
-        if (!(
-            omitir_posicion(posicion_siguiente) ||
-            hay_pieza_tuya(posicion_siguiente, jugador, tab)
-            ))posibles_movimientos.push_back(posicion_siguiente);
-
-        // si es su primer movimiento, el peón puede avanzar dos filas
-        // sabemos que aún no ha movido porque está en su fila de origen
-        if (
-            (posicion_actual.x == 2 && jugador == B) ||
-            (posicion_actual.y == 7 && jugador == W)
-            ) {
-            posicion_buffer = posicion_siguiente;
-            siguienteCasilla(direcciones[0], posicion_buffer, posicion_siguiente);
-
-            if (!(
-                omitir_posicion(posicion_siguiente) ||
-                hay_pieza_tuya(posicion_siguiente, jugador, tab)
-                ))posibles_movimientos.push_back(posicion_siguiente);
-
-        }
-
-        // CAPTURA
-        // comprobar si hay condiciones de captura
-        // . . .
+        
 
         // CAPTURA AL PASO
         // (comprobar si hay condiciones de captura al paso)
         // . . .
 
 
-        // PROMOCIÓN
-        // (si hay condiciones de promoción, es que no se puede mover más)
-        // . . .
+        // CAPTURA
+        /*
+        * Comprueba si hay pieza rival en las casillas en diagonal.
+        * Si hay, las añade. (No se modifica la posición siguiente al evaluar esto)
+        */
+        if (
+            (!omitir_posicion(posicion_siguiente + Vector2D(0, 1))) &&
+            hay_pieza_rival(posicion_siguiente + Vector2D(0, 1), jugador, tab)
+            ) posibles_movimientos.push_back(posicion_siguiente + Vector2D(0, 1));
+        if (
+            (!omitir_posicion(posicion_siguiente + Vector2D(0, -1))) &&
+            hay_pieza_rival(posicion_siguiente + Vector2D(0, -1), jugador, tab)
+            ) posibles_movimientos.push_back(posicion_siguiente + Vector2D(0, -1));
 
+
+        // AVANCE
+        /*
+        * Si la casilla siguiente está dentro del tablero y está vacía, la añade
+        */
+        if (!(
+            omitir_posicion(posicion_siguiente) ||
+            hay_pieza_tuya(posicion_siguiente, jugador, tab) ||
+            hay_pieza_rival(posicion_siguiente, jugador, tab) // tampoco puede haber una pieza rival porque el peón no captura en la misma dirección en que avanza
+            ))posibles_movimientos.push_back(posicion_siguiente);
+
+
+        // PRIMER MOVIMIENTO
+        /* Si es su primer movimiento, puede avanzar dos filas.
+        * Sabemos que es su primer movimiento porque está en su fila de origen.
+        */
+        if (
+            (posicion_actual.x == 2 && jugador == B) ||
+            (posicion_actual.x == 7 && jugador == W)
+            ) {
+            posicion_buffer = posicion_siguiente;
+            siguienteCasilla(direcciones[0], posicion_buffer, posicion_siguiente);
+
+            if (!(
+                omitir_posicion(posicion_siguiente) ||
+                hay_pieza_tuya(posicion_siguiente, jugador, tab) ||
+                hay_pieza_rival(posicion_siguiente, jugador, tab)
+                ))posibles_movimientos.push_back(posicion_siguiente);
+            
+        }
+
+        
         break;
 
     default:break;
