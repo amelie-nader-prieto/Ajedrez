@@ -7,8 +7,10 @@ void dibujar(Tablero tab);
 // Te da una lista de todas las piezas que hay en el tablero
 // consulta la interfaz PÚBLICA del tablero
 void lista_piezas(Tablero tab);
+
 // Te da una lista de los sitios a los que se puede mover una pieza (la inicializa y te la da)
 void lista_posibles_movimientos(Pieza p,Tablero tab,vector<Vector2D>& lista);
+
 // Dibuja el tablero y da una lista de las piezas que hay
 void imprime_info_tablero(Tablero tab);
 // Dibuja el tablero y da una lista de las piezas que hay
@@ -33,6 +35,8 @@ int main(){
 	Tablero tab3;
 	vector<Vector2D>movs{};
 
+	dibujar(tab3);
+	
 	//tab3.vaciar();
 	//tab3.crear_pieza(D, B, { 5,5 }); auto& mi_Dn = /**(tab3.tablero[5][5]);*/ *(tab3[{5, 5}]);
 	//tab3.crear_pieza(T, W, { 2,5 }); auto& mi_Tb = /**(tab3.tablero[2][5]);*/ *(tab3[{2, 5}]);
@@ -50,13 +54,13 @@ int main(){
 	auto& mi_Pb = *(tab3[{7, 4}]);
 	auto& mi_Pn = *(tab3[{2, 3}]);
 	
-	//probar_movimientos_pieza(mi_Cn, tab3);
+	probar_movimientos_pieza(mi_Cn, tab3);
 	probar_movimientos_pieza(mi_Pb, tab3);
 	probar_movimientos_pieza(mi_Pn, tab3);
 
 	imprime_info_tablero_completa(tab3);
+
 	return 0;
-	
 }
 
 void dibujar(Tablero tab) {
@@ -134,7 +138,7 @@ void imprime_info_tablero_completa(Tablero tab) {
 	lista_piezas_privada(tab);
 
 }
-void imprime_movimientos_pieza(Pieza p, Tablero tab,vector<Vector2D>&lista) {
+void imprime_movimientos_pieza (Pieza p, Tablero tab,vector<Vector2D>&lista) {
 	
 	//vector<Vector2D>v{};
 	Vector2D posicion_pieza = p.GetPosicion();

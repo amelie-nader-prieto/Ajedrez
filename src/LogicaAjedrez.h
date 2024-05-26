@@ -1,13 +1,12 @@
 #pragma once
-
 #include "Tablero.h"
 #include <iostream>
+using namespace std;
 
-using std::cout;
 
 // OPERADORES
 /* Imprime el tipo de pieza */
-inline std::ostream& operator<<(std::ostream& co, const Tipo& t) {
+inline ostream& operator<<(ostream& co, const Tipo& t) {
 
     switch (t) {
     case no_hay:co << " "; break;
@@ -21,22 +20,23 @@ inline std::ostream& operator<<(std::ostream& co, const Tipo& t) {
     }
 
     return co;
-
 }
+
+
 /* Imprime el color de la pieza */
-inline std::ostream& operator<<(std::ostream& co, const Jugador& _jugador) {
+inline ostream& operator<<(ostream& co, const Jugador& _jugador) {
 
     switch (_jugador) {
     case B:co << "n"; break; // negro
     case W:co << "b"; break; // blanco
     default:break;
     }
-
     return co;
-
 }
+
+
 /* Imprime las coordenadas con número y letra */
-inline std::ostream& operator<<(std::ostream& co, const Vector2D& _casilla) {
+inline ostream& operator<<(ostream& co, const Vector2D& _casilla) {
 
     vector<char>letras_columnas = { 'a','b','c','d','e','f','g','h','i','j','k' };
     int num_fila_0 = 10;
@@ -45,6 +45,8 @@ inline std::ostream& operator<<(std::ostream& co, const Vector2D& _casilla) {
     return co;
 
 }
+
+
 // operador para imprimir toda la info de la pieza
 // Imprime tipo, color y casilla en la que está
 inline std::ostream& operator<<(std::ostream& co, Pieza& _pieza) {
@@ -53,6 +55,8 @@ inline std::ostream& operator<<(std::ostream& co, Pieza& _pieza) {
     if (_pieza.GetCapturada()) co << " (capturada)";
     return co;
 }
+
+
 
 // DIRECCIONES
 /*
