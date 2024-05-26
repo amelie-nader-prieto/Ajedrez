@@ -10,6 +10,8 @@
 #include "rey.h"
 #include "dama.h"
 #include "caballo.h"
+
+/*
 Peon pW(3, 4, Jugador::W);
 Alfil aW(3, 5, Jugador::W);
 Torre tW(3, 6, Jugador::W);
@@ -23,6 +25,8 @@ Torre tB(9, 6, Jugador::B);
 Dama dB(9, 8, Jugador::B);
 Caballo cB(9, 9, Jugador::B);
 Rey rB(9, 10, Jugador::B);
+*/
+
 
 
 void pruebaMovimeinto(); //solo compruebo el movimiento, despues eliminar
@@ -39,8 +43,8 @@ GLTablero scene; //Para el dibujo del tablero y casillas
 int main(int argc, char* argv[]){
 	// vamos a crear un tablero para ver si funciona bien
 
-
-	for (int i = 0; i < FILA; i++) {
+	/*
+for (int i = 0; i < FILA; i++) {
 		for (int j = 0; j < COLUMNA; j++) {
 			// vamos a comprobar si est�n bien las posiciones de memoria
 			if (tab.tablero[i][j])
@@ -63,12 +67,14 @@ int main(int argc, char* argv[]){
 			}
 		}
 	}
+	*/
+	
 
 	// por favor enlazador no me traiciones
 	std::cout << "Estado inicial del tablero" << std::endl;
-	dibujar(tab); 
+	//dibujar(tab); 
 
-	pruebaMovimeinto();
+	//pruebaMovimeinto();
 
 
 //Inicializar el gestor de ventanas GLUT y crear la ventana

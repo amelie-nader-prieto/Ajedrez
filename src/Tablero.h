@@ -37,15 +37,21 @@ public:
 
 	void mover_pieza(Vector2D p_ini, Vector2D p_fin);
 	void activar_captura(Vector2D _posicion);
+	 
+	inline Pieza* operator[](const Vector2D& posicion)const {
+		return tablero[posicion.x][posicion.y];
+	}
+	//inline Pieza operator[](const Vector2D& posicion) {
+		//return *tablero[posicion.x][posicion.y];
+	//}
 
 
-
-
-	void dibujaPiezas();
 	void cambiarTurno() { //Solo para probar si cambia de turno, despues borrar
 		//es solo para las pruebas de movimiento
 		turnoActual = (turnoActual == W) ? B : W;
 	}
 
+
+	void dibujaPiezas(); //aun por ver en donde va
 };
 
