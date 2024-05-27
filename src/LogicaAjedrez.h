@@ -119,6 +119,7 @@ esta función para evaluar la posibilidad del jugador opuesto de capturar dicho p
 * posicion_posible_capturador: si la función es true, se inicializará con la posición del peón qe podrá captuar en ese turno
 * Es un vector en caso de que por un casual haya varios posibles capturadores
 */
+
 bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vector<Vector2D>posicion_posible_capturador);
 
 // FUNCIONES DE MOVIMIENTO
@@ -143,6 +144,8 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab);
 * Incluye la lógica de la captura (tienen que coincidir dos piezas opuestas en la posición de destino)
 */
 void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab);
+
+void promocion_peon(Pieza p, Tablero tab);
 
 // INICIALIZAR PIEZAS
 /*

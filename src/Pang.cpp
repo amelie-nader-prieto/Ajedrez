@@ -50,12 +50,12 @@ int main(){
 	//cout << mi_Tb << '\n' << mi_Dn << '\n';
 
 	//imprime_info_tablero_completa(tab3);
-	auto& mi_Cn = *(tab3[{1, 6}]);
 	auto& mi_Pb = *(tab3[{7, 4}]);
+	auto& mi_Cn = *(tab3[{1, 6}]);
 	auto& mi_Pn = *(tab3[{2, 3}]);
 	
-	probar_movimientos_pieza(mi_Cn, tab3);
 	probar_movimientos_pieza(mi_Pb, tab3);
+	probar_movimientos_pieza(mi_Cn, tab3);
 	probar_movimientos_pieza(mi_Pn, tab3);
 
 	imprime_info_tablero_completa(tab3);

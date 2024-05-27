@@ -9,6 +9,8 @@
 #include "torre.h"
 #include "No_pieza.h"
 #include <vector>
+#include <iostream>
+using namespace std;
 
 #define FILA 10
 #define COLUMNA 11
@@ -55,4 +57,6 @@ public:
 	*/
 	inline auto get_piezas_bla() { return piezas_bla; }
 	inline auto get_piezas_neg() { return piezas_neg; }
+
+	
 };

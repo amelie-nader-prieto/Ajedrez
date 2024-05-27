@@ -14,7 +14,7 @@ bool hay_pieza_rival(Vector2D _posicion, Jugador _jugador, Tablero tab) {
 }
 
 //Condiciones
-/*bool condiciones_captura_peon(Pieza _peon, Tablero tab) {
+bool condiciones_captura_peon(Pieza _peon, Tablero tab) {
     vector<Dir_t>direcciones_diagonal{}; // direcciones en las que el peón puede capturar. se inicializa según el color
     Vector2D posicion_siguiente;
 
@@ -38,8 +38,7 @@ bool hay_pieza_rival(Vector2D _posicion, Jugador _jugador, Tablero tab) {
     }
 
     return false;
-
-}*/
+}
 
 
 
@@ -223,9 +222,11 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab) {
         * PROMOCI�N: Si est� en una posici�n en la que no puede avanzar m�s, debe promocionar
         * (esta funci�n no gestiona la promoci�n del pe�n)
         */
-
+    {
+      
         // AVANCE
-        
+
+
         switch (_p.GetJugador()) {
         case B: //negro
             direcciones.push_back(Dir_t::UP);
@@ -239,16 +240,26 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab) {
         siguienteCasilla(direcciones[0], posicion_buffer, posicion_siguiente);
 
         // si la posici�n siguiente es v�lida, la a�ade
-        if (!(
-            omitir_posicion(posicion_siguiente) ||
-            hay_pieza_tuya(posicion_siguiente, _p.GetJugador(), tab)
-            ))posibles_movimientos.push_back(posicion_siguiente);
+        if (!(omitir_posicion(posicion_siguiente) ||
+            hay_pieza_tuya(posicion_siguiente, _p.GetJugador(), tab)))
+        {
+            posibles_movimientos.push_back(posicion_siguiente);
+            // PROMOCIÓN
+       /* Si puede promocionar, es porque no puede avanzar más.
+       * Comprobar esto antes de nada. Si se cumple, salir del bucle
+       */
+            for(int i=4;i<6;i++)
+            if ((_p.GetPosicion()==(0,9))|| (_p.GetPosicion() == (0, 0))) {
+                promocion_peon(_p, tab);
+            }
 
+        }
         // si es su primer movimiento, el pe�n puede avanzar 2 filas
         if (!_p.ha_movido()) {
             posicion_buffer = posicion_siguiente;
             siguienteCasilla(direcciones[0], posicion_buffer, posicion_siguiente);
             posibles_movimientos.push_back(posicion_siguiente);
+            _p.set_ha_movido();
             _p.set_ha_movido();
         }
 
@@ -263,20 +274,20 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab) {
         // CAPTURA AL PASO
         // (comprobar si hay condiciones de captura al paso)
         // . . .
-        
 
-        // PROMOCIÓN
-        // (si hay condiciones de promoción, es que no se puede mover)
-        // . . .
+
+       
 
         break;
-
-    default:break;
+    }
+    default:
+        break;
     }
 
     return posibles_movimientos;
 
 }
+
 vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
     vector<Vector2D>posibles_movimientos{}; // aquí almacenará los posibles movimientos
     vector<Dir_t>direcciones{}; // se inicializa según el tipo de pieza (excepto caballo)
@@ -423,10 +434,7 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
         * (esta función no gestiona la promoción del peón)
         */
 
-        // PROMOCIÓN
-        /* Si puede promocionar, es porque no puede avanzar más.
-        * Comprobar esto antes de nada. Si se cumple, salir del bucle
-        */
+       
 
         switch (jugador) {
         case B: //negro
@@ -550,6 +558,36 @@ static void iniciar(Tipo tipo, Vector2D posicion, Jugador j,Tablero tab)
 
 
 }
+
+//Cuando se llega al límite el peón podrá cambiar
+void promocion_peon(Pieza p, Tablero tab) {
+
+    cout << "Selecciona y cambia a:" << std::endl;//Imprime en pantalla las posibles figuras a las que se puede cambiar
+    cout << "D- Dama, A-Alfil, T-Torre, C-Caballo" << std::endl;
+
+    //Recibe la figura a la que cambia 
+    char letra;
+    std::cin >> letra;
+
+    switch (letra) {
+    case 'D':
+        tab.crear_pieza(D, p.GetJugador(), p.GetPosicion());
+        break;
+    case C:
+        tab.crear_pieza(C, p.GetJugador(), p.GetPosicion());
+        break;
+    case A:
+        tab.crear_pieza(A, p.GetJugador(), p.GetPosicion());
+        break;
+    case T:
+        tab.crear_pieza(T, p.GetJugador(), p.GetPosicion());
+        break;
+    default:break;
+    }
+
+}
+
+
 
 void liberar_memoria(Tablero tab) {
 

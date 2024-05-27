@@ -103,6 +103,7 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
 	}
 
 }
+
 void Tablero::mover_pieza(Pieza&_p, Vector2D p_fin) {
 
 	auto p_ini = _p.GetPosicion();
@@ -127,6 +128,8 @@ void Tablero::mover_pieza(Pieza&_p, Vector2D p_fin) {
 	}
 
 }
+
+
 // activa el evento captura en una posición determinada
 void Tablero::activar_captura(Vector2D _posicion) { 
 	auto jugador = tablero[_posicion.x][_posicion.y]->GetJugador();
@@ -136,6 +139,7 @@ void Tablero::activar_captura(Vector2D _posicion) {
 
 	//borrar_pieza_capturada(jugador); // lo siguiente es borrar la pieza capturada
 }
+
 void Tablero::borrar_pieza_capturada(Jugador _jugador) {
 	int num_capturadas=0, nuevo_num_piezas;
 	vector<Pieza>piezas_copia{};
@@ -189,6 +193,7 @@ void Tablero::vaciar() {
 	piezas_bla.clear();
 	piezas_neg.clear();
 }
+
 void Tablero::crear_pieza(Tipo _tipo, Jugador _jugador, Vector2D _posicion) {
 	if (_tipo == no_hay) return void{};
 	switch (_jugador) {
@@ -200,3 +205,6 @@ void Tablero::crear_pieza(Tipo _tipo, Jugador _jugador, Vector2D _posicion) {
 		break;
 	}
 }
+
+
+

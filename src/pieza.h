@@ -2,23 +2,25 @@
 #include "Tipos_piezas.h"
 #include "vector2D.h"
 
+#include <vector>
+
 class Pieza
 {
 protected:
 	int fila;
 	int columna;
 
-	Vector2D posicion;
+	Vector2D posicion = { fila,columna };
 	Tipo tipo;
 	Jugador jugador;
-		
+
 	bool primer_movimiento = true;
 	bool capturada = false;
 
 public:
-	Pieza(int fila, int columna, Tipo t,Jugador j=B) : fila(fila), columna(columna),posicion(fila,columna), tipo(t), jugador(j) {}
+	Pieza(int fila, int columna, Tipo t, Jugador j = B) : fila(fila), columna(columna), posicion(fila, columna), tipo(t), jugador(j) {}
 	Pieza(Vector2D _posicion = Vector2D(0, 0), Jugador _jugador = ninguno, Tipo _tipo = no_hay) :
-		posicion(_posicion), tipo(_tipo), jugador(_jugador){}
+		posicion(_posicion), tipo(_tipo), jugador(_jugador) {}
 
 	// funciones de interfaz
 	inline Tipo GetTipo()const { return tipo; }
@@ -40,5 +42,9 @@ public:
 		posicion = _posicion;
 	}
 
-	
+
+	//funcion para igualdar dos piezas
+	void igualar(const Pieza& otra);
+
 };
+
