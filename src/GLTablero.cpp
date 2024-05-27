@@ -70,12 +70,11 @@ void GLTablero::dibuja() {
 	ETSIDI::printxy("  9", -1, 9); ETSIDI::printxy("  10", -1, 10);
 	glTranslatef(0, despy, 0);
 
-	
-
+	chess.dibujaPiezas();
 }
 
 
-void GLTablero::MouseButton(int x, int y, int button, bool down) {
+void GLTablero::MouseButton(int x, int y, int button, bool down, Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado) {
 
 	GLint viewport[4];
 	GLdouble modelview[16];
@@ -98,16 +97,30 @@ void GLTablero::MouseButton(int x, int y, int button, bool down) {
 
 
 	//catura eventos del mouse
-	if (button == MOUSE_LEFT_BUTTON)
-		leftButton = down;
+	//***WRITE ACTIONS CONNECTED TO MOUSE STATE HERE
+
+	if (button == MOUSE_LEFT_BUTTON) {
+		if (down)
+		{
+			if (seleccionado) {
+				click_inicial = Vector2D{ xcell_sel, ycell_sel };
+				seleccionado = false; //Para pasar a la seleccion de la posicion final
+				std::cout << "incial seleccionada, ahora selecciona final" << std::endl;
+			}
+			else {
+				click_final = Vector2D{ xcell_sel, ycell_sel };
+				seleccionado = true; //Pra volver a seleccionar una pieza
+				std::cout << "final seleccionado....espera movimiento" << std::endl;
+				std::cout << "inicial: " << click_inicial << " final: " << click_final << std::endl;
+				chess.mover_pieza(click_inicial, click_final); //intenta mover la pieza
+				std::cout << "Deberia haber movido la pieza" << std::endl;
+			}
+			std::cout << "(" << xcell_sel << "," << ycell_sel << ")" << std::endl;
+		}
+		
+	}
 	
-		//***WRITE ACTIONS CONNECTED TO MOUSE STATE HERE
-
-
-
-
-		//print cell coordinates after click
-	//if (down && !no_se_usa(xcell_sel, ycell_sel)) //revisar, imprime algunas casillas y otras no
-	if (down)
-		std::cout << "(" << xcell_sel << "," << ycell_sel << ")" << std::endl;
+	
+		
+		
 }

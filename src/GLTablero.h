@@ -20,21 +20,21 @@ public:
 
 
 	Casilla cas;
+	Tablero chess; //Solo es una prueba
 	void init();
 	void dibuja();
 
 	float width = 1.0f; //solo para prueba, despues eliminar es el ancho de la casilla
-	void MouseButton(int x, int y, int button, bool down);
+	void MouseButton(int x, int y, int button, bool down, Vector2D&, Vector2D&, bool&);
 	void world2cell(double x, double y, int& cell_x, int& cell_y) {
 		//world coordinates to cell
 		cell_x = (int)(1 + abs(y / width));
 		cell_y = (int)(1 + x / width);
 	}
-	
+
+
 protected:
 	//mouse	
 	int xcell_sel, ycell_sel;			//cell selected with mouse
-
-	//mouse state events 
-	bool leftButton;
 };
+

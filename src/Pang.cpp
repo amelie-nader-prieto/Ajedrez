@@ -29,7 +29,7 @@ Rey rB(9, 10, Jugador::B);
 
 
 
-void pruebaMovimeinto(); //solo compruebo el movimiento, despues eliminar
+//void pruebaMovimeinto(); //solo compruebo el movimiento, despues eliminar
 
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
@@ -39,6 +39,16 @@ void OnMouseClick(int button, int state, int x, int y); //para eventos del mouse
 
 Tablero tab;
 GLTablero scene; //Para el dibujo del tablero y casillas
+
+
+//Variables globales para la gestión de los clicks
+Vector2D click_inicial{ -1, -1 };
+Vector2D click_final{ -1,-1 };
+bool seleccionado = true;
+//true cuando estamos seleccionando la pieza inicial
+//false cuando estamos seleccionando la posicion final
+
+
 
 int main(int argc, char* argv[]){
 	// vamos a crear un tablero para ver si funciona bien
@@ -74,7 +84,6 @@ for (int i = 0; i < FILA; i++) {
 	std::cout << "Estado inicial del tablero" << std::endl;
 	//dibujar(tab); 
 
-	//pruebaMovimeinto();
 
 
 //Inicializar el gestor de ventanas GLUT y crear la ventana
@@ -134,7 +143,7 @@ void OnDraw(void)
 	//dB.dibuja();
 	scene.dibuja();
 
-	tab.dibujaPiezas();
+	//tab.dibujaPiezas();
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
 }
@@ -157,22 +166,15 @@ void OnTimer(int value)
 
 void OnMouseClick(int b, int state, int x, int y) {
 	//////////////
-//captures clicks with mouse with or without special keys (CTRL or SHIFT)
-//gives control to board scene
+//captura los clicks del mouse
+//da el control a la escena del tablero 
 	bool down = (state == GLUT_DOWN);
 	int button;
 	if (b == GLUT_LEFT_BUTTON) {
 		button = MOUSE_LEFT_BUTTON;
 	}
 
-	scene.MouseButton(x, y, b, down);
+	scene.MouseButton(x, y, b, down, click_inicial, click_final, seleccionado);
 	glutPostRedisplay();
 
-}
-
-void pruebaMovimeinto() {
-	// Intentar mover una pieza Blanco
-	std::cout << "Mover peon blanco de (2, 2) a (3, 2):" << std::endl;
-	tab.mover_pieza(Vector2D(2, 2), Vector2D(3, 2));
-	dibujar(tab);
 }

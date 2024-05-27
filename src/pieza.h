@@ -22,7 +22,11 @@ protected:
 public:
 	Pieza(int fila, int columna, Tipo t,Jugador j=B) : fila(fila), columna(columna),posicion(fila,columna), tipo(t), jugador(j) {}
 	Pieza(Vector2D _posicion = Vector2D(0, 0), Jugador _jugador = ninguno, Tipo _tipo = no_hay) :
-		posicion(_posicion), tipo(_tipo), jugador(_jugador){}
+		posicion(_posicion), tipo(_tipo), jugador(_jugador)
+	{
+		fila = _posicion.y;
+		columna = _posicion.x;
+	}
 
 	// funciones de interfaz
 	inline Tipo GetTipo()const { return tipo; }
@@ -43,44 +47,51 @@ public:
 		posicion = _posicion;
 	}
 
-	SpriteSequence spriteN{ "bin/imagenes/peon-negro.png", 1 };
-	SpriteSequence spriteB{ "bin/imagenes/peon-blanco.png", 1 };
+	SpriteSequence spritePN{ "bin/imagenes/peon-negro.png", 1 };
+	SpriteSequence spritePB{ "bin/imagenes/peon-blanco.png", 1 };
 
-	void pruebaDibujo(const Jugador& j) {
-		switch (j)
+
+	virtual void dibuja(){
+		glPushMatrix();
+		switch (tipo)
 		{
+		case no_hay:
+			break;
+		case R:
+			break;
+		case D:
+			break;
+		case C:
+			break;
+		case A:
+			break;
+		case T:
+			break;
 		case P:
-			
+			if (jugador == Jugador::W) {
+				glTranslatef(posicion.y, posicion.x - 0.05, 0.02);
+				spritePB.setCenter(0, 0);
+				spritePB.setSize(1, 0.9);
+				spritePB.draw();
+				glTranslatef(-posicion.y, -posicion.x + 0.05, -0.02);
+
+			}
+
+			if (jugador == Jugador::B) {
+
+				glTranslatef(fila, columna - 0.05, 0.02);
+				spritePN.setCenter(0, 0);
+				spritePN.setSize(1, 0.9);
+				spritePN.draw();
+				glTranslatef(-fila, -columna + 0.05, -0.02);
+
+			}
+			break;
 		default:
 			break;
 		}
 
-	}
-
-	virtual void dibuja(){
-
-		glPushMatrix();
-		if (jugador == Jugador::W) {
-			glTranslatef(columna, fila - 0.05, 0.02);
-			spriteB.setCenter(0, 0);
-			spriteB.setSize(1, 0.9);
-			spriteB.draw();
-			glTranslatef(-columna, -fila + 0.05, -0.02);
-
-		}
-
-		if (jugador == Jugador::B) {
-
-			glTranslatef(columna, fila - 0.05, 0.02);
-			spriteN.setCenter(0, 0);
-			spriteN.setSize(1, 0.9);
-			spriteN.draw();
-			glTranslatef(-columna, -fila + 0.05, -0.02);
-
-		}
 		glPopMatrix();
-		
-	
 	}
 
 

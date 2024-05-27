@@ -10,8 +10,8 @@ Tablero::Tablero() :turnoActual(W) { //Inicializa el turno actual para que empie
 
 	// Creación de los peones
 	for (int i = 2; i < COLUMNA - 2; i++) {
-		piezas_neg.push_back(Peon(2, i, W));
-		piezas_bla.push_back(Peon(7, i, B));
+		piezas_neg.push_back(Pieza(Vector2D(7, i), B, P));
+		piezas_bla.push_back(Pieza(Vector2D(2, i), W, P));
 	} //Revisar las posiciones de las piezas, blancas van abajo y negras arriba
 
 	// Creación de las fichas en la fila intermedia
@@ -19,8 +19,8 @@ Tablero::Tablero() :turnoActual(W) { //Inicializa el turno actual para que empie
 	vector<Tipo>tipos_fila_intermedia{ T,C,A,C,T };
 	int j = 3;
 	for (auto tipo : tipos_fila_intermedia) {
-		piezas_neg.push_back(Pieza(Vector2D(1, j), B, tipo));
-		piezas_bla.push_back(Pieza(Vector2D(8, j), W, tipo));
+		piezas_neg.push_back(Pieza(Vector2D(8, j), B, tipo));
+		piezas_bla.push_back(Pieza(Vector2D(1, j), W, tipo));
 
 		j++;
 	}
@@ -30,8 +30,8 @@ Tablero::Tablero() :turnoActual(W) { //Inicializa el turno actual para que empie
 	vector<Tipo>tipos_fila_fondo{ R,A,D };
 	j = 4;
 	for (auto tipo : tipos_fila_fondo) {
-		piezas_neg.push_back(Pieza(Vector2D(0, j), B, tipo));
-		piezas_bla.push_back(Pieza(Vector2D(9, j), W, tipo));
+		piezas_neg.push_back(Pieza(Vector2D(9, j), B, tipo));
+		piezas_bla.push_back(Pieza(Vector2D(0, j), W, tipo));
 
 		j++;
 
@@ -134,6 +134,7 @@ void Tablero::dibujaPiezas() {
 		tablero[2][i]->dibuja();
 		tablero[7][i]->dibuja();
 	}
+
 
 
 
