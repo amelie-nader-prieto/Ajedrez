@@ -1,5 +1,7 @@
 #pragma once
 #include "Tipos_piezas.h"
+#include <string>
+#include <stdio.h>
 
 enum Tipo
 {

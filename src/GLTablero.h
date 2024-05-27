@@ -15,8 +15,7 @@ class GLTablero
 public:
 	Casilla cas;
 	void init();
-	void dibuja();
-
+	void dibuja(int);
 	float width = 1.0f; //solo para prueba, despues eliminar es el ancho de la casilla
 	void MouseButton(int x, int y, int button, bool down, bool sKey, bool ctrlKey);
 	void world2cell(double x, double y, int& cell_x, int& cell_y) {
