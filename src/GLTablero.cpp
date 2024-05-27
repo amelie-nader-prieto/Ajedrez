@@ -41,7 +41,7 @@ void GLTablero::dibuja() {
 
 	////////////Imagen de fondo////////////////
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/fondo3.png").id);
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/fondo7.png").id);
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
 	glColor3f(1, 1, 1);

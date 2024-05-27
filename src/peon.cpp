@@ -10,8 +10,8 @@ void Peon::dibuja() {
 	if (jugador == Jugador::W) {
 		glDisable(GL_LIGHTING);
 		glTranslatef(columna - 1, fila - 0.95, 0);
-		spritePeonB.setCenter(0, 0);
-		spritePeonB.setSize(1, 0.9);
+		spritePeonB.setCenter(0.1, 0.03);
+		spritePeonB.setSize(1.2, 0.97); //Esto se va ajustando segun como se vea la imagen
 		spritePeonB.draw();
 		glTranslatef(-columna + 1, -fila + 0.95, 0);
 		glEnable(GL_LIGHTING);
@@ -20,9 +20,9 @@ void Peon::dibuja() {
 	if (jugador == Jugador::B) {
 		glDisable(GL_LIGHTING);
 		glTranslatef(columna-1, fila + 0.05 -1, 0);
-		spritePeonN.setCenter(0, 0);
-		spritePeonN.setSize(1, 0.9);
-		//spritePeonN.flip(true, true);
+		spritePeonN.setCenter(0.05, -0.1);
+		spritePeonN.setSize(1.1, 0.9);
+		spritePeonN.flip(true, true);
 		spritePeonN.draw();
 		glTranslatef(-columna+1, -fila - 0.05 + 1, 0);
 		glEnable(GL_LIGHTING);

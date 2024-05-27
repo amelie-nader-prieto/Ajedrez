@@ -3,8 +3,8 @@
 void Casilla::dibuja(int i, int j) {
 	int sum = i + j;
 	glDisable(GL_LIGHTING);
-	if (sum % 2) glColor3ub(216, 243, 220); //para casillas pares un color mas oscuro//glColor3ub(23, 31, 161);
-	else glColor3ub(82, 183, 136);//glColor3ub(126, 128, 156);
+	if (sum % 2) glColor3ub(10, 0, 120); //glColor3ub(216, 243, 220); //para casillas pares un color mas oscuro//glColor3ub(23, 31, 161);
+	else glColor3ub(245, 184, 135);//glColor3ub(82, 183, 136);//glColor3ub(126, 128, 156);
 	glBegin(GL_POLYGON);
 	glVertex2f(i + 1, j + 1); //antihorario 
 	glVertex2f(i + 1, j);
@@ -16,7 +16,7 @@ void Casilla::dibuja(int i, int j) {
 
 void Casilla::dibujaGrid(int i, int j) {
 	glLineWidth(2);
-	glColor3ub(231,0,0);
+	glColor3ub(0,0,20);
 	glBegin(GL_LINES);
 	glVertex3f(i + 1, j + 1, 0.01f); glVertex3f(i + 1, j, 0.01f);
 	glVertex3f(i + 1, j, 0.01f);	 glVertex3f(i, j, 0.01f);

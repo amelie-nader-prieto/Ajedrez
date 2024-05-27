@@ -3,10 +3,45 @@
 #include "GLTablero.h"
 #include "LogicaAjedrez.h"
 
-//////////solo estoy comprobando si dibuja el sprite peon
+//////////Comprobación de cómo se dibujan las piezas, se sintentizará más adelante
 #include "peon.h"
-Peon pW(3, 4, Jugador::W);
-Peon pB(8, 6, Jugador::B);
+Peon pW(8, 6, Jugador::W);
+Peon pW2(8, 5, Jugador::W);
+Peon pW3(8, 4, Jugador::W);
+Peon pW4(8, 3, Jugador::W);
+Peon pW5(8, 7, Jugador::W);
+Peon pW6(8, 8, Jugador::W);
+Peon pW7(8, 9, Jugador::W);
+
+Peon pB(4, 6, Jugador::B);
+Peon pB2(4, 5, Jugador::B);
+Peon pB3(4, 4, Jugador::B);
+Peon pB4(4, 9, Jugador::B);
+Peon pB5(4, 7, Jugador::B);
+Peon pB6(4, 8, Jugador::B);
+Peon pB7(4, 10, Jugador::B);
+
+Alfil AW(10, 6, Jugador::W);
+Alfil AW1(9, 6, Jugador::W);
+Alfil AB(3, 7, Jugador::B);
+Alfil AB1(2, 7, Jugador::B);
+
+Rey RW(10, 5, Jugador::W);
+Rey RB(2, 6, Jugador::B);
+
+Dama DW(10, 7, Jugador::W);
+Dama DB(2, 8, Jugador::B);
+
+Caballo CW(9, 5, Jugador::W);
+Caballo CW1(9, 7, Jugador::W);
+Caballo CB(3, 6, Jugador::B);
+Caballo CB1(3, 8, Jugador::B);
+
+Torre TW(9, 4, Jugador::W);
+Torre TW1(9, 8, Jugador::W);
+Torre TB(3, 5, Jugador::B);
+Torre TB1(3, 9, Jugador::B);
+
 
 
 //NO HACE FALTA LLAMARLAS EXPLICITAMENTE
@@ -72,7 +107,42 @@ void OnDraw(void)
 
 
 	pW.dibuja();
+	pW2.dibuja();
+	pW3.dibuja();
+	pW4.dibuja();
+	pW5.dibuja();
+	pW6.dibuja();
+	pW7.dibuja();
 	pB.dibuja();
+	pB2.dibuja();
+	pB3.dibuja();
+	pB4.dibuja();
+	pB5.dibuja();
+	pB6.dibuja();
+	pB7.dibuja();
+
+	AW.dibuja();
+	AW1.dibuja();
+	
+	AB.dibuja();
+	AB1.dibuja();
+
+	RW.dibuja();
+	RB.dibuja();
+
+	DW.dibuja();
+	DB.dibuja();
+
+	CW.dibuja();
+	CW1.dibuja();
+	CB.dibuja();
+	CB1.dibuja();
+
+	TW.dibuja();
+	TW1.dibuja();
+	TB.dibuja();
+	TB1.dibuja();
+
 	scene.dibuja();
 
 	//no borrar esta linea ni poner nada despues
