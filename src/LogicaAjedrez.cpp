@@ -244,39 +244,34 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab) {
             hay_pieza_tuya(posicion_siguiente, _p.GetJugador(), tab)))
         {
             posibles_movimientos.push_back(posicion_siguiente);
-            // PROMOCIÓN
-       /* Si puede promocionar, es porque no puede avanzar más.
-       * Comprobar esto antes de nada. Si se cumple, salir del bucle
-       */
-            for(int i=4;i<6;i++)
-            if ((_p.GetPosicion()==(0,9))|| (_p.GetPosicion() == (0, 0))) {
-                promocion_peon(_p, tab);
+
+            // si es su primer movimiento, el pe�n puede avanzar 2 filas
+            if (!_p.ha_movido()) {
+                posicion_buffer = posicion_siguiente;
+                siguienteCasilla(direcciones[0], posicion_buffer, posicion_siguiente);
+                posibles_movimientos.push_back(posicion_siguiente);
+                _p.set_ha_movido();
+                _p.set_ha_movido();
             }
 
+
+            // CAPTURA
+            // (comprobar si hay condiciones de captura)
+            // . . .
+            if (condiciones_captura_peon(_p, tab)) {
+
+            }
+
+            // CAPTURA AL PASO
+            // (comprobar si hay condiciones de captura al paso)
+            // . . .
+
+            for (int i = 4;i < 6;i++)
+                if ((_p.GetPosicion() == (i, 9)) || (_p.GetPosicion() == (i, 0))) {
+                    promocion_peon(_p, tab);
+                }
+
         }
-        // si es su primer movimiento, el pe�n puede avanzar 2 filas
-        if (!_p.ha_movido()) {
-            posicion_buffer = posicion_siguiente;
-            siguienteCasilla(direcciones[0], posicion_buffer, posicion_siguiente);
-            posibles_movimientos.push_back(posicion_siguiente);
-            _p.set_ha_movido();
-            _p.set_ha_movido();
-        }
-
-
-        // CAPTURA
-        // (comprobar si hay condiciones de captura)
-        // . . .
-        if (condiciones_captura_peon(_p, tab)) {
-
-        }
-
-        // CAPTURA AL PASO
-        // (comprobar si hay condiciones de captura al paso)
-        // . . .
-
-
-       
 
         break;
     }
@@ -498,8 +493,8 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
                 hay_pieza_rival(posicion_siguiente, jugador, tab)
                 ))posibles_movimientos.push_back(posicion_siguiente);
             
-        }
-
+            }
+      
         
         break;
 
@@ -509,10 +504,23 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
     return posibles_movimientos;
 
 }
+
 void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab) {
     auto jugador = tab[p_ini]->GetJugador();
     if (hay_pieza_rival(p_fin, jugador, tab)) tab.activar_captura(p_fin); // sólo activa la captura si hay pieza rival en el destino
     tab.mover_pieza(p_ini, p_fin);
+
+
+   // PROMOCIÓN
+  /* Si puede promocionar, es porque no puede avanzar más.
+  * Comprobar esto antes de nada. Si se cumple, salir del bucle
+  */
+    if(tab[p_ini]->GetTipo()==P)
+    for (int i = 4;i < 6;i++)
+        if ((p_fin == (i, 9)) || (p_fin == (i, 0))) {
+            promocion_peon(*(tab[p_fin]), tab);
+        }
+
 }
 
 // INICIALIZAR PIEZAS
@@ -572,19 +580,21 @@ void promocion_peon(Pieza p, Tablero tab) {
     switch (letra) {
     case 'D':
         tab.crear_pieza(D, p.GetJugador(), p.GetPosicion());
+  
         break;
-    case C:
+    case 'C':
         tab.crear_pieza(C, p.GetJugador(), p.GetPosicion());
         break;
-    case A:
+    case 'A':
         tab.crear_pieza(A, p.GetJugador(), p.GetPosicion());
         break;
-    case T:
+    case 'T':
         tab.crear_pieza(T, p.GetJugador(), p.GetPosicion());
         break;
     default:break;
     }
-
+    //tablero[_posicion.x][_posicion.y]->set_captura(); // la pieza que estaba primero en esa posición será capturada
+   // tablero[_posicion.x][_posicion.y] = &ninguna;
 }
 
 
