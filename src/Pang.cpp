@@ -129,19 +129,8 @@ void OnDraw(void)
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)  
 
 
-	//pW.dibuja();
-	//pB.dibuja();
-	//aW.dibuja();
-	//aB.dibuja();
-	//tB.dibuja();
-	//tW.dibuja();
-	//cB.dibuja();
-	//cW.dibuja();
-	//rB.dibuja();
-	//rW.dibuja();
-	//dW.dibuja();
-	//dB.dibuja();
-	scene.dibuja();
+	
+	scene.dibuja(2);
 
 	//tab.dibujaPiezas();
 	//no borrar esta linea ni poner nada despues

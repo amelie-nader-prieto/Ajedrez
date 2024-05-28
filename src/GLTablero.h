@@ -22,7 +22,7 @@ public:
 	Casilla cas;
 	Tablero chess; //Solo es una prueba
 	void init();
-	void dibuja();
+	void dibuja(int);
 
 	float width = 1.0f; //solo para prueba, despues eliminar es el ancho de la casilla
 	void MouseButton(int x, int y, int button, bool down, Vector2D&, Vector2D&, bool&);
