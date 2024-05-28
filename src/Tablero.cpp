@@ -157,6 +157,33 @@ void Tablero::activar_promocion(Vector2D _posicion) {
 	}
 
 }
+void Tablero::activar_promocion(Vector2D _posicion, Tipo nuevo_tipo) {
+	auto jugador = (*this)[_posicion]->GetJugador();
+	auto columna = _posicion.y;
+
+	(*this)[_posicion]->set_promocion();
+	tablero[_posicion.x][_posicion.y] = &ninguna;
+
+	// comprueba que el tipo al que se va a promocionar sea válido
+	if (
+		(nuevo_tipo == P || nuevo_tipo == R || nuevo_tipo == no_hay )|| /*tipos no permitidos en general*/
+		((columna == 2 || columna == 7) && (nuevo_tipo == D || nuevo_tipo == T)) /*en las columnas 2 y 8 sólo se promociona a C o A*/
+		) nuevo_tipo = C;
+
+	// CASILLAS PARA SÓLO CABALLO Y ALFIL - columnas 2 y 8
+	if (columna == 2 || columna == 8) /*promociona a alfil o caballo*/ {
+		// que se pueda elegir entre C y A
+		crear_pieza(nuevo_tipo, jugador, _posicion);
+	}
+
+	// CASILLAS PARA LAS CUATRO PIEZAS POSIBLES - columnas de la 3 a la 7
+	if (columna >= 3 && columna <= 7) {
+		// que se pueda elegir entre D, C T y A
+		crear_pieza(nuevo_tipo, jugador, _posicion);
+	}
+
+
+}
 void Tablero::borrar_pieza_capturada(Jugador _jugador) {
 	int num_capturadas=0, nuevo_num_piezas;
 	vector<Pieza>piezas_copia{};

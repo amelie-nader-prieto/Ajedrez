@@ -553,7 +553,28 @@ void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab) {
     tab.mover_pieza(p_ini, p_fin);
 
     // Aquí se comprueba la promoción del peón
-    if (condiciones_promocion(*tab[p_fin]))tab.activar_promocion(p_fin);
+    //if (condiciones_promocion(*tab[p_fin]))tab.activar_promocion(p_fin);
+    if (condiciones_promocion(*tab[p_fin])) {
+        // elegir nuevo tipo
+        Tipo nuevo_tipo;
+        char opc;
+        do {
+            std::cout << "\nPROMOCIÓN\nSelecciona nuevo tipo: "
+                << "(torre: t   caballo: c   alfil: a   dama: d)\n";
+            std::cin >> opc;
+        } while (!
+            (opc == 'd' || opc == 'c' || opc == 'a' || opc == 't'));
+        switch (opc) {
+        case 'd':nuevo_tipo = D; break;
+        case 'c':nuevo_tipo = C; break;
+        case 'a':nuevo_tipo = A; break;
+        case 't':nuevo_tipo = T; break;
+        default:nuevo_tipo = C; break;
+        }
+        // activar promoción
+        tab.activar_promocion(p_fin, nuevo_tipo);
+    }
+
 }
 
 // INICIALIZAR PIEZAS

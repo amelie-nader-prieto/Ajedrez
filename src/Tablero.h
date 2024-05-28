@@ -41,6 +41,7 @@ public:
 	void mover_pieza(Pieza&_p, Vector2D p_fin);
 	void activar_captura(Vector2D _posicion);
 	void activar_promocion(Vector2D _posicion);
+	void activar_promocion(Vector2D _posicion, Tipo nuevo_tipo);
 	void borrar_pieza_capturada(Jugador _jugador);
 
 	// Funciones de prueba

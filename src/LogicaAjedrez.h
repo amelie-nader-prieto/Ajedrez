@@ -51,6 +51,8 @@ inline std::ostream& operator<<(std::ostream& co, Pieza& _pieza) {
     if (_pieza.GetTipo() == no_hay) return co;
     co << (_pieza.GetTipo()) << (_pieza.GetJugador()) << " en " << (_pieza.GetPosicion());
     if (_pieza.GetCapturada()) co << " (capturada)";
+    else if (_pieza.GetPromocionado())co << "(promocionado)";
+    //else co << "       ";
     return co;
 }
 
