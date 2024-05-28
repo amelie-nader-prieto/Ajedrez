@@ -115,28 +115,3 @@ void Tablero::activar_captura(Vector2D _posicion) {
 }
 
 
-
-void Tablero::dibujaPiezas() {
-
-	/*
-		for (int i = 0; i < FILA; i++) {
-		for (int j = 0; j < COLUMNA; j++) {
-			// Si hay una pieza en esta posición, la dibujamos
-			if (tablero[i][j] != nullptr && tablero[i][j]->GetTipo() != no_hay) {
-				tablero[i][j]->dibuja(); // Llama al método dibuja() de cada pieza
-			}
-		}
-	}
-	*/
-
-
-		for (int i = 2; i < COLUMNA - 2; i++) {
-		tablero[2][i]->dibuja();
-		tablero[7][i]->dibuja();
-	}
-
-
-
-
-}
-

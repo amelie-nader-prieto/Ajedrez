@@ -1,5 +1,10 @@
 #include "GLTablero.h"
 
+//SOLO ES UNA PRUEBA
+SpriteSequence spritePN{ "bin/imagenes/peon-negro.png", 1 };
+SpriteSequence spritePB{ "bin/imagenes/peon-blanco.png", 1 };
+
+
 void GLTablero::init() {
 	//habilitar luces y definir perspectiva
 	glEnable(GL_LIGHT0);
@@ -98,7 +103,8 @@ void GLTablero::dibuja(int Estadoskin) {
 	ETSIDI::printxy("  9", -1, 9); ETSIDI::printxy("  10", -1, 10);
 	glTranslatef(0, despy, 0);
 
-	chess.dibujaPiezas();
+	//chess.dibujaPiezas();
+	drawPieces(chess);
 }
 
 
@@ -151,4 +157,70 @@ void GLTablero::MouseButton(int x, int y, int button, bool down, Vector2D& click
 	
 		
 		
+}
+
+
+void GLTablero::drawPieces(Tablero& chess) {
+	/*
+		for (int i = 0; i < FILA; i++) {
+		for (int j = 0; j < COLUMNA; j++) {
+			//si hay una pieza en esta posicion la dibujamos
+			if (chess.tablero[i][j] != nullptr && chess.tablero[i][j]->GetTipo() != no_hay) {
+				chess.tablero[i][j]->dibuja();
+			}
+
+		}
+	}
+	*/
+
+
+	//for (int i = 2; i < COLUMNA - 2; i++) {
+	//chess.tablero[2][i]->dibuja();
+	//chess.tablero[7][i]->dibuja();
+	//}
+
+	/*
+		for (int i = 2; i < COLUMNA - 2; i++) {
+		glPushMatrix();
+		switch (chess.tablero[2][i]->GetTipo())
+		{
+		case no_hay:
+			break;
+		case R:
+			break;
+		case D:
+			break;
+		case C:
+			break;
+		case A:
+			break;
+		case T:
+			break;
+		case P:
+			if (chess.tablero[2][i]->GetJugador() == Jugador::W) {
+				glTranslatef(posicion.y, posicion.x - 0.05, 0.02);
+				spritePB.setCenter(0, 0);
+				spritePB.setSize(1, 0.9);
+				spritePB.draw();
+				glTranslatef(-posicion.y, -posicion.x + 0.05, -0.02);
+
+			}
+
+			if (jugador == Jugador::B) {
+
+				glTranslatef(fila, columna - 0.05, 0.02);
+				spritePN.setCenter(0, 0);
+				spritePN.setSize(1, 0.9);
+				spritePN.draw();
+				glTranslatef(-fila, -columna + 0.05, -0.02);
+
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	glPopMatrix();
+	*/
+
 }

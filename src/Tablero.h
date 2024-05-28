@@ -18,7 +18,7 @@ using std::vector;
 
 class Tablero
 {
-	friend static void iniciar(Tipo tipo, Vector2D posicion, Jugador j, Tablero tab);
+	//friend static void iniciar(Tipo tipo, Vector2D posicion, Jugador j, Tablero tab);
 
 	Pieza ninguna;
 	vector<Pieza>piezas_bla{};
@@ -32,8 +32,8 @@ public:
 	Con lo que hay en este dato basta para gestionar todo
 	*/
 
-	// constructor
-	Tablero();
+	
+	Tablero(); // constructor
 
 	void mover_pieza(Vector2D p_ini, Vector2D p_fin);
 	void activar_captura(Vector2D _posicion);
@@ -41,17 +41,10 @@ public:
 	inline Pieza* operator[](const Vector2D& posicion)const {
 		return tablero[posicion.x][posicion.y];
 	}
-	//inline Pieza operator[](const Vector2D& posicion) {
-		//return *tablero[posicion.x][posicion.y];
-	//}
-
-
 	void cambiarTurno() { //Solo para probar si cambia de turno, despues borrar
 		//es solo para las pruebas de movimiento
 		turnoActual = (turnoActual == W) ? B : W;
 	}
 
-
-	void dibujaPiezas(); //aun por ver en donde va
 };
 

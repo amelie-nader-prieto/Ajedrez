@@ -47,11 +47,11 @@ public:
 		posicion = _posicion;
 	}
 
-	SpriteSequence spritePN{ "bin/imagenes/peon-negro.png", 1 };
-	SpriteSequence spritePB{ "bin/imagenes/peon-blanco.png", 1 };
+	//SpriteSequence spritePN{ "bin/imagenes/peon-negro.png", 1 };
+	//SpriteSequence spritePB{ "bin/imagenes/peon-blanco.png", 1 };
 
-
-	virtual void dibuja(){
+	/*
+		virtual void dibuja(){
 		glPushMatrix();
 		switch (tipo)
 		{
@@ -93,7 +93,9 @@ public:
 
 		glPopMatrix();
 	}
+	*/
 
 
+	//friend class GLTablero;
 
 };

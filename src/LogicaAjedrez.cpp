@@ -265,9 +265,28 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab) {
 
 }
 
-// INICIALIZAR PIEZAS
 
-static void iniciar(Tipo tipo, Vector2D posicion, Jugador j,Tablero tab)
+
+// FUNCIONES DE DIBUJO DEL TABLERO
+void dibujar(Tablero tab) {
+    for (int i = 0; i < FILA; i++) {
+        for (int j = 0; j < COLUMNA; j++) {
+            if (tab.tablero[i][j])
+                cout << "[" << tab.tablero[i][j]->GetTipo() << "]";
+            else // si es null es porque no se usa
+                cout << "   ";
+        }
+        cout << ' ' << FILA - i << '\n';
+    }
+    cout << " a  b  c  d  e  f  g  h  i  j  k" << '\n';
+
+}
+
+
+
+// INICIALIZAR PIEZAS
+/*
+static void iniciar(Tipo tipo, Vector2D posicion, Jugador j, Tablero tab)
 {
 
     switch (tipo)
@@ -304,32 +323,16 @@ static void iniciar(Tipo tipo, Vector2D posicion, Jugador j,Tablero tab)
         default:break;
         }
     }
-
-
-
-}
-
-
-// FUNCIONES DE DIBUJO DEL TABLERO
-void dibujar(Tablero tab) {
-    for (int i = 0; i < FILA; i++) {
-        for (int j = 0; j < COLUMNA; j++) {
-            if (tab.tablero[i][j])
-                cout << "[" << tab.tablero[i][j]->GetTipo() << "]";
-            else // si es null es porque no se usa
-                cout << "   ";
-        }
-        cout << ' ' << FILA - i << '\n';
-    }
-    cout << " a  b  c  d  e  f  g  h  i  j  k" << '\n';
-
+    
 }
 
 void liberar_memoria(Tablero tab) {
-
-    for (int i = 0; i < FILA; ++i) {
+   
+        for (int i = 0; i < FILA; ++i) {
         for (int j = 0; j < COLUMNA; ++j) {
             delete tab.tablero[i][j]; // liberar la memoria de cada pieza
         }
     }
 }
+
+*/

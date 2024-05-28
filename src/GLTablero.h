@@ -6,7 +6,7 @@
 
 #include "Tablero.h"
 
-
+using ETSIDI::SpriteSequence;
 
 #define FILA 10
 #define COLUMNA 11
@@ -18,13 +18,12 @@ class GLTablero
 {
 public:
 
-
 	Casilla cas;
 	Tablero chess; //Solo es una prueba
 	void init();
 	void dibuja(int);
 
-	float width = 1.0f; //solo para prueba, despues eliminar es el ancho de la casilla
+	float width = 1.0f; //ancho de la casilla
 	void MouseButton(int x, int y, int button, bool down, Vector2D&, Vector2D&, bool&);
 	void world2cell(double x, double y, int& cell_x, int& cell_y) {
 		//world coordinates to cell
@@ -32,6 +31,7 @@ public:
 		cell_y = (int)(1 + x / width);
 	}
 
+	void drawPieces(Tablero&);
 
 protected:
 	//mouse	
