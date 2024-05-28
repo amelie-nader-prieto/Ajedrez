@@ -51,10 +51,12 @@ int main(){
 	auto& mi_Pn = *(tab3[{2, 3}]);
 	
 	//probar_movimientos_pieza(mi_Cn, tab3);
+	
 	probar_movimientos_pieza(mi_Pb, tab3);
 	probar_movimientos_pieza(mi_Pn, tab3);
 
 	imprime_info_tablero_completa(tab3);
+
 	return 0;
 	
 }

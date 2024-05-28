@@ -58,6 +58,35 @@ bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vect
 
     return false;
 }
+bool condiciones_promocion(Pieza peon) {
+    if (peon.GetTipo() != P)return false; // sólo promocionan los peones
+    
+    auto jugador = peon.GetJugador();
+    auto columna = peon.GetPosicion().y;
+    auto fila = peon.GetPosicion().x;
+
+    switch (jugador) {
+    case W:
+        // Blanco - las filas últimas son 0, 1 y 2 (la 2 sólo para caballo o alfil)
+        if (
+            ((columna == 2 || columna == 8) && fila == 2) ||
+            ((columna == 3 || columna == 7) && fila == 1) ||
+            ((columna > 3 && columna < 7) && fila == 0))return true;
+        break;
+    case B:
+        // Negro - las filas últimas son 7, 8 y 9 (la 7 sólo para caballo o alfil)
+        if (
+            ((columna == 2 || columna == 8) && fila == 7) ||
+            ((columna == 3 || columna == 7) && fila == 8) ||
+            ((columna > 3 && columna < 7) && fila == 9))return true;
+        break;
+    default:break;
+    }
+
+    return false;
+
+}
+
 
 // FUNCIONES DE MOVIMIENTO
 void siguienteCasilla(Dir_t dir, Vector2D ini, Vector2D& fin) {
@@ -505,6 +534,9 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
             
         }
 
+        // PROMOCIÓN
+        // Se hace en el mismo turno, justo después de mover
+
         
         break;
 
@@ -517,7 +549,11 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
 void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab) {
     auto jugador = tab[p_ini]->GetJugador();
     if (hay_pieza_rival(p_fin, jugador, tab)) tab.activar_captura(p_fin); // sólo activa la captura si hay pieza rival en el destino
+    
     tab.mover_pieza(p_ini, p_fin);
+
+    // Aquí se comprueba la promoción del peón
+    if (condiciones_promocion(*tab[p_fin]))tab.activar_promocion(p_fin);
 }
 
 // INICIALIZAR PIEZAS

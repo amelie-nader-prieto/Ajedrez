@@ -136,6 +136,27 @@ void Tablero::activar_captura(Vector2D _posicion) {
 
 	//borrar_pieza_capturada(jugador); // lo siguiente es borrar la pieza capturada
 }
+void Tablero::activar_promocion(Vector2D _posicion) {
+	auto jugador = (*this)[_posicion]->GetJugador();
+
+	//tablero[_posicion.x][_posicion.y] = &ninguna; // la casilla que antes apuntaba al peón ahora apunta a ningún sitio (se vacía la casilla)
+
+	// se crea una nueva pieza en dicha casilla
+
+	// CASILLAS PARA SÓLO CABALLO Y ALFIL - columnas 2 y 8
+	auto columna = _posicion.y;
+	if (columna == 2 || columna == 8) /*promociona a alfil o caballo*/ {
+		// que se pueda elegir entre C y A
+		crear_pieza(C, jugador, _posicion);
+	}
+
+	// CASILLAS PARA LAS CUATRO PIEZAS POSIBLES - columnas de la 3 a la 7
+	if (columna >= 3 && columna <= 7) {
+		// que se pueda elegir entre D, C T y A
+		crear_pieza(D, jugador, _posicion);
+	}
+
+}
 void Tablero::borrar_pieza_capturada(Jugador _jugador) {
 	int num_capturadas=0, nuevo_num_piezas;
 	vector<Pieza>piezas_copia{};

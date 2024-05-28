@@ -40,6 +40,7 @@ public:
 	void mover_pieza(Vector2D p_ini, Vector2D p_fin);
 	void mover_pieza(Pieza&_p, Vector2D p_fin);
 	void activar_captura(Vector2D _posicion);
+	void activar_promocion(Vector2D _posicion);
 	void borrar_pieza_capturada(Jugador _jugador);
 
 	// Funciones de prueba
@@ -55,4 +56,5 @@ public:
 	*/
 	inline auto get_piezas_bla() { return piezas_bla; }
 	inline auto get_piezas_neg() { return piezas_neg; }
+	
 };

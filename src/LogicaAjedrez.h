@@ -117,6 +117,13 @@ esta función para evaluar la posibilidad del jugador opuesto de capturar dicho p
 */
 bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vector<Vector2D>posicion_posible_capturador);
 
+/* CONDICIONES DE PROMOCIÓN DEL PEÓN
+* Promociona sólo a caballo o alfil si llega a la fila última en las columnas c, i (columnas 2 y 8)
+* Promociona a caballo, alfil, dama o torre si llega a la fila última en las columnas d-h (columnas 3-7)
+* En las columnas a y k (columnas 0 y 9) no hay promoción.
+*/
+bool condiciones_promocion(Pieza peon);
+
 // FUNCIONES DE MOVIMIENTO
 /*
 * A partir de una posición y una dirección, te da las coordenadas
