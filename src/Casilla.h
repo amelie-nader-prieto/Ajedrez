@@ -12,11 +12,11 @@ public:
         std::cout << "( " << row << " , " << col << " )" << std::endl;
     }
 
-	void dibuja(int i, int j) {
+	void dibuja(int i, int j, int ro, int go, int bo, int rc, int gc, int bc) {
 		int sum = i + j;
 		glDisable(GL_LIGHTING);
-		if (sum % 2) glColor3ub(216, 243, 220); //para casillas pares un color mas oscuro//glColor3ub(23, 31, 161);
-		else glColor3ub(82, 183, 136);//glColor3ub(126, 128, 156);
+		if (sum % 2) glColor3ub(rc, gc, bc); //para casillas pares un color mas claro//glColor3ub(23, 31, 161);
+		else glColor3ub(ro, go, bo);//glColor3ub(126, 128, 156);
 		glBegin(GL_POLYGON);
 		glVertex2f(i + 1, j + 1); //antihorario 
 		glVertex2f(i + 1, j);

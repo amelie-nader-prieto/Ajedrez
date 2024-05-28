@@ -8,8 +8,8 @@ class Torre :
 public:
     Torre(int fila, int columna,Jugador j=B);
 
-    SpriteSequence spriteN{ "bin/imagenes/torre-negro.png", 1 };
-    SpriteSequence spriteB{ "bin/imagenes/torre-blanco.png", 1 };
+    //SpriteSequence spriteN{ "bin/imagenes/torre-negro.png", 1 };
+    //SpriteSequence spriteB{ "bin/imagenes/torre-blanco.png", 1 };
 
-    void dibuja();
+    void dibuja(int);
 };
