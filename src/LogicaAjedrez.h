@@ -5,6 +5,7 @@
 
 using std::cout;
 
+// OPERADORES
 // operador para imprimir los tipos de piezas
 inline std::ostream& operator<<(std::ostream& co, const Tipo& t) {
 
@@ -99,10 +100,29 @@ inline bool omitir_posicion(const Vector2D& _posicion) {
 bool hay_pieza_tuya(Vector2D _posicion, Jugador _jugador, Tablero tab);
 /* Para saber si hay una pieza del color opuesto en una casilla determinada */
 bool hay_pieza_rival(Vector2D _posicion, Jugador _jugador, Tablero tab);
+
 /* Para saber si se cumplen las condiciones para que un peón (pasado como argumento) haga una captura tradicional
 * Podrá hacer una captura tradicional si hay una pieza rival en la fila siguiente en diagonal
 */
 bool condiciones_captura_peon(Pieza _peon, Tablero tab);
+/*
+* Para saber si se cumplen las condiciones para una captura al paso
+* Si el peón de un jugador avanza dos filas, en el turno siguiente se llamará a
+esta función para evaluar la posibilidad del jugador opuesto de capturar dicho peón.
+* ARGUMENTOS:
+* Tablero
+* Posición del peón que acaba de avanzar dos filas (si es true, dicho peón podrá ser capturado en ese turno)
+* posicion_posible_capturador: si la función es true, se inicializará con la posición del peón qe podrá capturar en ese turno
+* Es un vector en caso de que por un casual haya varios posibles capturadores
+*/
+bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vector<Vector2D>posicion_posible_capturador);
+/* CONDICIONES DE PROMOCIÓN DEL PEÓN
+* Promociona sólo a caballo o alfil si llega a la fila última en las columnas c, i (columnas 2 y 8)
+* Promociona a caballo, alfil, dama o torre si llega a la fila última en las columnas d-h (columnas 3-7)
+* En las columnas a y k (columnas 0 y 9) no hay promoción.
+*/
+bool condiciones_promocion(Pieza peon);
+
 
 // FUNCIONES DE MOVIMIENTO
 /*
@@ -116,17 +136,65 @@ void siguienteCasilla(Dir_t dir, Vector2D ini, Vector2D& fin);
 * dónde están todas las demás
 */
 vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab);
+/*
+* Te da todas las posiciones a las que podría moverse una pieza
+* a partir de su posición y del tablero.
+* Usad esta si podéis. A mí al menos me ha dado menos problemas
+*/
+vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab);
+/* Para mover una pieza
+* Incluye la lógica de la captura (tienen que coincidir dos piezas opuestas en la posición de destino)
+*/
+void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab);
 
 
 // INICIALIZAR PIEZAS
 // Esta función hace que cuando se quiera iniciar una pieza se manda el tipo y dirección 
 static void iniciar(Tipo tipo, Vector2D posicion, Jugador j,Tablero tab);
 
-// FUNCIONES DE DIBUJO DEL TABLERO (lo dibujan en la consola)
+
+// Liberar la memoria al final del programa
+void liberar_memoria(Tablero tab);
+
+
+
+// FUNCIONES PARA HACER PRUEBAS
+/* Para ir comprobando si funcionan los movimientos, si los datos de las piezas
+se actualizan bien, si la captura y la promoción se activan cuando deben etc etc*/
 /*
 * Dibuja el tablero en la consola, con todas las piezas
 */
 void dibujar(Tablero tab);
+/* Imprime el tablero en la consola y pone debajo una lista de las piezas que hay
+Accede tanto a lo público como a lo privado. De esta forma se va viendo si las coordenadas
+se actualizan bien y todo eso */
+void imprime_info_tablero(Tablero tab);
+/*
+* Imprime en la consola el tablero con las posiciones a las que se puede mover
+* una pieza determinada
+*/
+void imprime_movimientos_pieza(Pieza p, Tablero tab, vector<Vector2D>& lista);
 
-// Liberar la memoria al final del programa
-void liberar_memoria(Tablero tab);
+/*
+* Imprime una lista de todas las piezas que hay en el tablero,
+* consultando la interfaz PÚBLICA de la clase tablero
+*/
+void lista_piezas(Tablero tab);
+/*
+Imprime una lista de todas las piezas que hay en el tablero,
+consultando los datos PRIVADOS de la clase tablero
+*/
+void lista_piezas_privada(Tablero tab);
+/*
+* Imprime una lista de los sitios a los que se puede mover la pieza
+* También inicializa dicha lista y te la da a través de un vector pasado por referencia
+*/
+void lista_posibles_movimientos(Pieza p, Tablero tab, vector<Vector2D>&lista);
+
+/*
+* Bucle para mover la misma pieza varias veces seguidas.
+* Puedes moverla a una casilla que elijas (eliges a través del teclado)
+* y permite capturar, promocionar etc
+* Uso esta función para comprobar si se mueven y capturan bien
+*/
+void probar_movimientos_pieza(Pieza& p, Tablero& tab);
