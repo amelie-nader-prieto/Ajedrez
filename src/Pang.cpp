@@ -1,35 +1,7 @@
 #include "freeglut.h"
 #include "LogicaAjedrez.h"
-#include "GLTablero.h"
 
-//solo estoy comprobando si dibuja el sprite despues
-//eliminar estas lineas 
-#include "peon.h"
-#include "torre.h"
-#include "alfil.h"
-#include "rey.h"
-#include "dama.h"
-#include "caballo.h"
-
-/*
-Peon pW(3, 4, Jugador::W);
-Alfil aW(3, 5, Jugador::W);
-Torre tW(3, 6, Jugador::W);
-Dama dW(4, 8, Jugador::W);
-Caballo cW(4, 9, Jugador::W);
-Rey rW(4, 10, Jugador::W);
-
-Peon pB(8, 6, Jugador::B);
-Alfil aB(9, 5, Jugador::B);
-Torre tB(9, 6, Jugador::B);
-Dama dB(9, 8, Jugador::B);
-Caballo cB(9, 9, Jugador::B);
-Rey rB(9, 10, Jugador::B);
-*/
-
-
-
-//void pruebaMovimeinto(); //solo compruebo el movimiento, despues eliminar
+#include "Coordinador.h"
 
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
@@ -37,8 +9,9 @@ void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecl
 void OnMouseClick(int button, int state, int x, int y); //para eventos del mouse
 /////////////////////////////////////////////////////
 
-Tablero tab;
-GLTablero scene; //Para el dibujo del tablero y casillas
+//Tablero tab;
+//GLTablero scene; //Para el dibujo del tablero y casillas
+Coordinador coordinador;
 
 
 //Variables globales para la gestión de los clicks
@@ -51,41 +24,7 @@ bool seleccionado = true;
 
 
 int main(int argc, char* argv[]){
-	// vamos a crear un tablero para ver si funciona bien
-
-	/*
-for (int i = 0; i < FILA; i++) {
-		for (int j = 0; j < COLUMNA; j++) {
-			// vamos a comprobar si est�n bien las posiciones de memoria
-			if (tab.tablero[i][j])
-			{
-				cout << (tab.tablero[i][j]->GetPosicion()) << ":\t";
-				cout << tab.tablero[i][j] << '\n';
-			}
-		}
-		cout << '\n';
-	}
-
-	for (int i = 0; i < FILA; i++) {
-		for (int j = 0; j < COLUMNA; j++) {
-			// comprobamos si se han creado las piezas correctamente
-			if (tab.tablero[i][j]) {
-				if (tab.tablero[i][j]->GetTipo() != no_hay){
-					cout << "(" << i << ',' << j << ")" << '\t';
-					cout << (*tab.tablero[i][j]) << '\n';
-				}
-			}
-		}
-	}
-	*/
-	/*
-	Tablero tab;
-	auto& mi_pieza = *tab[{7, 3}];
-	probar_movimientos_pieza(mi_pieza,tab);*/
-
-	// por favor enlazador no me traiciones
-	std::cout << "Estado inicial del tablero" << std::endl;
-	//dibujar(tab); 
+	
 
 
 //Inicializar el gestor de ventanas GLUT y crear la ventana
@@ -93,8 +32,6 @@ for (int i = 0; i < FILA; i++) {
 	glutInitWindowSize(800, 600);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutCreateWindow("Ajedrez BALBO");
-
-	scene.init(); //reempleza a (habilitar luces, cuando ya se defina en donde va el main;
 
 	//Registrar los callbacks
 	glutDisplayFunc(OnDraw);
@@ -132,9 +69,10 @@ void OnDraw(void)
 
 
 	
-	scene.dibuja(2);
-
-	//tab.dibujaPiezas();
+	//scene.dibuja(2);
+	//El dibujar es llevado por el coordinador
+	coordinador.dibuja();
+	
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
 }
@@ -165,7 +103,11 @@ void OnMouseClick(int b, int state, int x, int y) {
 		button = MOUSE_LEFT_BUTTON;
 	}
 
-	scene.MouseButton(x, y, b, down, click_inicial, click_final, seleccionado);
+	//scene.MouseButton(x, y, b, down, click_inicial, click_final, seleccionado);
+	//El mouseBotton es llevado a acabo por el coordinador
+	coordinador.MouseBottom(x, y, b, down, click_inicial, click_final, seleccionado);
+	
+	
 	glutPostRedisplay();
 
 }
