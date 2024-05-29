@@ -3,9 +3,9 @@
 
 Peon::Peon(int fila, int columna,Jugador j) :
 	Pieza(fila, columna, P,j)
-{
-}
+{}
 
+/*
 void Peon::dibuja(int Estadoskin) {
 
 	std::string skin = "default";
@@ -62,9 +62,9 @@ void Peon::dibuja(int Estadoskin) {
 		glTranslatef(columna - 1, fila + 0.05 - 1, 0);
 		spritePeonN.setCenter(CenterB_X, CenterB_Y);
 		spritePeonN.setSize(SizeB_X, SizeB_Y);
-		//spritePeonN.flip(true, true);
 		spritePeonN.draw();
 		glTranslatef(-columna + 1, -fila - 0.05 + 1, 0);
 		glEnable(GL_LIGHTING);
 	}
 }
+*/

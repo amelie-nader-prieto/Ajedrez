@@ -11,6 +11,7 @@ void OnMouseClick(int button, int state, int x, int y); //para eventos del mouse
 
 Tablero tab; //Para la gestión de la lógica
 GLTablero scene; //Para el dibujo del tablero, casillas y piezas
+int EstadoSkin = 2;
 
 //Variables globales para la gestión de los clicks
 Vector2D click_inicial{ -1, -1 };
@@ -94,7 +95,8 @@ void OnDraw(void)
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)  
 
 
-	scene.dibuja(2);
+	scene.dibuja(1);
+	scene.drawPieces(tab, 1);
 
 	//tab.dibujaPiezas();
 	//no borrar esta linea ni poner nada despues

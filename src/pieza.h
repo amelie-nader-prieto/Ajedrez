@@ -95,7 +95,4 @@ public:
 	}
 	*/
 
-
-	//friend class GLTablero;
-
 };

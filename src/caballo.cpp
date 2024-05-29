@@ -6,6 +6,7 @@ Caballo::Caballo(int fila, int columna,Jugador j) :
 
 }
 
+/*
 void Caballo::dibuja(int Estadoskin) {
 
 	std::string skin = "default";
@@ -18,9 +19,6 @@ void Caballo::dibuja(int Estadoskin) {
 	{
 	case 1:
 		skin = "default";
-
-
-
 		break;
 	case 2:
 		skin = "StarWars";
@@ -37,9 +35,6 @@ void Caballo::dibuja(int Estadoskin) {
 
 		CenterB_X = -0.05; CenterB_Y = 0.02;
 		SizeB_X = 0.9; SizeB_Y = 0.95;
-
-
-
 		break;
 	}
 	direccionB = "bin/imagenes/" + skin + "/CaballoNegro.png";
@@ -72,3 +67,5 @@ void Caballo::dibuja(int Estadoskin) {
 	}
 }
 
+
+*/

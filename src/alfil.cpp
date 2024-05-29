@@ -4,16 +4,14 @@
 Alfil::Alfil(int fila, int columna,Jugador j) :
 	Pieza(fila, columna, A, j ) {
 
+
 }
 
-void Alfil::dibuja(int Estadoskin) {
+//void Alfil::dibuja(int Estadoskin) {
 
-	std::string skin = "default";
-	std::string direccionW = "";
-	std::string direccionB = "";
-	double CenterW_X, CenterW_Y, CenterB_X, CenterB_Y;
-	double SizeW_X, SizeW_Y, SizeB_X, SizeB_Y;
 
+
+	/*
 	switch (Estadoskin)
 	{
 	case 1:
@@ -42,13 +40,10 @@ void Alfil::dibuja(int Estadoskin) {
 
 		break;
 	}
-	direccionB = "bin/imagenes/" + skin + "/AlfilNegro.png";
-	direccionW = "bin/imagenes/" + skin + "/AlfilBlanco.png";
-	const char* rutaB = direccionB.c_str();
-	const char* rutaW = direccionW.c_str();
-	SpriteSequence spriteAlfilN{ rutaB, 1 };
-	SpriteSequence spriteAlfilB{ rutaW, 1 };
+	/*
+	
 
+	/*
 	if (jugador == Jugador::W) {
 		glDisable(GL_LIGHTING);
 		glTranslatef(columna - 1, fila - 0.95, 0);
@@ -69,4 +64,6 @@ void Alfil::dibuja(int Estadoskin) {
 		glTranslatef(-columna + 1, -fila - 0.05 + 1, 0);
 		glEnable(GL_LIGHTING);
 	}
-}
+	*/
+	
+//}

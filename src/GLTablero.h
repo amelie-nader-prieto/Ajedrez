@@ -6,6 +6,8 @@
 
 #include "Tablero.h"
 
+#include "alfil.h"
+
 using ETSIDI::SpriteSequence;
 
 #define FILA 10
@@ -21,7 +23,7 @@ public:
 	Casilla cas;
 	Tablero chess; //Solo es una prueba
 	void init();
-	void dibuja(int);
+	void dibuja(const int&);
 
 	float width = 1.0f; //ancho de la casilla
 	void MouseButton(int x, int y, int button, bool down, Vector2D&, Vector2D&, bool&);
@@ -31,10 +33,11 @@ public:
 		cell_y = (int)(1 + x / width);
 	}
 
-	void drawPieces(Tablero&);
+	void drawPieces(Tablero&, const int&);
 
 protected:
 	//mouse	
 	int xcell_sel, ycell_sel;			//cell selected with mouse
+
 };
 

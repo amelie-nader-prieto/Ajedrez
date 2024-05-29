@@ -9,7 +9,7 @@ public:
     Peon(int fila, int columna,Jugador j=B);
   
   
-    void dibuja(int skin);
+    //void dibuja(int skin);
 
 
 };
