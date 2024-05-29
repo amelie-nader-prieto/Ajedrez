@@ -10,17 +10,17 @@ Tablero::Tablero() :turnoActual(W) { //Inicializa el turno actual para que empie
 
 	// Creación de los peones
 	for (int i = 2; i < COLUMNA - 2; i++) {
-		piezas_neg.push_back(Pieza(Vector2D(7, i), B, P));
-		piezas_bla.push_back(Pieza(Vector2D(2, i), W, P));
-	} //Revisar las posiciones de las piezas, blancas van abajo y negras arriba
+		piezas_neg.push_back(Pieza(Vector2D(2, i), B, P));
+		piezas_bla.push_back(Pieza(Vector2D(7, i), W, P));
+	}
 
 	// Creación de las fichas en la fila intermedia
 	// T C A C T
 	vector<Tipo>tipos_fila_intermedia{ T,C,A,C,T };
 	int j = 3;
 	for (auto tipo : tipos_fila_intermedia) {
-		piezas_neg.push_back(Pieza(Vector2D(8, j), B, tipo));
-		piezas_bla.push_back(Pieza(Vector2D(1, j), W, tipo));
+		piezas_neg.push_back(Pieza(Vector2D(1, j), B, tipo));
+		piezas_bla.push_back(Pieza(Vector2D(8, j), W, tipo));
 
 		j++;
 	}
@@ -30,11 +30,10 @@ Tablero::Tablero() :turnoActual(W) { //Inicializa el turno actual para que empie
 	vector<Tipo>tipos_fila_fondo{ R,A,D };
 	j = 4;
 	for (auto tipo : tipos_fila_fondo) {
-		piezas_neg.push_back(Pieza(Vector2D(9, j), B, tipo));
-		piezas_bla.push_back(Pieza(Vector2D(0, j), W, tipo));
+		piezas_neg.push_back(Pieza(Vector2D(0, j), B, tipo));
+		piezas_bla.push_back(Pieza(Vector2D(9, j), W, tipo));
 
 		j++;
-
 	}
 
 	// filas 3 y 6: no hay nada
@@ -81,12 +80,11 @@ Tablero::Tablero() :turnoActual(W) { //Inicializa el turno actual para que empie
 void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
 	//Termina la ejecución del método "mover_pieza" si se detecta que no es el jugador al que le toca
 	//mover la pieza (al que le toca el turno). Impide que el movimiento de la pieza se realice
-	if (tablero[p_ini.x][p_ini.y]->GetJugador() != turnoActual) {
-		//No es el turno del Jugador que intenta mover la pieza
-		std::cout << "No es tu turno!" << std::endl;
-		return;
-	}
-
+	//if (tablero[p_ini.x][p_ini.y]->GetJugador() != turnoActual) {
+	//	//No es el turno del Jugador que intenta mover la pieza
+	//	std::cout << "No es tu turno!" << std::endl;
+	//	return;
+	//}
 
 	tablero[p_fin.x][p_fin.y] = tablero[p_ini.x][p_ini.y];
 	tablero[p_ini.x][p_ini.y] = &ninguna; // la posición inicial se queda vacía
@@ -94,13 +92,13 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
 	// busca la pieza que ha movido para actualizar sus coordenadas
 	switch (tablero[p_fin.x][p_fin.y]->GetJugador()) {
 	case B:
-		for (auto p : piezas_neg) {
+		for (auto&p : piezas_neg) {
 			if (p.GetPosicion() == p_ini)p.actualizar_coordenadas(p_fin);
 		}
 		break;
 
 	case W:
-		for (auto p : piezas_bla) {
+		for (auto&p : piezas_bla) {
 			if (p.GetPosicion() == p_ini)p.actualizar_coordenadas(p_fin);
 		}
 		break;

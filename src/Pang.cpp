@@ -79,11 +79,13 @@ for (int i = 0; i < FILA; i++) {
 	}
 	*/
 	
+	Tablero tab;
+	auto& mi_pieza = *tab[{7, 3}];
+	probar_movimientos_pieza(mi_pieza,tab);
 
 	// por favor enlazador no me traiciones
 	std::cout << "Estado inicial del tablero" << std::endl;
 	//dibujar(tab); 
-
 
 
 //Inicializar el gestor de ventanas GLUT y crear la ventana
