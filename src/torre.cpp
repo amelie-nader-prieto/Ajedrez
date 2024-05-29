@@ -6,6 +6,7 @@ Torre::Torre(int fila, int columna,Jugador j) :
 
 }
 
+/*
 void Torre::dibuja(int Estadoskin) {
 	std::string skin = "default";
 	std::string direccionW = "";
@@ -16,13 +17,10 @@ void Torre::dibuja(int Estadoskin) {
 	switch (Estadoskin)
 	{
 	case 1:
-		skin = "default";
-
-
-
+		//skin = "default";
 		break;
 	case 2:
-		skin = "StarWars";
+		//skin = "StarWars";
 		CenterW_X = -0.05; CenterW_Y = -0.01;
 		SizeW_X = 0.9; SizeW_Y = 0.9;
 
@@ -30,15 +28,12 @@ void Torre::dibuja(int Estadoskin) {
 		SizeB_X = 0.9; SizeB_Y = 0.95;
 		break;
 	case 3:
-		skin = "AnimalCrossing";
+		//skin = "AnimalCrossing";
 		CenterW_X = 0; CenterW_Y = 0.05;
 		SizeW_X = 1; SizeW_Y = 1;
 
 		CenterB_X = -0.05; CenterB_Y = 0.06;
 		SizeB_X = 0.9; SizeB_Y = 0.95;
-
-
-
 		break;
 	}
 	direccionB = "bin/imagenes/" + skin + "/TorreNegro.png";
@@ -69,3 +64,4 @@ void Torre::dibuja(int Estadoskin) {
 		glEnable(GL_LIGHTING);
 	}
 }
+*/

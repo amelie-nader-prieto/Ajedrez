@@ -8,5 +8,4 @@ class Caballo :
 public:
     Caballo(int fila, int columna,Jugador j=B);
 
-  //  void dibuja(int);
 };

@@ -27,7 +27,7 @@ Tablero::Tablero() :turnoActual(W) { //Inicializa el turno actual para que empie
 
 	// Creación de las fichas en la fila del fondo
 	// R A D
-	vector<Tipo>tipos_fila_fondo{ R,A,D };
+	vector<Tipo>tipos_fila_fondo{ D,A,R };
 	j = 4;
 	for (auto tipo : tipos_fila_fondo) {
 		piezas_neg.push_back(Pieza(Vector2D(0, j), B, tipo));

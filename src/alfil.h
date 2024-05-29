@@ -7,7 +7,7 @@ class Alfil :
 {
 public:
     Alfil(int fila, int columna,Jugador j=B);
-    //void dibuja(int);
+
 
 
 };
