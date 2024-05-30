@@ -47,52 +47,5 @@ public:
 		posicion = _posicion;
 	}
 
-	//SpriteSequence spritePN{ "bin/imagenes/peon-negro.png", 1 };
-	//SpriteSequence spritePB{ "bin/imagenes/peon-blanco.png", 1 };
-
-	/*
-		virtual void dibuja(){
-		glPushMatrix();
-		switch (tipo)
-		{
-		case no_hay:
-			break;
-		case R:
-			break;
-		case D:
-			break;
-		case C:
-			break;
-		case A:
-			break;
-		case T:
-			break;
-		case P:
-			if (jugador == Jugador::W) {
-				glTranslatef(posicion.y, posicion.x - 0.05, 0.02);
-				spritePB.setCenter(0, 0);
-				spritePB.setSize(1, 0.9);
-				spritePB.draw();
-				glTranslatef(-posicion.y, -posicion.x + 0.05, -0.02);
-
-			}
-
-			if (jugador == Jugador::B) {
-
-				glTranslatef(fila, columna - 0.05, 0.02);
-				spritePN.setCenter(0, 0);
-				spritePN.setSize(1, 0.9);
-				spritePN.draw();
-				glTranslatef(-fila, -columna + 0.05, -0.02);
-
-			}
-			break;
-		default:
-			break;
-		}
-
-		glPopMatrix();
-	}
-	*/
 
 };
