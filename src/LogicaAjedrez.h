@@ -149,7 +149,7 @@ vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab);
 /*
 * Te da todas las posiciones a las que podría moverse una pieza
 * A partir de su posición y del tablero
-* Usad esta si podéis. A mí al menos me ha dado menos problemas
+* USAD ESTA si podéis. A mí al menos me ha dado menos problemas
 */
 vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab);
 
