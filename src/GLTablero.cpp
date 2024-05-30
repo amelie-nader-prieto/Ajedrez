@@ -137,15 +137,14 @@ void GLTablero::MouseButton(int x, int y, int button, bool down, Vector2D& click
 			if (seleccionado) {
 				click_inicial = Vector2D{ xcell_sel, ycell_sel };
 				seleccionado = false; //Para pasar a la seleccion de la posicion final
-				std::cout << "incial seleccionada, ahora selecciona final" << std::endl;
+				std::cout << "Casilla inicial: " << click_inicial <<std::endl;
 			}
 			else {
 				click_final = Vector2D{ xcell_sel, ycell_sel };
 				seleccionado = true; //Pra volver a seleccionar una pieza
-				std::cout << "final seleccionado....espera movimiento" << std::endl;
-				std::cout << "inicial: " << click_inicial << " final: " << click_final << std::endl;
+				std::cout << "Casilla final: "<<click_final << std::endl;
 				chess.mover_pieza(click_inicial, click_final); //intenta mover la pieza
-				std::cout << "Deberia haber movido la pieza" << std::endl;
+				std::cout << "Espera movimiento......Debería haber movido" << std::endl;
 			}
 			std::cout << "(" << xcell_sel << "," << ycell_sel << ")" << std::endl;
 		}

@@ -75,10 +75,22 @@ Tablero::Tablero() {
 * Puedes pasarle la ubicación, ya que el tablero sabe qué pieza hay ahí
 */
 void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
+
 	// se asegura de que no intentes mover una pieza que no existe
 	if (
 		(!tablero[p_ini.x][p_ini.y]) || (tablero[p_ini.x][p_ini.y]->GetTipo() == no_hay)
 		)return void{};
+
+	//Termina la ejecución del método "mover_pieza" si se detecta que no es el jugador al que le toca
+    //mover la pieza (al que le toca el turno). Impide que el movimiento de la pieza se realice
+	//if (tablero[p_ini.x][p_ini.y]->GetJugador() != turnoActual) {
+		//No es el turno del Jugador que intenta mover la pieza
+		//std::cout << "No es tu turno!" << std::endl;
+		//return;
+	//}
+
+
+
 
 	auto jugador = tablero[p_ini.x][p_ini.y]->GetJugador();
 
@@ -101,6 +113,10 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
 
 	default:break;
 	}
+
+	//Cambia el turno al otro jugador: Despues de mover la pieza y actualizar las coordenadas
+//el turno se cambia al otro jugador, despues de cada movimiento válido el turno pasa al otro jugador
+	//turnoActual = (turnoActual == W) ? B : W;
 
 }
 
