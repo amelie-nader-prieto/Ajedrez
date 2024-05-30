@@ -5,12 +5,13 @@
 
 class Coordinador
 {
-	GLTablero mundo_grafico;
+	//GLTablero mundo_grafico;
 	enum Estado { INICIO, OPCIONES, JUEGO, PAUSA, GAMEOVER, FIN} estado=INICIO;
 	enum Tipo_Tablero{TIPO1=1, TIPO2, TIPO3}graf_tablero=TIPO1;
 	
 
 public:
+	GLTablero mundo_grafico;
 	//Coordinador();
 	void iniciar();
 	virtual ~Coordinador();

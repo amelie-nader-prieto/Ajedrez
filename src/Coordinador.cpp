@@ -9,14 +9,29 @@ void Coordinador::dibuja()
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0)
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y)
 		//Aparecerá la imagen de inicio
-		
-		ETSIDI::setTextColor(1, 1, 0);
+		////////////Imagen de fondo////////////////
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(menu_principal).id);
+		glDisable(GL_LIGHTING);
+		glBegin(GL_POLYGON);
+		glColor3f(1, 1, 1);
+		glTexCoord2d(0, 1); glVertex2d(-3.33, -1.2);
+		glTexCoord2d(1, 1); glVertex2d(13.24, -1.2);
+		glTexCoord2d(1, 0); glVertex2d(13.24, 11.18);
+		glTexCoord2d(0, 0); glVertex2d(-3.33, 11.18);
+		glEnd();
+		glEnable(GL_LIGHTING);
+		glDisable(GL_TEXTURE_2D);
+		/*/Intento
+		/*ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 16);
 		ETSIDI::printxy("Pang 1.2", -5, 8);
 		ETSIDI::setTextColor(1, 1, 1);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 12);
 		ETSIDI::printxy("PULSE LA TECLA -E- PARA EMPEZAR", -5, 7);
 		ETSIDI::printxy("PULSE LA TECLA -S- PARA SALIR", -5, 6);
+		*/
+		
 		break;
 
 	case OPCIONES: 
