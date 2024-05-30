@@ -30,9 +30,9 @@ public:
 		glLineWidth(2);
 		glColor3ub(231, 0, 0);
 		glBegin(GL_LINES);
-		glVertex3f((float)i + 1.0f, (float)j + 1, 0.01f); glVertex3f(i + 1.0f, j, 0.01f);
-		glVertex3f((float)i + 1.0f, (float)j, 0.01f);	 glVertex3f(i, j, 0.01f);
-		glVertex3f((float)i, (float)j, 0.01f);		 glVertex3f(i, j + 1.0f, 0.01f);
+		glVertex3f((float)i + 1.0f, (float)j + 1, 0.01f); glVertex3f((float)i + 1.0f, (float)j, 0.01f);
+		glVertex3f((float)i + 1.0f, (float)j, 0.01f);	 glVertex3f((float)i, (float)j, 0.01f);
+		glVertex3f((float)i, (float)j, 0.01f);		 glVertex3f((float)i, j + 1.0f, 0.01f);
 		glVertex3f((float)i, (float)j + 1, 0.01f);  	 glVertex3f(i + 1.0f, j + 1.0f, 0.01f);
 		glEnd();
 	}

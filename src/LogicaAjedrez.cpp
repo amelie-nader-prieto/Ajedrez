@@ -7,11 +7,13 @@ bool hay_pieza_tuya(Vector2D _posicion, Jugador _jugador, Tablero tab) {
     else if (tab.tablero[_posicion.x][_posicion.y]->GetJugador() == _jugador)return true;
     else return false;
 }
+
 bool hay_pieza_rival(Vector2D _posicion, Jugador _jugador, Tablero tab) {
     if (tab.tablero[_posicion.x][_posicion.y]->GetTipo() == no_hay)return false;
     else if (tab.tablero[_posicion.x][_posicion.y]->GetJugador() != _jugador)return true;
     else return false;
 }
+
 bool condiciones_captura_peon(Pieza _peon, Tablero tab) {
     vector<Dir_t>direcciones_diagonal{}; // direcciones en las que el peón puede capturar. se inicializa según el color
     Vector2D posicion_siguiente;
@@ -38,6 +40,37 @@ bool condiciones_captura_peon(Pieza _peon, Tablero tab) {
     return false;
 
 }
+
+bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vector<Vector2D>posicion_posible_capturador) {
+    // el argumento posible_peon_capturado DEBE HABER AVANZADO DOS FILAS EN EL TURNO ANTERIOR
+    // Las condiciones para la captura al paso se cumplen si hay un peón del color opuesto en esa misma fila
+    auto jugador = posible_peon_capturado.GetJugador();
+    int fila = 0;
+    switch (jugador) {
+    case B: fila = 4; break;
+    case W: fila = 5; break;
+    default:break;
+    }
+
+    for (auto j = 0; j < COLUMNA; j++) {
+        if (
+            (hay_pieza_rival({ fila,j }, jugador, tab)) && (tab.tablero[fila][j]->GetTipo() == P)
+            )
+            return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+
+
+
+
+
 
 // FUNCIONES DE MOVIMIENTO
 void siguienteCasilla(Dir_t dir, Vector2D ini, Vector2D& fin) {

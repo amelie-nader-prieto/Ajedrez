@@ -20,7 +20,7 @@ class GLTablero
 {
 public:
 
-	Casilla cas;
+	Casilla cas{};
 	Tablero chess; //Solo es una prueba
 	void init();
 	void dibuja(const int&);
@@ -37,7 +37,7 @@ public:
 
 protected:
 	//mouse	
-	int xcell_sel, ycell_sel;			//cell selected with mouse
+	int xcell_sel=0, ycell_sel=0;			//cell selected with mouse
 
 };
 

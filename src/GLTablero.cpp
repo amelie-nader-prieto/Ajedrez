@@ -84,27 +84,25 @@ void GLTablero::dibuja(const int &Estadoskin) {
 	//////////////////////////////////////////////////////
 
 	///////////////////FUENTES///////////////////////////
-	float despx = 0.25, despy = 0.65f;
-	ETSIDI::setTextColor(0.84, 0.45, 0.1);//(1, 0, 0.5);//(1,0.6,1); //85.0f, 224.0f, 68.0f
+	float despx = 0.25f, despy = 0.65f;
+	ETSIDI::setTextColor(0.84f, 0.45f, 0.1f);//(1, 0, 0.5);//(1,0.6,1); //85.0f, 224.0f, 68.0f
 	ETSIDI::setFont("bin/fuentes/Tablero1.ttf", 18);
-	glTranslatef(-despx, 0.4, 0);
+	glTranslatef(-despx, 0.4f, 0.0f);
 	ETSIDI::printxy("  A", 0, -1);  ETSIDI::printxy("   B", 1, -1);
 	ETSIDI::printxy("   C", 2, -1); ETSIDI::printxy("   D", 3, -1);
 	ETSIDI::printxy("   E", 4, -1); ETSIDI::printxy("   F", 5, -1);
 	ETSIDI::printxy("   G", 6, -1); ETSIDI::printxy("   H", 7, -1);
 	ETSIDI::printxy("   I", 8, -1); ETSIDI::printxy("   J", 9, -1);
 	ETSIDI::printxy("   K", 10, -1);
-	glTranslatef(despx, -0.4, 0);
-	glTranslatef(0, -despy, 0);
+	glTranslatef(despx, -0.4f, 0.0f);
+	glTranslatef(0.0f, -despy, 0.0f);
 	ETSIDI::printxy("  1", -1, 1); ETSIDI::printxy("  2", -1, 2);
 	ETSIDI::printxy("  3", -1, 3); ETSIDI::printxy("  4", -1, 4);
 	ETSIDI::printxy("  5", -1, 5); ETSIDI::printxy("  6", -1, 6);
 	ETSIDI::printxy("  7", -1, 7); ETSIDI::printxy("  8", -1, 8);
 	ETSIDI::printxy("  9", -1, 9); ETSIDI::printxy("  10", -1, 10);
-	glTranslatef(0, despy, 0);
+	glTranslatef(0.0f, despy, 0.0f);
 
-	//chess.dibujaPiezas();
-	//drawPieces(chess);
 }
 
 
@@ -254,11 +252,11 @@ void GLTablero::drawPieces(Tablero& chess, const int& Estadoskin) {
 					}
 					//////////////////////////////////
 					if (chess.tablero[i][j]->GetJugador() == Jugador::W) {
-						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 - 9, 0.02f);
+						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05f - 9, 0.02f);
 						spriteReyB.setCenter(CenterW_X, CenterW_Y);
 						spriteReyB.setSize(SizeW_X, SizeW_Y); //Esto se va ajustando segun como se vea la imagen
 						spriteReyB.draw();
-						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 + 9, -0.02f);
+						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05f + 9, -0.02f);
 					}
 					if (chess.tablero[i][j]->GetJugador() == Jugador::B) {
 						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 + 9, 0.02f);
@@ -463,7 +461,7 @@ void GLTablero::drawPieces(Tablero& chess, const int& Estadoskin) {
 						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 + 5, 0.02f);
 						spritePeonN.setCenter(CenterB_X, CenterB_Y);
 						spritePeonN.setSize(SizeB_X, SizeB_Y);
-						spritePeonN.draw();;
+						spritePeonN.draw();
 						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 - 5, -0.02f);
 					}
 					break;
