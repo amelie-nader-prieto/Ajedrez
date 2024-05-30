@@ -33,7 +33,7 @@ int main(int argc, char* argv[]){
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutCreateWindow("Ajedrez BALBO");
 
-	//habilitar luces y definir perspectiva
+	/**///////habilitar luces y definir perspectiva
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
@@ -80,8 +80,21 @@ void OnDraw(void)
 	
 	//scene.dibuja(2);
 	//El dibujar es llevado por el coordinador
-	coordinador.dibuja();
-	
+	//coordinador.dibuja();
+	//Aparecerá la imagen de inicio
+		////////////Imagen de fondo////////////////
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/fondo.png").id);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glTexCoord2d(0, 1); glVertex2d(-3.33, -1.2);
+	glTexCoord2d(1, 1); glVertex2d(13.24, -1.2);
+	glTexCoord2d(1, 0); glVertex2d(13.24, 11.18);
+	glTexCoord2d(0, 0); glVertex2d(-3.33, 11.18);
+	glEnd();
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
 	
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
