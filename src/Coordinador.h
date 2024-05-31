@@ -11,8 +11,8 @@ class Coordinador
 	//GLTablero mundo_grafico;
 	enum Estado { MENU1, MENU2, GRAFICOS,EXPLICACION, JUEGO, PAUSA, GAMEOVER, FIN} estado=MENU1;
 	enum Tipo_Tablero{clasic=1, starwors, animal}graf_tablero=clasic;
-	
-
+	enum Modalida { maquina, jugadores }modalidad = jugadores;
+	enum Volumen {ON, OFF} volumen=ON;
 public:
 	GLTablero mundo_grafico;
 	//Coordinador();

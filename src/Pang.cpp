@@ -1,32 +1,16 @@
-#include "freeglut.h"
-#include "LogicaAjedrez.h"
 
 #include "Coordinador.h"
 
-void OnDraw(void); //esta funcion sera llamada para dibujar
-void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
-void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
-void OnMouseClick(int button, int state, int x, int y); //para eventos del mouse
-/////////////////////////////////////////////////////
 
-//Tablero tab;
-//GLTablero scene; //Para el dibujo del tablero y casillas
+#include <iostream>
+
 Coordinador coordinador;
 
 
-//Variables globales para la gestión de los clicks
-Vector2D click_inicial{ -1, -1 };
-Vector2D click_final{ -1,-1 };
-bool seleccionado = true;
-//true cuando estamos seleccionando la pieza inicial
-//false cuando estamos seleccionando la posicion final
+int main()//int argc, char* argv[]){
+{
 
-
-
-int main(int argc, char* argv[]){
-	
-
-
+	/*
 //Inicializar el gestor de ventanas GLUT y crear la ventana
 	glutInit(&argc, argv);
 	glutInitWindowSize(800, 600);
@@ -34,7 +18,7 @@ int main(int argc, char* argv[]){
 	glutCreateWindow("Ajedrez BALBO");
 
 	/**///////habilitar luces y definir perspectiva
-	glEnable(GL_LIGHT0);
+	/*glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
@@ -52,6 +36,17 @@ int main(int argc, char* argv[]){
 
 	//pasarle el control a GLUT,que llamara a los callbacks
 	glutMainLoop();
+	*/
+	coordinador.iniciar();
+	int i = 1;
+	unsigned char key;
+	while (i == 1){
+		coordinador.dibuja();
+		
+		std::cin >> key;
+		coordinador.tecla(key);
+	}
+
 
 	return 0;
 
@@ -59,7 +54,7 @@ int main(int argc, char* argv[]){
 
 
 
-
+/*
 /////////////////////////////////////////////////////////////////
 /////////TODO LO DE PRINCIPAL.CPP//////////////////////////////
 void OnDraw(void)
@@ -123,4 +118,4 @@ void OnMouseClick(int b, int state, int x, int y) {
 	
 	glutPostRedisplay();
 
-}
+}*/

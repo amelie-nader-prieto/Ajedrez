@@ -40,17 +40,16 @@ void Coordinador::tecla(unsigned char key)
 		break;
 
 	case MENU2:
-		if (key == '1') exit(0);
-		if (key == 'e')
-		{
-			estado = MENU2;
-		}
+		if (key == '1') //Modelidad contra máquina
+			modalidad = jugadores;
+		if (key == '2')//Modalidad contra 2 jugadores
+			modalidad = maquina;
+		estado = GRAFICOS;
 		break;
 
 	case GRAFICOS:
-		if (key == 's') {
-			estado = MENU1; //Se irá al tablero tipo1
-			
+		if (key == 'e') {
+			estado = MENU1; //Se irá al menu inicial
 			break;
 		}
 		if (key == '1') {
@@ -60,27 +59,37 @@ void Coordinador::tecla(unsigned char key)
 		}
 		if (key == '2') graf_tablero = starwors;//Se irá al tablero tipo2
 		if (key == '3') graf_tablero = animal;//Se irá al tablero tipo3
+
 		mundo_grafico.init();//Se inicia la grafica del tablero deseado
+		estado = EXPLICACION;
 		break;
 
+	case EXPLICACION:
+		if (key == 'c')
+			estado = JUEGO;
+		break;
 	case JUEGO:
-		ETSIDI::printxy("ESTA EN JUEGO", -5, 9);
 		if (key == 'm') estado = PAUSA;
 			//mundo_grafico.tecla(key);
 		break;
 	case PAUSA:
-		if (key == 'm')
+		if (key == 'c')
 			estado = JUEGO;
-		if(key == 's')
-			estado = FIN;
-		if (key == 'f')
-			estado = INICIO;
+		if(key == 'e')
+			estado = MENU1;
+		if (key == 'v')
+			volumen = ON;
+		if (key == 's')
+			volumen = OFF;
 		break;
 	case GAMEOVER:
-		if (key == 'c')
-			estado = INICIO;
-		if (key == 's')
+		if (key == 'r')
+			estado = MENU2;
+		if (key == 'e')
 			estado = FIN;
+		break;
+	case FIN:
+		exit(0);
 		break;
 	}
 }
@@ -109,7 +118,7 @@ void Coordinador::MouseBottom(int x, int y, int button, bool down, Vector2D& cli
 
 void Coordinador::iniciar()
 {
-	estado = INICIO;
+	estado = MENU1;
 }
 
 Coordinador::~Coordinador()
