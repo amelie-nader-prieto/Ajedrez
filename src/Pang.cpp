@@ -128,6 +128,40 @@ void OnMouseClick(int b, int state, int x, int y) {
 	}
 
 	scene.MouseButton(x, y, b, down, click_inicial, click_final, seleccionado);
+
+	Pieza seleccionada; // se inicializará con la pieza que hay en la posición que seleccionemos con el mouse
+
+	// Comprobar que la casilla seleccionada con el mouse sea válida
+	// si es válida, se inicializa el objeto pieza seleccionada
+	/*
+	* La casilla es válida si:
+	* - está dentro del tablero
+	* - hay una pieza en la casilla
+	* - dicha pieza se puede mover 
+	*/
+	if (tab[click_inicial] && tab[click_inicial]->GetTipo() != no_hay && 
+		obtener_posibles_movimientos(click_inicial, tab).size() > 0) {
+
+		seleccionada = *tab[click_inicial];
+		cout << "  (pieza seleccionada: " << seleccionada << ")   \n";
+		for (auto p : obtener_posibles_movimientos(click_inicial, tab)) {
+			if (p == click_final) { // simplemente verificamos que el sitio en el que has hecho click está entre los posibles movimientos
+				
+				// mover pieza al lugar seleccionado
+				mover_pieza(click_inicial, click_final, tab);
+				//seleccionada = *tab[click_final];
+				tab.dibujar();
+				cout << '\n';
+				tab.mostrar_lista_de_piezas();
+				cout << '\n';
+
+				break;
+			}
+		}
+	}
+
+
+
 	glutPostRedisplay();
 
 }

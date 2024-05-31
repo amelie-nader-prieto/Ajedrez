@@ -164,7 +164,7 @@ void GLTablero::drawPieces(Tablero& chess, const int& Estadoskin) {
 	case 1: skin = "default"; break;
 	case 2: skin = "StarWars"; break;
 	case 3: skin = "AnimalCrossing"; break;
-	default:
+	default: skin = "default"; break;
 		break;
 	}
 	std::string direccionW = "";

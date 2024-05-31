@@ -287,3 +287,22 @@ void Tablero::dibujar() {
 	}
 	cout << " a  b  c  d  e  f  g  h  i  j  k" << '\n';
 }
+
+void Tablero::mostrar_lista_de_piezas() {
+	int num_piezas_max = (piezas_bla.size() > piezas_neg.size() ? piezas_bla.size() : piezas_neg.size());
+
+	cout << "  BLANCO\t  NEGRO\n";
+	for (int i = 0; i < num_piezas_max; i++) {
+		if (i < piezas_bla.size()){
+			cout << i + 1 << ". " << piezas_bla.at(i);
+		}
+		cout << "\t";
+		if (i < piezas_neg.size()) {
+			cout << i + 1 << ". " << piezas_neg.at(i);
+		}
+		cout << '\n';
+	}
+	/*cout << "  total blancas: " << piezas_bla.size();
+	cout << "  total negras: " << piezas_neg.size();*/
+
+}

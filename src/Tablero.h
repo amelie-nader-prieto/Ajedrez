@@ -16,6 +16,60 @@
 
 using std::vector; using std::cout;
 
+/*Imprime el color de la pieza*/
+inline std::ostream& operator<<(std::ostream& co, const Tipo& t) {
+
+	switch (t) {
+	case no_hay:co << " "; break;
+	case R:co << "R"; break;
+	case D:co << "D"; break;
+	case C:co << "C"; break;
+	case A:co << "A"; break;
+	case T:co << "T"; break;
+	case P:co << "P"; break;
+	default:break;
+	}
+
+	return co;
+
+}
+
+/*operador para imprimir el color de la pieza*/
+inline std::ostream& operator<<(std::ostream& co, const Jugador& _jugador) {
+
+	switch (_jugador) {
+	case B:co << "n"; break; // negro
+	case W:co << "b"; break; // blanco
+	default:break;
+	}
+
+	return co;
+
+}
+
+/* Imprime las coordenadas con número y letra */
+inline std::ostream& operator<<(std::ostream& co, const Vector2D& _casilla) {
+
+	vector<char>letras_columnas = { 'a','b','c','d','e','f','g','h','i','j','k' };
+	int num_fila_0 = 10;
+	co << letras_columnas.at(_casilla.y) << num_fila_0 - _casilla.x;
+
+	return co;
+
+}
+
+// operador para imprimir toda la info de la pieza
+// (lo uso para comprobar que se han creado bien)
+inline std::ostream& operator<<(std::ostream& co, Pieza& _pieza) {
+	if (_pieza.GetTipo() == no_hay) return co;
+	co << (_pieza.GetTipo()) << (_pieza.GetJugador()) << " en " << (_pieza.GetPosicion());
+	if (_pieza.GetCapturada()) co << " (capturada)";
+	else if (_pieza.GetPromocionado())co << "(promocionado)";
+	//else co << "       ";
+	return co;
+}
+
+
 class Tablero
 {
 	//friend static void iniciar(Tipo tipo, Vector2D posicion, Jugador j, Tablero tab);
@@ -64,7 +118,9 @@ public:
 	inline auto get_piezas_neg() { return piezas_neg; }
 	// FUNCIÓN PARA IMPRIMIR EL TABLERO POR LA CONSOLA
 	void dibujar();
-
+	// Función para que aparezca en la consola una lista de las piezas que hay en el tablero.
+	// Usar esta función para verificar que las piezas y sus coordenadas se actualizan correctamente
+	void mostrar_lista_de_piezas();
 
 	void cambiarTurno() { //Solo para probar si cambia de turno, despues borrar
 		//es solo para las pruebas de movimiento
