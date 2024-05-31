@@ -1,13 +1,16 @@
 #pragma once
 #include "GLTablero.h"
 #include "ETSIDI.h"
+#include <iostream>
+using std::cout;
+using std::endl;
 
 
 class Coordinador
 {
 	//GLTablero mundo_grafico;
-	enum Estado { INICIO, OPCIONES, JUEGO, PAUSA, GAMEOVER, FIN} estado=INICIO;
-	enum Tipo_Tablero{TIPO1=1, TIPO2, TIPO3}graf_tablero=TIPO1;
+	enum Estado { MENU1, MENU2, GRAFICOS,EXPLICACION, JUEGO, PAUSA, GAMEOVER, FIN} estado=MENU1;
+	enum Tipo_Tablero{clasic=1, starwors, animal}graf_tablero=clasic;
 	
 
 public:

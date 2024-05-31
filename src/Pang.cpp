@@ -41,13 +41,14 @@ int main(int argc, char* argv[]){
 	glMatrixMode(GL_PROJECTION);
 	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
 
+
 	//Registrar los callbacks
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(25, OnTimer, 0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
 	glutKeyboardFunc(OnKeyboardDown);
 	glutMouseFunc(OnMouseClick);///////////////PRUEBA MOUSE
 	//POSIBLE INICIALIZACION
-	coordinador.iniciar();
+	//coordinador.iniciar();
 
 	//pasarle el control a GLUT,que llamara a los callbacks
 	glutMainLoop();
@@ -80,21 +81,10 @@ void OnDraw(void)
 	
 	//scene.dibuja(2);
 	//El dibujar es llevado por el coordinador
-	//coordinador.dibuja();
+	coordinador.dibuja();
 	//Aparecerá la imagen de inicio
-		////////////Imagen de fondo////////////////
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/fondo.png").id);
-	glDisable(GL_LIGHTING);
-	glBegin(GL_POLYGON);
-	glColor3f(1, 1, 1);
-	glTexCoord2d(0, 1); glVertex2d(-3.33, -1.2);
-	glTexCoord2d(1, 1); glVertex2d(13.24, -1.2);
-	glTexCoord2d(1, 0); glVertex2d(13.24, 11.18);
-	glTexCoord2d(0, 0); glVertex2d(-3.33, 11.18);
-	glEnd();
-	glEnable(GL_LIGHTING);
-	glDisable(GL_TEXTURE_2D);
+	
+
 	
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
@@ -128,7 +118,7 @@ void OnMouseClick(int b, int state, int x, int y) {
 
 	//scene.MouseButton(x, y, b, down, click_inicial, click_final, seleccionado);
 	//El mouseBotton es llevado a acabo por el coordinador
-	coordinador.MouseBottom(x, y, b, down, click_inicial, click_final, seleccionado);
+	//coordinador.MouseBottom(x, y, b, down, click_inicial, click_final, seleccionado);
 	
 	
 	glutPostRedisplay();
