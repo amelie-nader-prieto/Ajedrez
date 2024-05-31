@@ -14,7 +14,7 @@
 #define FILA 10
 #define COLUMNA 11
 
-using std::vector;
+using std::vector; using std::cout;
 
 class Tablero
 {
@@ -62,6 +62,8 @@ public:
 	*/
 	inline auto get_piezas_bla() { return piezas_bla; }
 	inline auto get_piezas_neg() { return piezas_neg; }
+	// FUNCIÓN PARA IMPRIMIR EL TABLERO POR LA CONSOLA
+	void dibujar();
 
 
 	void cambiarTurno() { //Solo para probar si cambia de turno, despues borrar

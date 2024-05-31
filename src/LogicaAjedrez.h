@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Tablero.h"
-#include <iostream>
 
 using std::cout;
 
@@ -169,12 +168,6 @@ void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero& tab);
 // INICIALIZAR PIEZAS
 // Esta función hace que cuando se quiera iniciar una pieza se manda el tipo y dirección 
 static void iniciar(Tipo tipo, Vector2D posicion, Jugador j,Tablero tab);
-
-// FUNCIONES DE DIBUJO DEL TABLERO (lo dibujan en la consola)
-/*
-* Dibuja el tablero en la consola, con todas las piezas
-*/
-void dibujar(Tablero tab);
 
 // Liberar la memoria al final del programa
 void liberar_memoria(Tablero tab);

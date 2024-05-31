@@ -127,7 +127,6 @@ void GLTablero::MouseButton(int x, int y, int button, bool down, Vector2D& click
 	//finally cell coordinates
 	world2cell(posX, posY, xcell_sel, ycell_sel); //método para pasar las coordenadas a posiciones de las casillas
 
-
 	//catura eventos del mouse
 	//***WRITE ACTIONS CONNECTED TO MOUSE STATE HERE
 

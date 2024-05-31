@@ -6,12 +6,9 @@
 
 #include "Tablero.h"
 
-#include "alfil.h"
+//#include "alfil.h"
 
 using ETSIDI::SpriteSequence;
-
-#define FILA 10
-#define COLUMNA 11
 
 //enums to eliminate dependency of glut
 enum { MOUSE_LEFT_BUTTON, MOUSE_MIDDLE_BUTTON, MOUSE_RIGHT_BUTTON };
@@ -29,8 +26,8 @@ public:
 	void MouseButton(int x, int y, int button, bool down, Vector2D&, Vector2D&, bool&);
 	void world2cell(double x, double y, int& cell_x, int& cell_y) {
 		//world coordinates to cell
-		cell_x = (int)(1 + abs(y / width));
-		cell_y = (int)(1 + x / width);
+		cell_x = FILA - (int)(1 + abs(y / width));
+		cell_y = (int)(1 + x / width) - 1;
 	}
 
 	void drawPieces(Tablero&, const int&);

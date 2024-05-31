@@ -274,3 +274,16 @@ void Tablero::crear_pieza(Tipo _tipo, Jugador _jugador, Vector2D _posicion) {
 		break;
 	}
 }
+
+void Tablero::dibujar() {
+	for (int i = 0; i < FILA; i++) {
+		for (int j = 0; j < COLUMNA; j++) {
+			if (tablero[i][j]) 
+				cout << "[" << tablero[i][j]->GetTipo() << "]";
+			else // si es null es porque no se usa
+				cout << "   ";
+		}
+		cout << ' ' << FILA - i << '\n';
+	}
+	cout << " a  b  c  d  e  f  g  h  i  j  k" << '\n';
+}
