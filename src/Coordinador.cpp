@@ -5,24 +5,36 @@ void Coordinador::dibuja()
 {
 	switch (estado) {
 	case MENU1:
-		cout << "Pulsa J para jugar" << endl;
-		cout << "Pulsa S para salir" << endl;
+		cout << "Pulsa S para jugar" << endl;
+		cout << "Pulsa E para salir" << endl;
 		break;
 	case MENU2:
 		cout << "Pulsa 1 para jugar contra jugador" << endl;
-		cout << "Pulsa S para  jugar contra máquina" << endl;
+		cout << "Pulsa 2 para jugar contra máquina" << endl;
+		break;
+	case EXPLICACION:
+		cout << "Se explican las fichas de " << graf_tablero<<endl;
+		cout << "Pulsa C para continuar" << endl;
+		break;
+
+	case PAUSA:
+		cout << "Pulsa C para volver a jugar" << endl;
+		cout << "Pulsa E para volver a menu inicial" << endl;
+		cout << "Pulsa V para poner volumen en ON" << endl;
+		cout << "Pulsa S para poner volumen en OFF" << endl;
 		break;
 
 	case GRAFICOS: 
 		cout<<"PULSE LA TECLA -1- PARA JUEGO MODO BÁSICO"<<endl;
 		cout << "PULSE LA TECLA -2- PARA JUAGO MODO STAR WORS" << endl;
 		cout << "PULSE LA TECLA -3- PARA JUAGO MODO ANIMAL CROSSING" << endl;
-		cout << "PULSE LA TECLA -S- PARA VOLVER" << endl;
+		cout << "PULSE LA TECLA -E- PARA VOLVER" << endl;
 		break;
-	case EXPLICACION:
-		cout << "Se explican las fichas de" << graf_tablero;
+	;
 	case JUEGO:
-		cout<<"Se esta jugando al"<<graf_tablero;
+		cout<<"Se esta jugando al: "<<graf_tablero<<endl;
+		cout << "Pulsa M para ir a pausa" << endl;
+
 		break;
 	}
 }
@@ -32,8 +44,8 @@ void Coordinador::tecla(unsigned char key)
 {
 	switch (estado) {
 	case MENU1:
-		if (key == 's') exit(0);
-		if (key == 'e')
+		if (key == 'e') exit(0);
+		if (key == 's')
 		{
 			estado = MENU2;
 		}
@@ -60,7 +72,7 @@ void Coordinador::tecla(unsigned char key)
 		if (key == '2') graf_tablero = starwors;//Se irá al tablero tipo2
 		if (key == '3') graf_tablero = animal;//Se irá al tablero tipo3
 
-		mundo_grafico.init();//Se inicia la grafica del tablero deseado
+		//mundo_grafico.init();//Se inicia la grafica del tablero deseado
 		estado = EXPLICACION;
 		break;
 
@@ -94,6 +106,7 @@ void Coordinador::tecla(unsigned char key)
 	}
 }
 
+/*
 void Coordinador::tecla_especial(unsigned char key)
 {
 	//if (estado == JUEGO)
@@ -113,7 +126,7 @@ void Coordinador::MouseBottom(int x, int y, int button, bool down, Vector2D& cli
 	{
 	mundo_grafico.MouseButton(x, y, button, down, click_inicial, click_final, seleccionado);
 	}
-}
+}*/
 
 
 void Coordinador::iniciar()
@@ -121,6 +134,4 @@ void Coordinador::iniciar()
 	estado = MENU1;
 }
 
-Coordinador::~Coordinador()
-{
-}
+//Coordinador::~Coordinador() {}

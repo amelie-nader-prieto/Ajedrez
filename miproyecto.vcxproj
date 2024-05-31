@@ -19,37 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\alfil.cpp" />
-    <ClCompile Include="src\caballo.cpp" />
     <ClCompile Include="src\Coordinador.cpp" />
-    <ClCompile Include="src\dama.cpp" />
-    <ClCompile Include="src\GLTablero.cpp" />
-    <ClCompile Include="src\LogicaAjedrez.cpp" />
-    <ClCompile Include="src\No_pieza.cpp" />
     <ClCompile Include="src\Pang.cpp" />
-    <ClCompile Include="src\peon.cpp" />
-    <ClCompile Include="src\pieza.cpp" />
-    <ClCompile Include="src\principal.cpp" />
-    <ClCompile Include="src\rey.cpp" />
-    <ClCompile Include="src\Tablero.cpp" />
-    <ClCompile Include="src\torre.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\alfil.h" />
-    <ClInclude Include="src\caballo.h" />
-    <ClInclude Include="src\Casilla.h" />
     <ClInclude Include="src\Coordinador.h" />
-    <ClInclude Include="src\dama.h" />
-    <ClInclude Include="src\GLTablero.h" />
-    <ClInclude Include="src\LogicaAjedrez.h" />
-    <ClInclude Include="src\No_pieza.h" />
-    <ClInclude Include="src\peon.h" />
-    <ClInclude Include="src\pieza.h" />
-    <ClInclude Include="src\rey.h" />
-    <ClInclude Include="src\Tablero.h" />
-    <ClInclude Include="src\Tipos_piezas.h" />
-    <ClInclude Include="src\torre.h" />
-    <ClInclude Include="src\vector2D.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

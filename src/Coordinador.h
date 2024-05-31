@@ -1,5 +1,5 @@
 #pragma once
-#include "GLTablero.h"
+//#include "GLTablero.h"
 #include "ETSIDI.h"
 #include <iostream>
 using std::cout;
@@ -14,14 +14,14 @@ class Coordinador
 	enum Modalida { maquina, jugadores }modalidad = jugadores;
 	enum Volumen {ON, OFF} volumen=ON;
 public:
-	GLTablero mundo_grafico;
+	//GLTablero mundo_grafico;
 	//Coordinador();
 	void iniciar();
-	virtual ~Coordinador();
-	void tecla_especial(unsigned char key);
+	/*virtual ~Coordinador();
+	void tecla_especial(unsigned char key);*/
 	void tecla(unsigned char key);
-	void mueve();
+//	void mueve();
 	void dibuja();
-	void MouseBottom(int x, int y, int button, bool down, Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado);
+//	void MouseBottom(int x, int y, int button, bool down, Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado);
 };
 
