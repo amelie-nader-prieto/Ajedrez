@@ -1,4 +1,5 @@
 #include "LogicaAjedrez.h"
+#include "Maquina.h";
 
 
 // Dibuja el tablero en la consola
@@ -28,36 +29,11 @@ void lista_piezas_privada(Tablero tab);
 void probar_movimientos_pieza(Pieza& p, Tablero& tab);
 
 int main(){
-	
-	// Creamos y configuramos un tablero de prueba
-	Tablero tab3;
-	vector<Vector2D>movs{};
-
-	//tab3.vaciar();
-	//tab3.crear_pieza(D, B, { 5,5 }); auto& mi_Dn = /**(tab3.tablero[5][5]);*/ *(tab3[{5, 5}]);
-	//tab3.crear_pieza(T, W, { 2,5 }); auto& mi_Tb = /**(tab3.tablero[2][5]);*/ *(tab3[{2, 5}]);
-
-	//// uso las dos para ver si dan la misma información
-	//imprime_info_tablero_completa(tab3);
-	//
-	////probar_movimientos_pieza(mi_Dn, tab3);
-	//probar_movimientos_pieza(mi_Tb, tab3);
-
-	//cout << mi_Tb << '\n' << mi_Dn << '\n';
-
-	//imprime_info_tablero_completa(tab3);
-	auto& mi_Cn = *(tab3[{1, 6}]);
-	auto& mi_Pb = *(tab3[{7, 4}]);
-	auto& mi_Pn = *(tab3[{2, 3}]);
-	
-	//probar_movimientos_pieza(mi_Cn, tab3);
-	
-	probar_movimientos_pieza(mi_Pb, tab3);
-	probar_movimientos_pieza(mi_Pn, tab3);
-
-	imprime_info_tablero_completa(tab3);
-
-	return 0;
+	Maquina maquina;
+	while (true)
+	{
+		maquina.jugar();
+	}
 	
 }
 
