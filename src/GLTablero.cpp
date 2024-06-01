@@ -27,18 +27,18 @@ void GLTablero::dibuja(const int &Estadoskin) {
 	{
 	case 1: //Default
 		skin = "default";
-		r_oscuro = 64; g_oscuro = 65; b_oscuro = 77;
-		r_claro = 187; g_claro = 190; b_claro = 215;
+		r_oscuro = 187; g_oscuro = 190; b_oscuro = 215;
+		r_claro = 64; g_claro = 65; b_claro = 77;
 		break;
 	case 2: //StarWars
 		skin = "StarWars";
-		r_oscuro = 0; g_oscuro = 100; b_oscuro = 162;
-		r_claro = 249; g_claro = 245; b_claro = 220;
+		r_oscuro = 249; g_oscuro = 245; b_oscuro = 220;
+		r_claro = 0; g_claro = 100; b_claro = 162;
 		break;
 	case 3: //AnimalCrossing
 		skin = "AnimalCrossing";
-		r_oscuro = 107; g_oscuro = 142; b_oscuro = 35;
-		r_claro = 255; g_claro = 227; b_claro = 232;
+		r_oscuro = 255; g_oscuro = 227; b_oscuro = 232;
+		r_claro = 107; g_claro = 142; b_claro = 35;
 		break;
 	}
 
@@ -103,6 +103,7 @@ void GLTablero::dibuja(const int &Estadoskin) {
 	ETSIDI::printxy("  9", -1, 9); ETSIDI::printxy("  10", -1, 10);
 	glTranslatef(0.0f, despy, 0.0f);
 
+
 }
 
 
@@ -134,12 +135,12 @@ void GLTablero::MouseButton(int x, int y, int button, bool down, Vector2D& click
 		if (down)
 		{
 			if (seleccionado) {
-				click_inicial = Vector2D{ xcell_sel, ycell_sel };
+				click_inicial = Vector2D{xcell_sel, ycell_sel };
 				seleccionado = false; //Para pasar a la seleccion de la posicion final
 				std::cout << "Casilla inicial: " << click_inicial <<std::endl;
 			}
 			else {
-				click_final = Vector2D{ xcell_sel, ycell_sel };
+				click_final = Vector2D{xcell_sel, ycell_sel };
 				seleccionado = true; //Pra volver a seleccionar una pieza
 				std::cout << "Casilla final: "<<click_final << std::endl;
 				chess.mover_pieza(click_inicial, click_final); //intenta mover la pieza
@@ -250,18 +251,18 @@ void GLTablero::drawPieces(Tablero& chess, const int& Estadoskin) {
 					}
 					//////////////////////////////////
 					if (chess.tablero[i][j]->GetJugador() == Jugador::W) {
-						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05f - 9, 0.02f);
+						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05f , 0.02f);
 						spriteReyB.setCenter(CenterW_X, CenterW_Y);
 						spriteReyB.setSize(SizeW_X, SizeW_Y); //Esto se va ajustando segun como se vea la imagen
 						spriteReyB.draw();
-						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05f + 9, -0.02f);
+						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05f , -0.02f);
 					}
 					if (chess.tablero[i][j]->GetJugador() == Jugador::B) {
-						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 + 9, 0.02f);
+						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 , 0.02f);
 						spriteReyN.setCenter(CenterB_X, CenterB_Y);
 						spriteReyN.setSize(SizeB_X, SizeB_Y);
 						spriteReyN.draw();;
-						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 - 9, -0.02f);
+						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 , -0.02f);
 					}
 					break;
 
@@ -290,18 +291,18 @@ void GLTablero::drawPieces(Tablero& chess, const int& Estadoskin) {
 					}
 					///////////////////////////////////
 					if (chess.tablero[i][j]->GetJugador() == Jugador::W) {
-						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 - 9, 0.02f);
+						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 , 0.02f);
 						spriteReinaB.setCenter(CenterW_X, CenterW_Y);
 						spriteReinaB.setSize(SizeW_X, SizeW_Y); //Esto se va ajustando segun como se vea la imagen
 						spriteReinaB.draw();
-						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 + 9, -0.02f);
+						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 , -0.02f);
 					}
 					if (chess.tablero[i][j]->GetJugador() == Jugador::B) {
-						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 + 9, 0.02f);
+						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 , 0.02f);
 						spriteReinaN.setCenter(CenterB_X, CenterB_Y);
 						spriteReinaN.setSize(SizeB_X, SizeB_Y);
 						spriteReinaN.draw();;
-						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 - 9, -0.02f);
+						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 , -0.02f);
 					}
 					break;
 
@@ -330,18 +331,18 @@ void GLTablero::drawPieces(Tablero& chess, const int& Estadoskin) {
 					}
 					////////////////////////////////////
 					if (chess.tablero[i][j]->GetJugador() == Jugador::W) {
-						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 - 7, 0.02f);
+						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 , 0.02f);
 						spriteCaballoB.setCenter(CenterW_X, CenterW_Y);
 						spriteCaballoB.setSize(SizeW_X, SizeW_Y); //Esto se va ajustando segun como se vea la imagen
 						spriteCaballoB.draw();
-						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 + 7, -0.02f);
+						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 , -0.02f);
 					}
 					if (chess.tablero[i][j]->GetJugador() == Jugador::B) {
-						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 + 7, 0.02f);
+						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 , 0.02f);
 						spriteCaballoN.setCenter(CenterB_X, CenterB_Y);
 						spriteCaballoN.setSize(SizeB_X, SizeB_Y);
 						spriteCaballoN.draw();;
-						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 - 7, -0.02f);
+						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05, -0.02f);
 					}
 					break;
 
@@ -371,18 +372,18 @@ void GLTablero::drawPieces(Tablero& chess, const int& Estadoskin) {
 					}
 					//////////////////////////////////
 						if (chess.tablero[i][j]->GetJugador() == Jugador::W) {
-							glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 - 8, 0.02f);
+							glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05, 0.02f);
 							spriteAlfilB.setCenter(CenterW_X, CenterW_Y);
 							spriteAlfilB.setSize(SizeW_X, SizeW_Y); //Esto se va ajustando segun como se vea la imagen
 							spriteAlfilB.draw();
-							glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 + 8, -0.02f);
+							glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05, -0.02f);
 						}
 						if (chess.tablero[i][j]->GetJugador() == Jugador::B) {
-							glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 + 8, 0.02f);
+							glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 , 0.02f);
 							spriteAlfilN.setCenter(CenterB_X, CenterB_Y);
 							spriteAlfilN.setSize(SizeB_X, SizeB_Y);
 							spriteAlfilN.draw();;
-							glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 - 8, -0.02f);
+							glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 , -0.02f);
 						}
 					break;
 
@@ -411,18 +412,18 @@ void GLTablero::drawPieces(Tablero& chess, const int& Estadoskin) {
 					}
 					/////////////////////////////////////
 					if (chess.tablero[i][j]->GetJugador() == Jugador::W) {
-						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 - 7, 0.02f);
+						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05, 0.02f);
 						spriteTorreB.setCenter(CenterW_X, CenterW_Y);
 						spriteTorreB.setSize(SizeW_X, SizeW_Y); //Esto se va ajustando segun como se vea la imagen
 						spriteTorreB.draw();
-						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 + 7, -0.02f);
+						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 , -0.02f);
 					}
 					if (chess.tablero[i][j]->GetJugador() == Jugador::B) {
-						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 + 7, 0.02f);
+						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 , 0.02f);
 						spriteTorreN.setCenter(CenterB_X, CenterB_Y);
 						spriteTorreN.setSize(SizeB_X, SizeB_Y);
 						spriteTorreN.draw();;
-						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 - 7, -0.02f);
+						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05, -0.02f);
 					}
 					break;
 
@@ -449,18 +450,18 @@ void GLTablero::drawPieces(Tablero& chess, const int& Estadoskin) {
 					}
 					///////////////////////////////////
 					if (chess.tablero[i][j]->GetJugador() == Jugador::W) {
-						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 - 5, 0.02f);
+						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 , 0.02f);
 						spritePeonB.setCenter(CenterW_X, CenterW_Y);
 						spritePeonB.setSize(SizeW_X, SizeW_Y); //Esto se va ajustando segun como se vea la imagen
 						spritePeonB.draw();
-						glTranslatef((float) - chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 + 5, -0.02f);
+						glTranslatef((float) - chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 , -0.02f);
 					}
 					if (chess.tablero[i][j]->GetJugador() == Jugador::B) {
-						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 + 5, 0.02f);
+						glTranslatef((float)chess.tablero[i][j]->GetPosicion().y, (float)chess.tablero[i][j]->GetPosicion().x - 0.05 , 0.02f);
 						spritePeonN.setCenter(CenterB_X, CenterB_Y);
 						spritePeonN.setSize(SizeB_X, SizeB_Y);
 						spritePeonN.draw();
-						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 - 5, -0.02f);
+						glTranslatef((float)-chess.tablero[i][j]->GetPosicion().y, (float)-chess.tablero[i][j]->GetPosicion().x + 0.05 , -0.02f);
 					}
 					break;
 

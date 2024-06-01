@@ -26,8 +26,8 @@ public:
 	void MouseButton(int x, int y, int button, bool down, Vector2D&, Vector2D&, bool&);
 	void world2cell(double x, double y, int& cell_x, int& cell_y) {
 		//world coordinates to cell
-		cell_x = FILA - (int)(1 + abs(y / width));
-		cell_y = (int)(1 + x / width) - 1;
+		cell_x = (int)( abs(y / width));
+		cell_y = (int)(x / width) ;
 	}
 
 	void drawPieces(Tablero&, const int&);
