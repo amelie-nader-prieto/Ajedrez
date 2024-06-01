@@ -95,7 +95,7 @@ void OnDraw(void)
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)  
 
 
-	scene.dibuja(1);
+	scene.dibuja(2);
 	scene.drawPieces(tab, 2);
 
 	//tab.dibujaPiezas();

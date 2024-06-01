@@ -103,6 +103,7 @@ void GLTablero::dibuja(const int &Estadoskin) {
 	ETSIDI::printxy("  9", -1, 9); ETSIDI::printxy("  10", -1, 10);
 	glTranslatef(0.0f, despy, 0.0f);
 
+	dibujaCasillasPosibles(movimientosPosibles, Vector2D{xcell_sel, ycell_sel});
 
 }
 
@@ -137,6 +138,7 @@ void GLTablero::MouseButton(int x, int y, int button, bool down, Vector2D& click
 			if (seleccionado) {
 				click_inicial = Vector2D{xcell_sel, ycell_sel };
 				seleccionado = false; //Para pasar a la seleccion de la posicion final
+				movimientosPosibles = obtener_posibles_movimientos(click_inicial, chess);
 				std::cout << "Casilla inicial: " << click_inicial <<std::endl;
 			}
 			else {
@@ -145,15 +147,11 @@ void GLTablero::MouseButton(int x, int y, int button, bool down, Vector2D& click
 				std::cout << "Casilla final: "<<click_final << std::endl;
 				chess.mover_pieza(click_inicial, click_final); //intenta mover la pieza
 				std::cout << "Espera movimiento......Debería haber movido" << std::endl;
+				movimientosPosibles.clear();
 			}
 			std::cout << "(" << xcell_sel << "," << ycell_sel << ")" << std::endl;
 		}
-		
 	}
-	
-	
-		
-		
 }
 
 
@@ -473,8 +471,26 @@ void GLTablero::drawPieces(Tablero& chess, const int& Estadoskin) {
 		}
 	}
 		glPopMatrix();
+}
 
-	
+void GLTablero::dibujaCasillasPosibles(const std::vector<Vector2D>& movimientosPosibles, const Vector2D& v) {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-
+	glColor3ub(255,0,0);
+	glTranslatef(v.y+0.5, v.x+0.5, 0.1);
+	glutWireSphere(0.35, 10, 5);
+	glTranslatef(-v.y-0.5, -v.x-0.5, 0.1);
+	glEnd();
+	for (auto& mov : movimientosPosibles) {
+		// Color semitransparente
+		glColor4f(1.0f,0.0f, 0.0f, 0.6f); //Compones RGBA //los rangos van de (0-1) alpha es para la transparencia
+		glBegin(GL_QUADS);
+		glVertex3f(mov.y, mov.x, 0.01f);
+		glVertex3f(mov.y + 1, mov.x, 0.01f);
+		glVertex3f(mov.y + 1, mov.x + 1, 0.01f);
+		glVertex3f(mov.y, mov.x + 1, 0.01f);
+		glEnd();
+	}
+	glDisable(GL_BLEND);
 }

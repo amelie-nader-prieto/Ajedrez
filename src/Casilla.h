@@ -6,6 +6,7 @@ class Casilla
 {
 public:
     int row, col;
+	unsigned char red, green, blue;
     //row: fila - va de 0 a 9
     //col: coluna - va de 0 a 10
     void imprime() {

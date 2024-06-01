@@ -18,7 +18,9 @@ class GLTablero
 public:
 
 	Casilla cas{};
-	Tablero chess; //Solo es una prueba
+	Tablero chess; //Solo es una prueba// no eliminar
+	std::vector<Vector2D> movimientosPosibles;
+
 	void init();
 	void dibuja(const int&);
 
@@ -31,6 +33,7 @@ public:
 	}
 
 	void drawPieces(Tablero&, const int&);
+	void dibujaCasillasPosibles(const std::vector<Vector2D>&, const Vector2D&);
 
 protected:
 	//mouse	
