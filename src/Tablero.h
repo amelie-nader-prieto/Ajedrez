@@ -122,10 +122,10 @@ public:
 	// Usar esta función para verificar que las piezas y sus coordenadas se actualizan correctamente
 	void mostrar_lista_de_piezas();
 
-	void cambiarTurno() { //Solo para probar si cambia de turno, despues borrar
+	//void cambiarTurno() { //Solo para probar si cambia de turno, despues borrar
 		//es solo para las pruebas de movimiento
-		turnoActual = (turnoActual == W) ? B : W;
-	}
+		//turnoActual = (turnoActual == W) ? B : W;
+	//}
 
 };
 

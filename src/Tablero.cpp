@@ -1,7 +1,7 @@
 #include "Tablero.h"
 
 // constructor
-Tablero::Tablero() {
+Tablero::Tablero(): turnoActual(W){
 
 	// Crea las piezas y las pone sobre el tablero
 
@@ -83,11 +83,11 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
 
 	//Termina la ejecución del método "mover_pieza" si se detecta que no es el jugador al que le toca
     //mover la pieza (al que le toca el turno). Impide que el movimiento de la pieza se realice
-	//if (tablero[p_ini.x][p_ini.y]->GetJugador() != turnoActual) {
+	if (tablero[p_ini.x][p_ini.y]->GetJugador() != turnoActual) {
 		//No es el turno del Jugador que intenta mover la pieza
-		//std::cout << "No es tu turno!" << std::endl;
-		//return;
-	//}
+		std::cout << "No es tu turno! " << std::endl;
+		return;
+	}
 
 
 
@@ -115,8 +115,8 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
 	}
 
 	//Cambia el turno al otro jugador: Despues de mover la pieza y actualizar las coordenadas
-//el turno se cambia al otro jugador, despues de cada movimiento válido el turno pasa al otro jugador
-	//turnoActual = (turnoActual == W) ? B : W;
+   //el turno se cambia al otro jugador, despues de cada movimiento válido el turno pasa al otro jugador
+	turnoActual = (turnoActual == W) ? B : W;
 
 }
 
