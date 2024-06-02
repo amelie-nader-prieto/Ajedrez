@@ -5,7 +5,7 @@ class Maquina
 {
 	Tablero& tablero;
 
-	enum Estado { INICIO, AMENAZAS, NO_AMNZ, SI_AMNZ, MOVER_RND} estado = INICIO;
+	enum Estado { INICIO, AMENAZAS, NO_AMNZ, NO_AMNZ_POSIBLE_CAPTURA, CAPTURA, MOVER_RNDM, SI_AMNZ, SI_AMNZ_POSIBLE_CAPTURA, SI_AMNZ_NO_CAPTURA} estado = INICIO;
 
 	vector<Pieza*>piezas_propias{}, piezas_rival{};
 
@@ -28,15 +28,44 @@ class Maquina
 	vector<amenaza>lista_amenazas{};
 	vector<captura>lista_posibles_capturas{};
 
-	void capturar(); // capturar pieza una vez decidido que se hace
-
-	bool obtener_amenazas();
-
 	bool puede_mover(Pieza* pieza, vector<Vector2D> posibles_mov);
 
-	bool obtener_capturas();
+	void obtener_amenazas();
 
-	int puntuacion_pieza(Pieza*);
+	void obtener_capturas();
+	
+	void mover_rndm(Pieza* pieza);
+
+	int puntuacion_captura(Pieza* pieza_atacada);
+
+	static int puntuacion_pieza(Pieza* pieza)
+	{
+		// se atribuye a cada pieza un valor en función de su importancia
+		switch (pieza->GetTipo())
+		{
+		case R:
+			return 100;
+			break;
+		case D:
+			return 9;
+			break;
+		case C:
+			return 3;
+			break;
+		case A:
+			return 3;
+			break;
+		case T:
+			return 5;
+			break;
+		case P:
+			return 1;
+			break;
+		default:
+			return 0;
+			break;
+		}
+	}
 
 	bool comparar_amenazas(const amenaza& amnz1, const amenaza& amnz2); // condicion de ordenacion de lista de menazas
 
