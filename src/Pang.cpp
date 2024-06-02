@@ -28,34 +28,30 @@ void lista_piezas_privada(Tablero tab);
 void probar_movimientos_pieza(Pieza& p, Tablero& tab);
 
 int main(){
+	// Vamos a crear unos tableros de prueba
+	Tablero tab_prueba_jaque, tab_prueba_jaque2;
+	tab_prueba_jaque.vaciar(); tab_prueba_jaque2.vaciar();
 	
-	// Creamos y configuramos un tablero de prueba
-	Tablero tab3;
-	vector<Vector2D>movs{};
+	auto posicion_rey_1 = Vector2D(8,3); // variar este valor para ver si el rey en cuestión está amenazado o no
+	auto posicion_rey_2 = Vector2D(6,6); // variar este valor para ver si el rey en cuestión está amenazado o no
 
-	//tab3.vaciar();
-	//tab3.crear_pieza(D, B, { 5,5 }); auto& mi_Dn = /**(tab3.tablero[5][5]);*/ *(tab3[{5, 5}]);
-	//tab3.crear_pieza(T, W, { 2,5 }); auto& mi_Tb = /**(tab3.tablero[2][5]);*/ *(tab3[{2, 5}]);
-
-	//// uso las dos para ver si dan la misma información
-	//imprime_info_tablero_completa(tab3);
-	//
-	////probar_movimientos_pieza(mi_Dn, tab3);
-	//probar_movimientos_pieza(mi_Tb, tab3);
-
-	//cout << mi_Tb << '\n' << mi_Dn << '\n';
-
-	//imprime_info_tablero_completa(tab3);
-	auto& mi_Cn = *(tab3[{1, 6}]);
-	auto& mi_Pb = *(tab3[{7, 4}]);
-	auto& mi_Pn = *(tab3[{2, 3}]);
+	tab_prueba_jaque.crear_pieza(T, B, { 1,3 });
+	tab_prueba_jaque.crear_pieza(T, B, { 0,4 });
+	tab_prueba_jaque.crear_pieza(R, W, posicion_rey_1); 
 	
-	//probar_movimientos_pieza(mi_Cn, tab3);
-	
-	probar_movimientos_pieza(mi_Pb, tab3);
-	probar_movimientos_pieza(mi_Pn, tab3);
+	tab_prueba_jaque2.crear_pieza(A, B, { 5,7 });
+	tab_prueba_jaque2.crear_pieza(R, W, posicion_rey_2);
 
-	imprime_info_tablero_completa(tab3);
+	auto& posicion_rey = posicion_rey_2;
+	Tablero& tab = tab_prueba_jaque2;
+	Pieza& mi_Rb = *tab[posicion_rey];
+
+	dibujar(tab);
+	cout << '\n' << mi_Rb;
+	if (amenazado(mi_Rb.GetPosicion(), tab)) {
+		cout << " (amenazado)\n";
+	}
+	
 
 	return 0;
 	
@@ -105,6 +101,8 @@ void lista_posibles_movimientos(Pieza p,Tablero tab, vector<Vector2D>& lista) {
 	//cout << "\n\n";
 	lista = movimientos;
 }
+
+
 void lista_piezas_privada(Tablero tab) {
 	auto lista_bla = tab.get_piezas_bla();
 	auto lista_neg = tab.get_piezas_neg();

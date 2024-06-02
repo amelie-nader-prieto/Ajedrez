@@ -64,13 +64,27 @@ esta función para evaluar la posibilidad del jugador opuesto de capturar dicho p
 * Es un vector en caso de que por un casual haya varios posibles capturadores
 */
 bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vector<Vector2D>posicion_posible_capturador);
-
 /* CONDICIONES DE PROMOCIÓN DEL PEÓN
 * Promociona sólo a caballo o alfil si llega a la fila última en las columnas c, i (columnas 2 y 8)
 * Promociona a caballo, alfil, dama o torre si llega a la fila última en las columnas d-h (columnas 3-7)
 * En las columnas a y k (columnas 0 y 9) no hay promoción.
 */
 bool condiciones_promocion(Pieza peon);
+/* Verifica si un rey está amenazado
+* Está amenazado si su posición actual se encuentra entre los
+* posibles movimientos de alguna de las piezas del rival
+*/
+bool amenazado(Vector2D casilla, Tablero tab);
+/*
+* Verifica si hay jaque mate
+* Hay jaque mate si:
+* - El rey está amenazado en su posición actual
+* - Seguirá estando amenazado en todas las casillas a las que se puede mover
+* Verifica dichas condiciones para los reyes de ambos jugadores
+* El jugador cuyo rey está atrapado habrá perdido la partida y el otro habrá ganado
+* (el jugador que ha perdido se inicializa mediante el parámetro tipo Jugador&)
+*/
+
 
 // FUNCIONES DE MOVIMIENTO
 /*
@@ -94,6 +108,7 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab);
 * Incluye la lógica de la captura (tienen que coincidir dos piezas opuestas en la posición de destino)
 */
 void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab);
+
 
 // INICIALIZAR PIEZAS
 /*

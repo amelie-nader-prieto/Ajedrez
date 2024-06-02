@@ -86,6 +86,33 @@ bool condiciones_promocion(Pieza peon) {
     return false;
 
 }
+bool amenazado(Vector2D casilla, Tablero tab) {
+    vector<Pieza>piezas_rival{}; // se inicializa con las piezas que pertenecen al color opuesto
+    auto jugador = tab[casilla]->GetJugador();
+
+    switch (jugador) {
+    case B:piezas_rival = tab.get_piezas_bla(); break;
+    case W:piezas_rival = tab.get_piezas_neg(); break;
+    default:return false; break;
+    }
+
+    // Itera sobre las piezas del jugador rival
+    for (const auto& p : piezas_rival) {
+        if (p.GetCapturada() ||
+            (p.GetTipo() == P && p.GetPromocionado())
+            )continue;
+
+        // Para cada pieza rival, itera sobre sus posibles movimientos
+        for (const auto& u : obtener_posibles_movimientos(p.GetPosicion(), tab)) {
+            // Para cada posible movimiento de la pieza rival,
+            // lo compara con la posición del rey (si coinciden, el rey está amenazado)
+            if (casilla == u) { return true; break; }
+        }
+    }
+
+    return false;
+
+}
 
 
 // FUNCIONES DE MOVIMIENTO
