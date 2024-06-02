@@ -3,12 +3,13 @@
 
 class Maquina
 {
-	Tablero tablero;
+	Tablero& tablero;
+
 	enum Estado { INICIO, AMENAZAS, NO_AMNZ, SI_AMNZ, MOVER_RND} estado = INICIO;
 
 	vector<Pieza*>piezas_propias{}, piezas_rival{};
 
-	bool jaque_mate = false;
+	bool fin_turno = false;
 	
 	struct amenaza
 	{
@@ -27,11 +28,11 @@ class Maquina
 	vector<amenaza>lista_amenazas{};
 	vector<captura>lista_posibles_capturas{};
 
-	void mover_rndm(); // mover pieza una vez decidido que se hace
-
 	void capturar(); // capturar pieza una vez decidido que se hace
 
 	bool obtener_amenazas();
+
+	bool puede_mover(Pieza* pieza, vector<Vector2D> posibles_mov);
 
 	bool obtener_capturas();
 
@@ -45,8 +46,7 @@ public:
 
 	Maquina();
 
-	void inicializa(); // pasara máquina las piezas con las que juega;
-
 	void jugar(); // gestion de la máquina de estados
 };
+
 
