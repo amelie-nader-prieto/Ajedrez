@@ -118,6 +118,7 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) {
    //el turno se cambia al otro jugador, despues de cada movimiento válido el turno pasa al otro jugador
 	turnoActual = (turnoActual == W) ? B : W;
 
+
 }
 
 void Tablero::mover_pieza(Pieza& _p, Vector2D p_fin) {

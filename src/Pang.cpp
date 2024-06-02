@@ -21,6 +21,7 @@ bool seleccionado = true;
 //false cuando estamos seleccionando la posicion final
 
 
+
 int main(int argc, char* argv[]){
 	// vamos a crear un tablero para ver si funciona bien
 
@@ -89,16 +90,17 @@ void OnDraw(void)
 	glLoadIdentity();
 
 	//funciones de dibujo
-
-	gluLookAt(5, 5, 17,  // posicion del ojo
-		5.0, 5.0, 0.0,      // hacia que punto mira  (0,0,0) 
+	//gluLookAt(scene.x_ojo, scene.y_ojo, scene.z_ojo,  // posicion del ojo
+	gluLookAt( 5, 5, 17,
+	5.0, 5.0, 0.0,      // hacia que punto mira  (0,0,0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)  
 
 
 	scene.dibuja(2);
 	scene.drawPieces(tab, 2);
+	
 
-	//tab.dibujaPiezas();
+
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
 }
@@ -112,6 +114,7 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 void OnTimer(int value)
 {
 	//poner aqui el código de animacion
+
 
 		//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);

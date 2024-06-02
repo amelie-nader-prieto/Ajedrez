@@ -2,11 +2,8 @@
 #include "Casilla.h"
 #include "ETSIDI.h"
 #include "LogicaAjedrez.h" //la uso para omitir casillas fuera del tablero
-
-
 #include "Tablero.h"
 
-//#include "alfil.h"
 
 using ETSIDI::SpriteSequence;
 
@@ -15,6 +12,11 @@ enum { MOUSE_LEFT_BUTTON, MOUSE_MIDDLE_BUTTON, MOUSE_RIGHT_BUTTON };
 
 class GLTablero
 {
+
+public:
+	float x_ojo, y_ojo, z_ojo;	
+	//GLTablero() : x_ojo(5), y_ojo(5), z_ojo (17){}
+
 public:
 
 	Casilla cas{};
@@ -34,6 +36,18 @@ public:
 
 	void drawPieces(Tablero&, const int&);
 	void dibujaCasillasPosibles(const std::vector<Vector2D>&, const Vector2D&);
+
+
+
+
+	void rotarOjo() {
+		//float dist = sqrt((x_ojo - 5.0) * (x_ojo - 5.0) + (z_ojo - 0.0) * (z_ojo - 0.0));
+		float dist = sqrt((x_ojo - 5.0) * (x_ojo - 5.0) + (y_ojo - 5.0) * (y_ojo -5.0));
+		float theta = atan2(x_ojo - 5.0, y_ojo - 5.0);
+		theta += 0.05;
+		y_ojo = 5.0 + dist * cos(theta);
+		x_ojo = 5.0 + dist * sin(theta);
+	}
 
 protected:
 	//mouse	
