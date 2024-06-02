@@ -9,11 +9,63 @@
 #include "torre.h"
 #include "No_pieza.h"
 #include <vector>
+#include <iostream>
 
 #define FILA 10
 #define COLUMNA 11
 
-using std::vector;
+using std::cout; using std::vector;
+
+// OPERADORES
+/* Imprime el tipo de pieza */
+inline std::ostream& operator<<(std::ostream& co, const Tipo& t) {
+
+	switch (t) {
+	case no_hay:co << " "; break;
+	case R:co << "R"; break;
+	case D:co << "D"; break;
+	case C:co << "C"; break;
+	case A:co << "A"; break;
+	case T:co << "T"; break;
+	case P:co << "P"; break;
+	default:break;
+	}
+
+	return co;
+
+}
+/* Imprime el color de la pieza */
+inline std::ostream& operator<<(std::ostream& co, const Jugador& _jugador) {
+
+	switch (_jugador) {
+	case B:co << "n"; break; // negro
+	case W:co << "b"; break; // blanco
+	default:break;
+	}
+
+	return co;
+
+}
+/* Imprime las coordenadas con número y letra */
+inline std::ostream& operator<<(std::ostream& co, const Vector2D& _casilla) {
+
+	vector<char>letras_columnas = { 'a','b','c','d','e','f','g','h','i','j','k' };
+	int num_fila_0 = 10;
+	co << letras_columnas.at(_casilla.y) << num_fila_0 - _casilla.x;
+
+	return co;
+
+}
+// operador para imprimir toda la info de la pieza
+// Imprime tipo, color y casilla en la que está
+inline std::ostream& operator<<(std::ostream& co, Pieza& _pieza) {
+	if (_pieza.GetTipo() == no_hay) return co;
+	co << (_pieza.GetTipo()) << (_pieza.GetJugador()) << " en " << (_pieza.GetPosicion());
+	if (_pieza.GetCapturada()) co << " (capturada)";
+	else if (_pieza.GetPromocionado())co << "(promocionado)";
+	//else co << "       ";
+	return co;
+}
 
 class Tablero
 {
