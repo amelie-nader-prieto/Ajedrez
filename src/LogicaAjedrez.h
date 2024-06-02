@@ -84,7 +84,7 @@ bool amenazado(Vector2D casilla, Tablero tab);
 * El jugador cuyo rey está atrapado habrá perdido la partida y el otro habrá ganado
 * (el jugador que ha perdido se inicializa mediante el parámetro tipo Jugador&)
 */
-bool condiciones_fin_de_la_partida(Tablero tab);
+bool condiciones_fin_de_la_partida(Tablero tab,Jugador&derrotado);
 
 // FUNCIONES DE MOVIMIENTO
 /*
