@@ -113,7 +113,11 @@ bool amenazado(Vector2D casilla, Tablero tab) {
     return false;
 
 }
+bool condiciones_fin_de_la_partida(Tablero tab, Jugador& derrotado) {
 
+    return false;
+
+}
 
 // FUNCIONES DE MOVIMIENTO
 void siguienteCasilla(Dir_t dir, Vector2D ini, Vector2D& fin) {
