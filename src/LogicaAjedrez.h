@@ -75,16 +75,25 @@ bool condiciones_promocion(Pieza peon);
 * posibles movimientos de alguna de las piezas del rival
 */
 bool amenazado(Vector2D casilla, Tablero tab);
+// Esta sobrecarga además te da un vector con las posiciones de las piezas que están amenazando a tu rey
+// la manera de salir del jaque es o moviendo a tu rey o capturando a alguna de esas piezas
+bool amenazado(Vector2D casilla, Tablero tab, vector<Vector2D>& piezas_que_lo_amenazan);
 /*
-* Verifica si hay jaque mate
-* Hay jaque mate si:
-* - El rey está amenazado en su posición actual
-* - Seguirá estando amenazado en todas las casillas a las que se puede mover
-* Verifica dichas condiciones para los reyes de ambos jugadores
-* El jugador cuyo rey está atrapado habrá perdido la partida y el otro habrá ganado
-* (el jugador que ha perdido se inicializa mediante el parámetro tipo Jugador&)
+* Al iniciar el turno, verifica si hay jaque mate
+* Hay jaque mate si alguno de los reyes:
+* - Está amenazado en su posición actual
+* - No tiene forma posible de dejar de estar amenazado
 */
 bool condiciones_fin_de_la_partida(Tablero tab,Jugador&derrotado);
+
+
+// FUNCIONES QUE HACEN COPIAS DEL TABLERO
+/*
+* Si un rey está amenazado, esta función te dará los lugares a los que se puede mover
+* (es decir, los lugares en los que dejará de estar amenazado, entre sus posibles movimientos)
+*/
+vector<Vector2D>sitios_sin_amenaza(Vector2D casilla, Tablero tab);
+
 
 // FUNCIONES DE MOVIMIENTO
 /*

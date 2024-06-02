@@ -32,18 +32,21 @@ int main(){
 	Tablero tab_prueba_jaque, tab_prueba_jaque2;
 	tab_prueba_jaque.vaciar(); tab_prueba_jaque2.vaciar();
 	
-	auto posicion_rey_1 = Vector2D(8,3); // variar este valor para ver si el rey en cuestión está amenazado o no
+	auto posicion_rey_1 = Vector2D(3,3); // variar este valor para ver si el rey en cuestión está amenazado o no
 	auto posicion_rey_2 = Vector2D(6,6); // variar este valor para ver si el rey en cuestión está amenazado o no
 
 	tab_prueba_jaque.crear_pieza(T, B, { 1,3 });
-	tab_prueba_jaque.crear_pieza(T, B, { 0,4 });
+	tab_prueba_jaque.crear_pieza(T, B, { 8,3 });
 	tab_prueba_jaque.crear_pieza(R, W, posicion_rey_1); 
 	
 	tab_prueba_jaque2.crear_pieza(A, B, { 5,7 });
 	tab_prueba_jaque2.crear_pieza(R, W, posicion_rey_2);
 
-	auto& posicion_rey = posicion_rey_2;
-	Tablero& tab = tab_prueba_jaque2;
+
+
+
+	auto& posicion_rey = posicion_rey_1;
+	Tablero& tab = tab_prueba_jaque;
 	Pieza& mi_Rb = *tab[posicion_rey];
 
 	dibujar(tab);
@@ -51,9 +54,36 @@ int main(){
 	if (amenazado(mi_Rb.GetPosicion(), tab)) {
 		cout << " (amenazado)\n";
 	}
+	vector<Vector2D>lugar_amenaza{};
+	if (amenazado(mi_Rb.GetPosicion(), tab, lugar_amenaza)) {
+		cout << "  la amenaza está en: ";
+		for (auto p : lugar_amenaza) cout << "   " << p;
+	}
+
+	auto movs = obtener_posibles_movimientos(posicion_rey, tab);
+	cout << "\nte puedes mover a: ";
+	for (auto p : movs)cout << "   " << p;
+	cout << '\n';
+
+	//vector<Vector2D>sitios_ok{}; // se rellenará con las casillas en las que ya no estaría amenazado
+
+	//auto tab_copia = new Tablero; *tab_copia = tab;
+	//for (auto p : movs) {
+	//	mover_pieza(posicion_rey, p, *tab_copia);
+	//	if (!amenazado(p, *tab_copia)) sitios_ok.push_back(p);
+	//	*tab_copia = tab;
+	//}
+
+	auto sitios_ok = sitios_sin_amenaza(posicion_rey, tab);
+
+	cout << "los lugares en los que NO estarías amenazado serían: ";
+	for (auto p : sitios_ok) cout << "   " << p;
+
+
 	
 
 	return 0;
+
 	
 }
 

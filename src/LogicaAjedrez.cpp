@@ -113,11 +113,77 @@ bool amenazado(Vector2D casilla, Tablero tab) {
     return false;
 
 }
+bool amenazado(Vector2D casilla, Tablero tab, vector<Vector2D>& piezas_que_lo_amenazan) {
+    vector<Vector2D>v; // se irá rellenando con las posiciones de las piezas que amenazan a tu rey, si hay
+    vector<Pieza>piezas_rival{}; // se inicializa con las piezas que pertenecen al color opuesto
+    auto jugador = tab[casilla]->GetJugador();
+
+    switch (jugador) {
+    case B:piezas_rival = tab.get_piezas_bla(); break;
+    case W:piezas_rival = tab.get_piezas_neg(); break;
+    default:return false; break;
+    }
+
+    // Itera sobre las piezas del jugador rival
+    for (const auto& p : piezas_rival) {
+        if (p.GetCapturada() ||
+            (p.GetTipo() == P && p.GetPromocionado())
+            )continue;
+
+        // Para cada pieza rival, itera sobre sus posibles movimientos
+        for (const auto& u : obtener_posibles_movimientos(p.GetPosicion(), tab)) {
+            // Para cada posible movimiento de la pieza rival,
+            // lo compara con la posición del rey (si coinciden, el rey está amenazado)
+            if (casilla == u) {
+                v.push_back(p.GetPosicion()); // añade la pieza rival al vector para retornarlo
+                break; //para dejar de iterar sobre sus movimientos
+            }
+        }
+    }
+
+    piezas_que_lo_amenazan = v;
+    return(v.size() == 0 ? false : true);
+
+}
 bool condiciones_fin_de_la_partida(Tablero tab, Jugador& derrotado) {
+
+    // verifica las condiciones de jaque mate para cada jugador
+    for (auto jugador : { B,W }) {
+
+        // verifica si su rey está amenazado
+        
+
+        // verifica si puedes salir del jaque moviéndote
+        
+
+        // comprueba si puedes salir del jaque capturando a alguna de las piezas que te amenazan
+
+    }
+
 
     return false;
 
 }
+
+
+// FUNCIONES QUE HACEN COPIAS DEL TABLERO
+vector<Vector2D>sitios_sin_amenaza(Vector2D casilla, Tablero tab) {
+    vector<Vector2D>sitios_ok{}; // se rellenará con las casillas en las que ya no estaría amenazado
+    
+    auto tab_copia = new Tablero; // se hace una copia del tablero
+    *tab_copia = tab;
+    // Itera sobre los posibles movimientos de tu rey
+    for (auto p : obtener_posibles_movimientos(casilla, tab)) {
+        mover_pieza(casilla, p, *tab_copia); // hacemos dicho movimiento y vemos si tu rey sigue amenazado
+        if (!amenazado(p, *tab_copia)) sitios_ok.push_back(p); // si al hacer el movimiento ya no está amenazado, lo añadimos
+        *tab_copia = tab; // resetea el tablero copiado
+    }
+    delete tab_copia;
+    
+    return sitios_ok;
+
+}
+
 
 // FUNCIONES DE MOVIMIENTO
 void siguienteCasilla(Dir_t dir, Vector2D ini, Vector2D& fin) {
