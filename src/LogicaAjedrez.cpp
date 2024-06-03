@@ -145,7 +145,7 @@ bool amenazado(Vector2D casilla, Tablero tab, vector<Vector2D>& piezas_que_lo_am
     return(v.size() == 0 ? false : true);
 
 }
-bool condiciones_fin_de_la_partida(Tablero tab, Jugador& derrotado) {
+bool condiciones_jaque_mate(Tablero tab, Jugador& derrotado) {
     Vector2D posicion_rey; // se usará para localizar a los reyes de ambos jugadores
     bool Rb_mate = true, Rn_mate = true;
 
@@ -155,63 +155,62 @@ bool condiciones_fin_de_la_partida(Tablero tab, Jugador& derrotado) {
         posicion_rey = tab.get_rey(jugador);
         bool& R_mate = (jugador == B ? Rn_mate : Rb_mate);
 
-        // comprobamos si está en jaque (amenazado
         // Si NO está en jaque, no hay que comprobar nada más
         if (!amenazado(posicion_rey, tab)) {
             R_mate = false;
             continue;
         }
         
-        // comprobamos todas las jugadas legales que pueden sacarte del jaque
-        // (Si no hay ninguna posible, hay mate)
+        // Comprobamos todas las formas de salir del jaque
+        /*
+        * SACADO DE WIKIPEDIA CHAVAL:
+        * Las posibles maneras de salir de jaque son:
+            1. Mover el rey a un escaque en el cual no se ve amenazado.
+            2. Capturar la pieza que amenaza (posiblemente con el rey).
+            3. Bloquear el jaque mediante la colocación de una pieza entre el rey y la pieza mortal del adversario.
+        */
         else {
-            // MOVIENDO AL REY
-            // si puede moverse a alguna otra casilla en la que no vaya a estar amenazado, no hay mate
+            // Mover el rey a un escaque en el cual no se ve amenazado
             if (sitios_sin_amenaza(posicion_rey, tab).size() != 0) { 
                 R_mate = false;
                 continue;
             }
 
-            // MOVIENDO ALGUNA OTRA PIEZA
+            // Las otras formas sólo funcionan si sólo te amenaza UNA pieza
             vector<Vector2D>posiciones_amenaza{}; // se inicializa con las posiciones en las que están las piezas que te amenazan
             amenazado(posicion_rey, tab, posiciones_amenaza);
-
-            // Si sólo estás amenazado por UNA pieza del rival...
             if (posiciones_amenaza.size() == 1) {
-                //... y puedes capturarla, no hay mate.
+                // Capturar la pieza que amenaza
                 if (amenazado(posiciones_amenaza[0], tab)) { /*la lógica de esta función permite utilizarla para cualquier pieza*/
                     R_mate = false;
-                    continue;
+                    continue; // se pasa a evaluar el jugador siguiente
                 }
 
-                // Si no puedes capturarla, PERO:
-                // - es D, A o T (se mueven en línea recta), Y
-                // - alguna de tus piezas puede meterse en su camino (poniéndose entre esa pieza y el rey)
-                // tampoco hay mate.
+                // Bloquear el jaque mediante la colocación de una pieza entre el rey y la pieza mortal del adversario
                 if (
                     tab[posiciones_amenaza[0]]->GetTipo() == T ||
                     tab[posiciones_amenaza[0]]->GetTipo() == D ||
                     tab[posiciones_amenaza[0]]->GetTipo() == A
                     ) {
-
-                    auto p_amenaza = posiciones_amenaza[0];
-                    vector<Vector2D>camino{}; // casillas entre la pieza rival y tu rey
+                    auto p_amenaza = posiciones_amenaza[0]; // posición de la pieza mortal del adversario
+                    vector<Vector2D>camino{}; // casillas entre la pieza mortal del adversario y tu rey
                     Vector2D p_ini = p_amenaza, p_buffer = p_ini, p_siguiente;
                     Dir_t direccion_camino;
-
-                    // Recorrido desde la pieza rival hasta tu rey
-                    auto recorrido = posicion_rey - p_amenaza; // es como posición final (rey) - posición inicial (la otra pieza)
-                    // Para obtener la dirección
-                    if (recorrido.x == 0 && recorrido.y == 0) /*el recorrido es horizontal o vertical*/ {
+                    auto recorrido = posicion_rey - p_amenaza; // Recorrido de la pieza rival hasta tu rey - es como posición final (rey) - posición inicial (la otra pieza)
+                    
+                    // Inicializar la dirección
+                    if (recorrido.x == 0 || recorrido.y == 0) /*el recorrido es horizontal o vertical*/ {
                         direccion_camino = (recorrido.x == 0 ?
                             (recorrido.y > 0 ? Dir_t::UP : Dir_t::DOWN) : /* misma columna */
                             (recorrido.x > 0 ? Dir_t::RIGHT : Dir_t::LEFT) /* misma fila */
                             );
                     }
                     else /*el recorrido es diagonal*/ {
-
+                        direccion_camino = (recorrido.x > 0 ?
+                            (recorrido.y > 0 ? Dir_t::UPRIGHT : Dir_t::UPLEFT) : /*x positivas: dirección up*/
+                            (recorrido.y > 0 ? Dir_t::RIGHTDOWN : Dir_t::DOWNLEFT) /*x negativas: dirección down*/
+                            );
                     }
-
                     // Inicializar el camino
                     do {
                         siguienteCasilla(direccion_camino, p_buffer, p_siguiente);
@@ -219,22 +218,16 @@ bool condiciones_fin_de_la_partida(Tablero tab, Jugador& derrotado) {
                         p_buffer = p_siguiente;
 
                     } while (!(p_siguiente==posicion_rey));
-
-                    // Comprobar si alguna de tus piezas puede meterse en el camino
-                    if (camino.size() == 0) continue;
-                    switch (jugador) {
-                    case B:/*negro*/
-                        for (const auto& pn : tab.get_piezas_neg()) {
-
+                    if (camino.size() == 0) continue; // se pasa a evaluar el jugador siguiente
+                    
+                    // COMPROBAR SI SE PUEDE BLOQUEAR EL JAQUE
+                    for (const auto& casilla : camino) {
+                        if (casilla_accesible(casilla, jugador, tab)) {
+                            R_mate = false;
+                            break; // se sale del bucle
                         }
-                        break;
-                    case W:/*blanco*/
-                        for (const auto& pb : tab.get_piezas_bla()) {
-
-                        }
-                        break;
                     }
-
+                    
                 }
 
             }
@@ -250,6 +243,17 @@ bool condiciones_fin_de_la_partida(Tablero tab, Jugador& derrotado) {
     }
     return false;
 
+}
+bool casilla_accesible(Vector2D casilla, Jugador jugador, Tablero tab) {
+    auto tus_piezas = (jugador == B ? tab.get_piezas_neg() : tab.get_piezas_bla());
+    // Itera sobre todas tus piezas
+    for (const auto& p : tus_piezas) {
+        // Para cada una de tus piezas, itera sobre sus posibles movimientos
+        for (const auto& u : obtener_posibles_movimientos(p, tab)) {
+            if (casilla == u) return true;
+        }
+    }
+    return false;
 }
 
 

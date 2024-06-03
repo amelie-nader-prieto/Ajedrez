@@ -85,7 +85,11 @@ bool amenazado(Vector2D casilla, Tablero tab, vector<Vector2D>& piezas_que_lo_am
 * - Está amenazado en su posición actual
 * - No tiene forma posible de dejar de estar amenazado
 */
-bool condiciones_fin_de_la_partida(Tablero tab,Jugador&derrotado);
+bool condiciones_jaque_mate(Tablero tab,Jugador&derrotado);
+/* Para saber si alguna de tus piezas (comprobando entre todas tus piezas) puede moverse a una casilla determinada
+* (se usa para evaluar si hay jaque mate)
+*/
+bool casilla_accesible(Vector2D casilla, Jugador jugador, Tablero tab);
 
 
 // FUNCIONES QUE HACEN COPIAS DEL TABLERO
