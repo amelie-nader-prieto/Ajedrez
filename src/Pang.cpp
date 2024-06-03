@@ -27,7 +27,7 @@ void lista_piezas_privada(Tablero tab);
 // Uso esta función para comprobar si se mueven bien
 void probar_movimientos_pieza(Pieza& p, Tablero& tab);
 
-int main(){
+/*int main() {
 	// Vamos a crear unos tableros de prueba
 	Tablero tab_prueba_jaque, tab_prueba_jaque2;
 	tab_prueba_jaque.vaciar(); tab_prueba_jaque2.vaciar();
@@ -86,7 +86,7 @@ int main(){
 
 	
 }
-
+*/
 void dibujar(Tablero tab) {
 	for (int i = 0; i < FILA; i++) {
 		for (int j = 0; j < COLUMNA; j++) {
