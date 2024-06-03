@@ -109,5 +109,7 @@ public:
 	*/
 	inline auto get_piezas_bla() { return piezas_bla; }
 	inline auto get_piezas_neg() { return piezas_neg; }
-	
+
+	/* Retorna la posición de uno de los reyes */
+	Vector2D get_rey(Jugador _jugador);
 };

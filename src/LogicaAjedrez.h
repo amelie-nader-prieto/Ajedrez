@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "Tablero.h"
@@ -5,8 +6,8 @@
 // DIRECCIONES
 /*
 * Las ocho direcciones del espacio
-* UP es sumar uno a la fila y es SUBIR, los peones BLANCOS avanzan en esta dirección
-* DOWN es restar uno a la fila y en BAJAR, los peones NEGROS avanzan en esta dirección
+* UP = sumar 1 a la fila, DOWN = restar 1 a la fila
+* RIGHT = sumar a la columna, LEFT = restar a la columna
 */
 static enum class Dir_t {
     LEFT, UPLEFT, UP, UPRIGHT, RIGHT, RIGHTDOWN, DOWN, DOWNLEFT
