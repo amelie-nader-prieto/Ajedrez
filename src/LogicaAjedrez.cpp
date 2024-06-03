@@ -179,7 +179,10 @@ bool condiciones_fin_de_la_partida(Tablero tab, Jugador& derrotado) {
             // Si sólo estás amenazado por UNA pieza del rival...
             if (posiciones_amenaza.size() == 1) {
                 //... y puedes capturarla, no hay mate.
-                if (amenazado(posiciones_amenaza[0], tab))R_mate = false;
+                if (amenazado(posiciones_amenaza[0], tab)) { /*la lógica de esta función permite utilizarla para cualquier pieza*/
+                    R_mate = false;
+                    continue;
+                }
 
                 // Si no puedes capturarla, PERO:
                 // - es D, A o T (se mueven en línea recta), Y
@@ -196,63 +199,24 @@ bool condiciones_fin_de_la_partida(Tablero tab, Jugador& derrotado) {
                     Vector2D p_ini = p_amenaza, p_buffer = p_ini, p_siguiente;
                     Dir_t direccion_camino;
 
-                    // INICIALIZAMOS EL CAMINO
-                    switch (tab[p_amenaza]->GetTipo()) {
-                    case T: // la torre va a estar en tu misma fila o en tu misma columna
-                        if (p_amenaza.x == posicion_rey.x) /*misma columna*/ {
-                            if (posicion_rey.y > p_amenaza.y) {
-                                // la dirección es UP
-                                direccion_camino = Dir_t::UP;
-                            }
-                            else {
-                                // la dirección es DOWN
-                                direccion_camino = Dir_t::DOWN;
-                            }
-                        }
-                        else if (p_amenaza.y == posicion_rey.y) /*misma fila*/ {
-                            if (posicion_rey.x > p_amenaza.x) {
-                                // la dirección es RIGHT
-                                direccion_camino = Dir_t::RIGHT;
-                            }
-                            else {
-                                // la dirección es LEFT
-                                direccion_camino = Dir_t::LEFT;
-                            }
-                        }
-                        else { break; }
+                    // Recorrido desde la pieza rival hasta tu rey
+                    auto recorrido = posicion_rey - p_amenaza; // es como posición final (rey) - posición inicial (la otra pieza)
+                    // Para obtener la dirección
+                    if (recorrido.x == 0 && recorrido.y == 0) /*el recorrido es horizontal o vertical*/ {
+                        direccion_camino = (recorrido.x == 0 ?
+                            (recorrido.y > 0 ? Dir_t::UP : Dir_t::DOWN) : /* misma columna */
+                            (recorrido.x > 0 ? Dir_t::RIGHT : Dir_t::LEFT) /* misma fila */
+                            );
+                    }
+                    else /*el recorrido es diagonal*/ {
 
-                        do {
-                            siguienteCasilla(direccion_camino, p_buffer, p_siguiente);
-                            if (!(p_siguiente.x == posicion_rey.x && p_siguiente.y && posicion_rey.y))
-                                camino.push_back(p_siguiente);
-                            p_buffer = p_siguiente;
-                        } while (!(p_siguiente.x == posicion_rey.x && p_siguiente.y && posicion_rey.y));
-
-                        break;
-                    case A: // el alfil estará en una fila distinta y una columna distinta
-
-                        break;
-
-                    case D:
-
-                        break;
-                    default:break;
                     }
 
-                    // y comprobamos si alguna de tus piezas puede meterse en el camino
-                    switch (jugador) {
-                    case B:
-                        for (const auto& pn : tab.get_piezas_neg()) {
+                    // Inicializar el camino
 
-                        }
-                        break;
-                    case W:
-                        for (const auto& pb : tab.get_piezas_bla()) {
 
-                        }
-                        break;
-                    default:break;
-                    }
+                    // Comprobar si alguna de tus piezas puede meterse en el camino
+
 
                 }
 
