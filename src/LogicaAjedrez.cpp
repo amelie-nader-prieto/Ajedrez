@@ -213,10 +213,27 @@ bool condiciones_fin_de_la_partida(Tablero tab, Jugador& derrotado) {
                     }
 
                     // Inicializar el camino
+                    do {
+                        siguienteCasilla(direccion_camino, p_buffer, p_siguiente);
+                        if (!(p_siguiente == posicion_rey)) camino.push_back(p_siguiente);
+                        p_buffer = p_siguiente;
 
+                    } while (!(p_siguiente==posicion_rey));
 
                     // Comprobar si alguna de tus piezas puede meterse en el camino
+                    if (camino.size() == 0) continue;
+                    switch (jugador) {
+                    case B:/*negro*/
+                        for (const auto& pn : tab.get_piezas_neg()) {
 
+                        }
+                        break;
+                    case W:/*blanco*/
+                        for (const auto& pb : tab.get_piezas_bla()) {
+
+                        }
+                        break;
+                    }
 
                 }
 
