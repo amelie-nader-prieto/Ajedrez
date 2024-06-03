@@ -10,7 +10,7 @@ class Coordinador
 {
 	//GLTablero mundo_grafico;
 	enum Estado { MENU1, MENU2, GRAFICOS,EXPLICACION, JUEGO, PAUSA, GAMEOVER, FIN} estado=MENU1;
-	enum Tipo_Tablero{clasic=1, starwors, animal}graf_tablero=clasic;
+	enum Tipo_Tablero{classic=1, starwors, animal}graficas_tablero=classic;
 	enum Modalida { maquina, jugadores }modalidad = jugadores;
 	enum Volumen {ON, OFF} volumen=ON;
 public:
@@ -23,5 +23,6 @@ public:
 //	void mueve();
 	void dibuja();
 //	void MouseBottom(int x, int y, int button, bool down, Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado);
+	void musica();
 };
 

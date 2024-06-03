@@ -32,6 +32,7 @@ void Coordinador::dibuja()
 		break;
 	;
 	case JUEGO:
+		musica();
 		cout<<"Se esta jugando al: "<<graf_tablero<<endl;
 		cout << "Pulsa M para ir a pausa" << endl;
 
@@ -65,12 +66,12 @@ void Coordinador::tecla(unsigned char key)
 			break;
 		}
 		if (key == '1') {
-			graf_tablero = clasic;
+			graficas_tablero = classic;
 			estado = JUEGO;//Se irá al tablero tipo1
 			break;
 		}
-		if (key == '2') graf_tablero = starwors;//Se irá al tablero tipo2
-		if (key == '3') graf_tablero = animal;//Se irá al tablero tipo3
+		if (key == '2') graficas_tablero = starwors;//Se irá al tablero tipo2
+		if (key == '3') graficas_tablero = animal;//Se irá al tablero tipo3
 
 		//mundo_grafico.init();//Se inicia la grafica del tablero deseado
 		estado = EXPLICACION;
@@ -135,3 +136,21 @@ void Coordinador::iniciar()
 }
 
 //Coordinador::~Coordinador() {}
+
+
+void Coordinador::musica() {
+	switch (graficas_tablero)
+	{
+	case classic:
+		ETSIDI::play("bin/sonidos/Classic.WAV");
+		break;
+	case starwors:
+		ETSIDI::play("bin/sonidos/Star_Wars.WAV");
+		break;
+	case animal:
+		ETSIDI::play("bin/sonidos/Animal_Crossing.WAV");
+		break;
+	default:
+		break;
+	}
+}

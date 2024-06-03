@@ -1,16 +1,15 @@
 
 #include "Coordinador.h"
-
+#include "freeglut.h"
 
 #include <iostream>
 
 Coordinador coordinador;
 
 
-int main()//int argc, char* argv[]){
-{
+int main(int argc, char* argv[]){
 
-	/*
+
 //Inicializar el gestor de ventanas GLUT y crear la ventana
 	glutInit(&argc, argv);
 	glutInitWindowSize(800, 600);
@@ -18,7 +17,7 @@ int main()//int argc, char* argv[]){
 	glutCreateWindow("Ajedrez BALBO");
 
 	/**///////habilitar luces y definir perspectiva
-	/*glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
@@ -36,8 +35,9 @@ int main()//int argc, char* argv[]){
 
 	//pasarle el control a GLUT,que llamara a los callbacks
 	glutMainLoop();
-	*/
+	
 	coordinador.iniciar();
+
 	int i = 1;
 	unsigned char key;
 	while (i == 1){
@@ -54,7 +54,7 @@ int main()//int argc, char* argv[]){
 
 
 
-/*
+
 /////////////////////////////////////////////////////////////////
 /////////TODO LO DE PRINCIPAL.CPP//////////////////////////////
 void OnDraw(void)
@@ -118,4 +118,4 @@ void OnMouseClick(int b, int state, int x, int y) {
 	
 	glutPostRedisplay();
 
-}*/
+}
