@@ -255,6 +255,16 @@ bool casilla_accesible(Vector2D casilla, Jugador jugador, Tablero tab) {
     }
     return false;
 }
+bool ahogado(Jugador jugador, Tablero tab) {
+    if(!amenazado(tab.get_rey(jugador),tab)) return false;
+    // Comprobar si tiene jugadas legales
+    auto tus_piezas = (jugador == B ? tab.get_piezas_neg() : tab.get_piezas_bla());
+    for (const auto& p : tus_piezas) {
+        // para cada pieza, comprueba sus jugadas legales. Si ALGUNA tiene alguna jugada legal, no hay ahogado
+        if (obtener_movimientos_legales(p.GetPosicion(), tab).size() != 0) return false;
+    }
+    return true;
+}
 
 
 // FUNCIONES QUE HACEN COPIAS DEL TABLERO
@@ -274,7 +284,24 @@ vector<Vector2D>sitios_sin_amenaza(Vector2D casilla, Tablero tab) {
     return sitios_ok;
 
 }
+vector<Vector2D>obtener_movimientos_legales(Vector2D casilla, Tablero tab) {
+    vector<Vector2D>movimientos_legales{};
+    auto jugador = tab[casilla]->GetJugador();
+    auto tu_rey = tab.get_rey(jugador);
+    auto tab_copia = new Tablero; // se usa para hacer una copia del tablero
+    *tab_copia = tab;
+    
+    // Itera sobre los posibles movimientos de la pieza en cuestión
+    for (const auto& p_fin : obtener_posibles_movimientos(casilla, tab)) {
+        mover_pieza(casilla, p_fin, *tab_copia);
+        if (!amenazado(tu_rey, *tab_copia)) movimientos_legales.push_back(p_fin); // si al mover la pieza no hay jaque, la añade a los movimientos legales
+        *tab_copia = tab; // resetea el tablero copiado
+    }
+    delete tab_copia;
+    
+    return movimientos_legales;
 
+}
 
 // FUNCIONES DE MOVIMIENTO
 void siguienteCasilla(Dir_t dir, Vector2D ini, Vector2D& fin) {

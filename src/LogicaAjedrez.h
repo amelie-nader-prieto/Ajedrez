@@ -90,15 +90,26 @@ bool condiciones_jaque_mate(Tablero tab,Jugador&derrotado);
 * (se usa para evaluar si hay jaque mate)
 */
 bool casilla_accesible(Vector2D casilla, Jugador jugador, Tablero tab);
-
+/*
+* Te dice si un jugador determinado está ahogado
+* (El ahogado se produce si el jugador de quien es el turno no tiene jugadas legales y su rey no está en jaque)
+*/
+bool ahogado(Jugador jugador, Tablero tab);
 
 // FUNCIONES QUE HACEN COPIAS DEL TABLERO
 /*
-* Si un rey está amenazado, esta función te dará los lugares a los que se puede mover
+* Si un rey está amenazado, esta función te dará los lugares a los que éste se puede mover legalmente
 * (es decir, los lugares en los que dejará de estar amenazado, entre sus posibles movimientos)
+* ARGUMENTOS:
+* - casilla: posición del rey amenazado
+* - el tablero
 */
 vector<Vector2D>sitios_sin_amenaza(Vector2D casilla, Tablero tab);
-
+/*
+* Te da todas las casillas a las que podría moverse una pieza QUE SEAN LEGALES
+* (es decir, de entre sus posibles movimientos, aquellos que no pongan a su propio rey en jaque)
+*/
+vector<Vector2D>obtener_movimientos_legales(Vector2D casilla, Tablero tab);
 
 // FUNCIONES DE MOVIMIENTO
 /*
