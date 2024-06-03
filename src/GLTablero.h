@@ -15,6 +15,7 @@ class GLTablero
 
 public:
 	float x_ojo, y_ojo, z_ojo;	
+	bool activar_musica=true;
 	//GLTablero() : x_ojo(5), y_ojo(5), z_ojo (17){}
 
 public:

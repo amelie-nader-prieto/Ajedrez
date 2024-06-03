@@ -44,6 +44,8 @@ void GLTablero::dibuja(const int &Estadoskin) {
 
 	direccionF = "bin/imagenes/" + skin + "/Fondo.png";
 	const char* rutaF = direccionF.c_str();
+
+
 	int sum = 0;
 	for (int i = 0; i < COLUMNA; i++) {
 		for (int j = 0; j < FILA; j++) {
@@ -104,6 +106,20 @@ void GLTablero::dibuja(const int &Estadoskin) {
 	glTranslatef(0.0f, despy, 0.0f);
 
 	dibujaCasillasPosibles(movimientosPosibles, Vector2D{xcell_sel, ycell_sel});
+	////////////////////////////////////////////////////
+
+
+
+	///////////////////MÚSICA///////////////////////////
+
+	std::string direccionM = "";
+	direccionM = "bin/sonidos/" + skin + "/Fondo.WAV";
+	const char* rutaM = direccionM.c_str();
+	
+		if (activar_musica == true) {
+			ETSIDI::play(rutaM);
+		activar_musica=false;
+		}
 
 }
 
