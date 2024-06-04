@@ -7,4 +7,6 @@ class Dama :
 {
 public:
     Dama(int fila, int columna,Jugador j=B);
+
 };
+

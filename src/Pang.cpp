@@ -1,68 +1,37 @@
+#include "freeglut.h"
 #include "LogicaAjedrez.h"
-#include "Maquina.h";
+#include "GLTablero.h"
+
+void OnDraw(void); //esta funcion sera llamada para dibujar
+void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
+void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
+void OnMouseClick(int button, int state, int x, int y); //para eventos del mouse
 
 
-// Dibuja el tablero en la consola
-void dibujar(Tablero tab);
+Tablero tab; //Para la gestión de la lógica
+GLTablero scene; //Para el dibujo del tablero, casillas y piezas
+int EstadoSkin = 2;
 
-// Te da una lista de todas las piezas que hay en el tablero
-// consulta la interfaz PÚBLICA del tablero
-void lista_piezas(Tablero tab);
-// Te da una lista de los sitios a los que se puede mover una pieza (la inicializa y te la da)
-void lista_posibles_movimientos(Pieza p,Tablero tab,vector<Vector2D>& lista);
-// Dibuja el tablero y da una lista de las piezas que hay
-void imprime_info_tablero(Tablero tab);
-// Dibuja el tablero y da una lista de las piezas que hay
-// te da la lista accediendo a lo público y luego a lo privado
-// la uso para ver si los datos se actualizan bien
-void imprime_info_tablero_completa(Tablero tab);
-// Representa sobre el tablero las posiciones a las que se puede mover
-// [.] si se puede mover
-// [x] si puede capturar
-void imprime_movimientos_pieza(Pieza p, Tablero tab, vector<Vector2D>& lista);
+//Variables globales para la gestión de los clicks
+Vector2D click_inicial{ -1, -1 };
+Vector2D click_final{ -1,-1 };
+bool seleccionado = true;
+//true cuando estamos seleccionando la pieza inicial
+//false cuando estamos seleccionando la posicion final
 
-// imprime las piezas (hace una copia de los datos PRIVADOS del tablero)
-void lista_piezas_privada(Tablero tab);
 
-// Bucle para mover una pieza a una casilla que elijas
-// Uso esta función para comprobar si se mueven bien
-void probar_movimientos_pieza(Pieza& p, Tablero& tab);
 
-int main(){
-	IA maquina;
-	while (true)
-	{
-		maquina.jugar();
-	}
+int main(int argc, char* argv[]){
+
+	
+//Inicializar el gestor de ventanas GLUT y crear la ventana
+	glutInit(&argc, argv);
+	glutInitWindowSize(800, 600);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutCreateWindow("Ajedrez BALBO");
   
-void dibujar(Tablero tab) {
-	for (int i = 0; i < FILA; i++) {
-		for (int j = 0; j < COLUMNA; j++) {
-			if (tab.tablero[i][j])
-				cout << "[" << tab.tablero[i][j]->GetTipo() << "]";
-			else // si es null es porque no se usa
-				cout << "   ";
-		}
-		cout << ' ' << FILA - i << '\n';
-	}
-	cout << " a  b  c  d  e  f  g  h  i  j  k" << '\n';
-	cout << '\n';
 }
-void lista_piezas(Tablero tab) {
-	cout << "\n---LISTA DE PIEZAS (PÚBLICA)---\n";
-	for (int i = 0; i < FILA; i++) {
-		for (int j = 0; j < COLUMNA; j++) {
-			// comprobamos si se han creado las piezas correctamente
-			if (tab.tablero[i][j]) {
-				if (tab.tablero[i][j]->GetTipo() != no_hay) {
-					cout << "(" << i << ',' << j << ")" << '\t';
-					cout << (*tab.tablero[i][j]) << '\t';
-				}
-			}
-		}
-	}
-	cout << "\n--------------------------------\n\n";
-}
+
 void lista_posibles_movimientos(Pieza p,Tablero tab, vector<Vector2D>& lista) {
 	//auto movimientos = obtener_posibles_movimientos(*(tab.tablero[5][5]), tab);
 	auto movimientos = obtener_posibles_movimientos(p.GetPosicion(), tab);
@@ -80,30 +49,8 @@ void lista_posibles_movimientos(Pieza p,Tablero tab, vector<Vector2D>& lista) {
 	lista = movimientos;
 }
 
-
-void lista_piezas_privada(Tablero tab) {
-	auto lista_bla = tab.get_piezas_bla();
-	auto lista_neg = tab.get_piezas_neg();
-	int tam = (lista_bla.size() > lista_neg.size()) ?
-		lista_bla.size() : lista_neg.size();
-	cout << "\n--LISTA DE PIEZAS (PRIVADAS)--\n";
-	cout << "  NEGRO  \t  BLANCO\n";
-	for (int i = 0; i < tam; i++) {
-		if (i < lista_neg.size()) cout << lista_neg.at(i);
-		else cout << "         ";
-
-		cout << '\t';
-
-		if (i < lista_bla.size())cout << lista_bla.at(i);
-		else cout << "         ";
-
-		cout << '\n';
-	}
-	cout << "\n------------------------------\n\n";
-}
-
 void imprime_info_tablero(Tablero tab) {
-	dibujar(tab);
+	tab.dibujar();
 	lista_piezas(tab);
 }
 void imprime_info_tablero_completa(Tablero tab) {
@@ -111,6 +58,18 @@ void imprime_info_tablero_completa(Tablero tab) {
 	imprime_info_tablero(tab);
 	lista_piezas_privada(tab);
 
+	scene.init(); //reempleza a (habilitar luces)
+
+	//Registrar los callbacks
+	glutDisplayFunc(OnDraw);
+	glutTimerFunc(25, OnTimer, 0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
+	glutKeyboardFunc(OnKeyboardDown);
+	glutMouseFunc(OnMouseClick);//PRUEBA MOUSE funciona
+
+	//pasarle el control a GLUT,que llamara a los callbacks
+	glutMainLoop();
+
+	return 0;
 }
 void imprime_movimientos_pieza(Pieza p, Tablero tab,vector<Vector2D>&lista) {
 	
@@ -120,58 +79,94 @@ void imprime_movimientos_pieza(Pieza p, Tablero tab,vector<Vector2D>&lista) {
 	auto movimientos = obtener_posibles_movimientos(posicion_pieza, tab);
 	bool posible_movimiento = false;
 
-	for (int i = 0; i < FILA; i++) {
-		for (int j = 0; j < COLUMNA; j++) {
-			posicion_actual = { i,j };
-			posible_movimiento = false;
-			if (!tab.tablero[i][j]) // si es null es porque no se usa
-				cout << "   ";
-			else { // resto de casillas que sí se usan
-				if (posicion_actual==posicion_pieza)
-					cout << "[" << tab.tablero[i][j]->GetTipo() << "]";
-				else { // comprueba si la posicion actual pertenece a los posibles movimientos
-					// si pertenece, la representa con un . o una x
-					for (const auto& u : movimientos) {
-						if (posicion_actual == u) {
-							posible_movimiento = true;
-							break;
-						}
-					}
-					if (
-						posible_movimiento &&
-						hay_pieza_rival(Vector2D(i, j), p.GetJugador(), tab)
-						) cout << "[x]";
-					else if (posible_movimiento) cout << "[.]";
-					else cout << "[ ]";
-				}
-			}
-		}
-		cout << ' ' << FILA - i << '\n';
-	}
-	cout << " a  b  c  d  e  f  g  h  i  j  k" << '\n';
-	cout << '\n';
-	lista_posibles_movimientos(*(tab.tablero[posicion_pieza.x][posicion_pieza.y]),tab,lista);
+
+
+/////////TODO LO DE PRINCIPAL.CPP//////////////////////////////
+void OnDraw(void)
+{
+	//Borrado de la pantalla	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Para definir el punto de vista
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	//funciones de dibujo
+	//gluLookAt(scene.x_ojo, scene.y_ojo, scene.z_ojo,  // posicion del ojo
+	gluLookAt( 5, 5, 17,
+	5.0, 5.0, 0.0,      // hacia que punto mira  (0,0,0) 
+		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)  
+
+
+	scene.dibuja(3);
+	scene.drawPieces(tab, 3);
+	
+
+
+	//no borrar esta linea ni poner nada despues
+	glutSwapBuffers();
+}
+void OnKeyboardDown(unsigned char key, int x_t, int y_t)
+{
+	//poner aqui el código de teclado
+
+	glutPostRedisplay();
 }
 
-void probar_movimientos_pieza(Pieza& _pieza, Tablero& tab) {
-	int opc = 0;
-	vector<Vector2D>v{}; // aquí almacenará los posibles movimientos
-	Vector2D posicion_destino; // posición a la que te vas a mover
+void OnTimer(int value)
+{
+	//poner aqui el código de animacion
 
-	while (1) {
-		v.clear(); opc = 0;
-		imprime_movimientos_pieza(_pieza, tab, v);
 
-		do {
-			std::cin >> opc;
-			if (opc == -1)return void{}; // -1 para salir del bucle
-		} while (opc <= 0 || opc > v.size());
-		posicion_destino = v.at(opc - 1);
+		//no borrar estas lineas
+	glutTimerFunc(25, OnTimer, 0);
+	glutPostRedisplay();
+}
 
-		cout << '\n' << posicion_destino << "\n";
-		
-		mover_pieza(_pieza.GetPosicion(), posicion_destino, tab);
-		imprime_info_tablero_completa(tab);
-		cout << "\n\n";
+void OnMouseClick(int b, int state, int x, int y) {
+//captura los clicks del mouse
+//da el control a la escena del tablero 
+	bool down = (state == GLUT_DOWN);
+	int button;
+	if (b == GLUT_LEFT_BUTTON) {
+		button = MOUSE_LEFT_BUTTON;
 	}
+
+	scene.MouseButton(x, y, b, down, click_inicial, click_final, seleccionado);
+
+	Pieza seleccionada; // se inicializará con la pieza que hay en la posición que seleccionemos con el mouse
+
+	// Comprobar que la casilla seleccionada con el mouse sea válida
+	// si es válida, se inicializa el objeto pieza seleccionada
+	/*
+	* La casilla es válida si:
+	* - está dentro del tablero
+	* - hay una pieza en la casilla
+	* - dicha pieza se puede mover 
+	*/
+	if (tab[click_inicial] && tab[click_inicial]->GetTipo() != no_hay && 
+		obtener_posibles_movimientos(click_inicial, tab).size() > 0) {
+
+		seleccionada = *tab[click_inicial];
+		cout << "  (pieza seleccionada: " << seleccionada << ")   \n";
+		for (auto p : obtener_posibles_movimientos(click_inicial, tab)) {
+			if (p == click_final) { // simplemente verificamos que el sitio en el que has hecho click está entre los posibles movimientos
+				
+				// mover pieza al lugar seleccionado
+				mover_pieza(click_inicial, click_final, tab);
+				//seleccionada = *tab[click_final];
+				tab.dibujar();
+				cout << '\n';
+				tab.mostrar_lista_de_piezas();
+				cout << '\n';
+
+				break;
+			}
+		}
+	}
+
+
+
+	glutPostRedisplay();
+
 }

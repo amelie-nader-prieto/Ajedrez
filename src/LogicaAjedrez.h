@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "Tablero.h"
@@ -32,9 +31,9 @@ inline bool no_se_usa(int i, int j) {
 
 // POSICIONES A LAS QUE NO TE PUEDES MOVER
 /*
-* FunciÛn m·s elaborada, para descartar una posible posiciÛn autom·ticamente
-* - Si es de las que no se usan, no te puedes mover ahÌ
-* - Si se sale de los Ìndices v·lidos, no te puedes mover ahÌ
+* Funci√≥n m√°s elaborada, para descartar una posible posici√≥n autom√°ticamente
+* - Si es de las que no se usan, no te puedes mover ah√≠
+* - Si se sale de los √≠ndices v√°lidos, no te puedes mover ah√≠
 */
 inline bool omitir_posicion(const Vector2D& _posicion) {
     return (_posicion.x < 0 || _posicion.y < 0 ||
@@ -44,45 +43,47 @@ inline bool omitir_posicion(const Vector2D& _posicion) {
 
 
 // FUNCIONES QUE REVISAN EL TABLERO
-/* Revisan los datos p˙blicos de la clase Tablero
-// hay que pasarles el objeto Tablero junto con los dem·s par·metros */
+/* Revisan los datos p√∫blicos de la clase Tablero
+// hay que pasarles el objeto Tablero junto con los dem√°s par√°metros */
 /* Para saber si hay una pieza de tu color en una casilla determinada */
 bool hay_pieza_tuya(Vector2D _posicion, Jugador _jugador, Tablero tab);
+
 /* Para saber si hay una pieza del color opuesto en una casilla determinada */
 bool hay_pieza_rival(Vector2D _posicion, Jugador _jugador, Tablero tab);
-/* Para saber si se cumplen las condiciones para que un peÛn (pasado como argumento) haga una captura tradicional
-* Podr· hacer una captura tradicional si hay una pieza rival en la fila siguiente en diagonal
+
+/* Para saber si se cumplen las condiciones para que un pe√≥n (pasado como argumento) haga una captura tradicional
+* Podr√° hacer una captura tradicional si hay una pieza rival en la fila siguiente en diagonal
 */
 bool condiciones_captura_peon(Pieza _peon, Tablero tab);
 /*
 * Para saber si se cumplen las condiciones para una captura al paso
-* Si el peÛn de un jugador avanza dos filas, en el turno siguiente se llamar· a
-esta funciÛn para evaluar la posibilidad del jugador opuesto de capturar dicho peÛn.
+* Si el pe√≥n de un jugador avanza dos filas, en el turno siguiente se llamar√° a
+esta funci√≥n para evaluar la posibilidad del jugador opuesto de capturar dicho pe√≥n.
 * ARGUMENTOS:
 * Tablero
-* PosiciÛn del peÛn que acaba de avanzar dos filas (si es true, dicho peÛn podr· ser capturado en ese turno)
-* posicion_posible_capturador: si la funciÛn es true, se inicializar· con la posiciÛn del peÛn qe podr· captuar en ese turno
+* Posici√≥n del pe√≥n que acaba de avanzar dos filas (si es true, dicho pe√≥n podr√° ser capturado en ese turno)
+* posicion_posible_capturador: si la funci√≥n es true, se inicializar√° con la posici√≥n del pe√≥n qe podr√° captuar en ese turno
 * Es un vector en caso de que por un casual haya varios posibles capturadores
 */
 bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vector<Vector2D>posicion_posible_capturador);
-/* CONDICIONES DE PROMOCI”N DEL PE”N
-* Promociona sÛlo a caballo o alfil si llega a la fila ˙ltima en las columnas c, i (columnas 2 y 8)
-* Promociona a caballo, alfil, dama o torre si llega a la fila ˙ltima en las columnas d-h (columnas 3-7)
-* En las columnas a y k (columnas 0 y 9) no hay promociÛn.
+/* CONDICIONES DE PROMOCI√ìN DEL PE√ìN
+* Promociona s√≥lo a caballo o alfil si llega a la fila √∫ltima en las columnas c, i (columnas 2 y 8)
+* Promociona a caballo, alfil, dama o torre si llega a la fila √∫ltima en las columnas d-h (columnas 3-7)
+* En las columnas a y k (columnas 0 y 9) no hay promoci√≥n.
 */
 bool condiciones_promocion(Pieza peon);
-/* Verifica si un rey est· amenazado
-* Est· amenazado si su posiciÛn actual se encuentra entre los
+/* Verifica si un rey est√° amenazado
+* Est√° amenazado si su posici√≥n actual se encuentra entre los
 * posibles movimientos de alguna de las piezas del rival
 */
 bool amenazado(Vector2D casilla, Tablero tab);
-// Esta sobrecarga adem·s te da un vector con las posiciones de las piezas que est·n amenazando a tu rey
+// Esta sobrecarga adem√°s te da un vector con las posiciones de las piezas que est√°n amenazando a tu rey
 // la manera de salir del jaque es o moviendo a tu rey o capturando a alguna de esas piezas
 bool amenazado(Vector2D casilla, Tablero tab, vector<Vector2D>& piezas_que_lo_amenazan);
 /*
 * Al iniciar el turno, verifica si hay jaque mate
 * Hay jaque mate si alguno de los reyes:
-* - Est· amenazado en su posiciÛn actual
+* - Est√° amenazado en su posici√≥n actual
 * - No tiene forma posible de dejar de estar amenazado
 */
 bool condiciones_jaque_mate(Tablero tab,Jugador&derrotado);
@@ -91,53 +92,90 @@ bool condiciones_jaque_mate(Tablero tab,Jugador&derrotado);
 */
 bool casilla_accesible(Vector2D casilla, Jugador jugador, Tablero tab);
 /*
-* Te dice si un jugador determinado est· ahogado
-* (El ahogado se produce si el jugador de quien es el turno no tiene jugadas legales y su rey no est· en jaque)
+* Te dice si un jugador determinado est√° ahogado
+* (El ahogado se produce si el jugador de quien es el turno no tiene jugadas legales y su rey no est√° en jaque)
 */
 bool ahogado(Jugador jugador, Tablero tab);
 
 // FUNCIONES QUE HACEN COPIAS DEL TABLERO
 /*
-* Si un rey est· amenazado, esta funciÛn te dar· los lugares a los que Èste se puede mover legalmente
-* (es decir, los lugares en los que dejar· de estar amenazado, entre sus posibles movimientos)
+* Si un rey est√° amenazado, esta funci√≥n te dar√° los lugares a los que √©ste se puede mover legalmente
+* (es decir, los lugares en los que dejar√° de estar amenazado, entre sus posibles movimientos)
 * ARGUMENTOS:
-* - casilla: posiciÛn del rey amenazado
+* - casilla: posici√≥n del rey amenazado
 * - el tablero
 */
 vector<Vector2D>sitios_sin_amenaza(Vector2D casilla, Tablero tab);
 /*
-* Te da todas las casillas a las que podrÌa moverse una pieza QUE SEAN LEGALES
+* Te da todas las casillas a las que podr√≠a moverse una pieza QUE SEAN LEGALES
 * (es decir, de entre sus posibles movimientos, aquellos que no pongan a su propio rey en jaque)
 */
 vector<Vector2D>obtener_movimientos_legales(Vector2D casilla, Tablero tab);
 
+/*
+* Para saber si se cumplen las condiciones para una captura al paso
+* Si el pe√≥n de un jugador avanza dos filas, en el turno siguiente se llamar√° a
+esta funci√≥n para evaluar la posibilidad del jugador opuesto de capturar dicho pe√≥n.
+* ARGUMENTOS:
+* Tablero
+* Posici√≥n del pe√≥n que acaba de avanzar dos filas (si es true, dicho pe√≥n podr√° ser capturado en ese turno)
+* posicion_posible_capturador: si la funci√≥n es true, se inicializar√° con la posici√≥n del pe√≥n qe podr√° captuar en ese turno
+* Es un vector en caso de que por un casual haya varios posibles capturadores
+*/
+bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vector<Vector2D>posicion_posible_capturador);
+
+/* CONDICIONES DE PROMOCI√ìN DEL PE√ìN
+* Promociona s√≥lo a caballo o alfil si llega a la fila √∫ltima en las columnas c, i (columnas 2 y 8)
+* Promociona a caballo, alfil, dama o torre si llega a la fila √∫ltima en las columnas d-h (columnas 3-7)
+* En las columnas a y k (columnas 0 y 9) no hay promoci√≥n.
+*/
+bool condiciones_promocion(Pieza peon);
+
 // FUNCIONES DE MOVIMIENTO
 /*
-* A partir de una posiciÛn y una direcciÛn, te da las coordenadas
-* de la posiciÛn siguiente
+* A partir de una posici√≥n y una direcci√≥n, te da las coordenadas
+* de la posici√≥n siguiente
 */
 void siguienteCasilla(Dir_t dir, Vector2D ini, Vector2D& fin);
+
+
 /*
-* Te da todas las posiciones a las que podrÌa moverse dicha pieza
-* Hay que pasarle tambiÈn el tablero, ya que necesitar· revisar
-* dÛnde est·n todas las dem·s
+* Te da todas las posiciones a las que podr√≠a moverse dicha pieza
+* Hay que pasarle tambi√©n el tablero, ya que necesitar√° revisar
+* d√≥nde est√°n todas las dem√°s
 */
 vector<Vector2D>obtener_posibles_movimientos(Pieza _p, Tablero tab);
 /*
-* Te da todas las posiciones a las que podrÌa moverse una pieza
-* A partir de su posiciÛn y del tablero
-* Usad esta si podÈis. A mÌ al menos me ha dado menos problemas
+* Te da todas las posiciones a las que podr√≠a moverse una pieza
+* A partir de su posici√≥n y del tablero
+* Usad esta si pod√©is. A m√≠ al menos me ha dado menos problemas
 */
 vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab);
 /* Para mover una pieza
-* Incluye la lÛgica de la captura (tienen que coincidir dos piezas opuestas en la posiciÛn de destino)
+* Incluye la l√≥gica de la captura (tienen que coincidir dos piezas opuestas en la posici√≥n de destino)
 */
 void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab);
 
+/*
+* Te da todas las posiciones a las que podr√≠a moverse una pieza
+* A partir de su posici√≥n y del tablero
+* USAD ESTA si pod√©is. A m√≠ al menos me ha dado menos problemas
+*/
+vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab);
+
+/* Para mover una pieza
+* Incluye la l√≥gica de la captura (tienen que coincidir dos piezas opuestas en la posici√≥n de destino)
+*/
+void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero& tab);
+
+
+
+
 
 // INICIALIZAR PIEZAS
+
 /*
-* Esta funciÛn hace que cuando se quiera iniciar una pieza se manda el tipo y direcciÛn
+* Esta funci√≥n hace que cuando se quiera iniciar una pieza se manda el tipo y direcci√≥n
 */
 static void iniciar(Tipo tipo, Vector2D posicion, Jugador j,Tablero tab);
 

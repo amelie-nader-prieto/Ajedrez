@@ -7,4 +7,6 @@ class Torre :
 {
 public:
     Torre(int fila, int columna,Jugador j=B);
+
+
 };

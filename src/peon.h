@@ -8,5 +8,8 @@ class Peon :
 public:
     Peon(int fila, int columna,Jugador j=B);
   
+  
+
+
 };
 

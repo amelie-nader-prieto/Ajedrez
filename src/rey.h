@@ -8,5 +8,6 @@ class Rey :
 public:
     Rey(int fila, int columna,Jugador j=B);
 
+
 };
 
