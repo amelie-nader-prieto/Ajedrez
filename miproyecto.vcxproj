@@ -24,6 +24,7 @@
     <ClCompile Include="src\Casilla.cpp" />
     <ClCompile Include="src\dama.cpp" />
     <ClCompile Include="src\LogicaAjedrez.cpp" />
+    <ClCompile Include="src\IA.cpp" />
     <ClCompile Include="src\No_pieza.cpp" />
     <ClCompile Include="src\Pang.cpp" />
     <ClCompile Include="src\peon.cpp" />
@@ -39,6 +40,7 @@
     <ClInclude Include="src\Casilla.h" />
     <ClInclude Include="src\dama.h" />
     <ClInclude Include="src\LogicaAjedrez.h" />
+    <ClInclude Include="src\IA.h" />
     <ClInclude Include="src\No_pieza.h" />
     <ClInclude Include="src\peon.h" />
     <ClInclude Include="src\pieza.h" />
