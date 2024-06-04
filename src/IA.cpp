@@ -1,10 +1,10 @@
-#include "Maquina.h"
+#include "IA.h"
 #include <algorithm>
 
 using namespace std;
 
 
-void Maquina::jugar() {
+void IA::jugar() {
 	// iniciar las varibales de lista de piezas
 	obtener_amenazas();
 	obtener_capturas();
@@ -15,23 +15,23 @@ void Maquina::jugar() {
 	{
 		switch (estado)
 		{
-		case Maquina::INICIO:
+		case IA::INICIO:
 			// Inicio del turno
 			if (fin_turno) break;
 			estado = AMENAZAS;
 			break;
-		case Maquina::AMENAZAS:
+		case IA::AMENAZAS:
 			// Evaluar posibles amenazas
 			if (hay_amenazas) estado = SI_AMNZ;
 			else estado = NO_AMNZ;
 			break;
-		case Maquina::NO_AMNZ:
+		case IA::NO_AMNZ:
 			// Evaluar si se puede capturar o no
 			if (puede_capturar)
 				estado = NO_AMNZ_POSIBLE_CAPTURA;
 			else estado = MOVER_RNDM;
 			break;
-		case Maquina::NO_AMNZ_POSIBLE_CAPTURA:
+		case IA::NO_AMNZ_POSIBLE_CAPTURA:
 			// evalua la captura mas conveniente, si no compensa mueve
 			if (puede_capturar) {
 				// CAPTURA SIEMPRE QUE PUEDA
@@ -41,13 +41,13 @@ void Maquina::jugar() {
 			}
 			else estado = MOVER_RNDM;
 			break;
-		case Maquina::CAPTURA:
+		case IA::CAPTURA:
 			// realiza la captura más conveniente
 			mover_pieza(lista_posibles_capturas[0].pieza_atacante->GetPosicion(), lista_posibles_capturas[0].pieza_amenazada->GetPosicion(), tablero);
 			fin_turno = true;
 			estado = INICIO;
 			break;
-		case Maquina::MOVER_RNDM:
+		case IA::MOVER_RNDM:
 			// MOVIMIENTO RANDOM
 			// determinar pieza random así como un movimiento random de sus posibles movimeintos
 			// no se evalua la posibilidad de que no se pueda mover ninguna pieza. De eso se encarga la lógica
@@ -62,13 +62,13 @@ void Maquina::jugar() {
 			}
 			estado = INICIO;
 			break;
-		case Maquina::SI_AMNZ:
+		case IA::SI_AMNZ:
 			if (puede_capturar)
 				estado = SI_AMNZ_POSIBLE_CAPTURA;
 			else
 				estado = SI_AMNZ_NO_CAPTURA;
 			break;
-		case Maquina::SI_AMNZ_POSIBLE_CAPTURA:
+		case IA::SI_AMNZ_POSIBLE_CAPTURA:
 			// evalua si la captura con mayor puntuacion es superior a la amenaza con mayor puntuacion
 			if (lista_amenazas[0].puntuacion > lista_posibles_capturas[0].puntuacion)
 				estado = SI_AMNZ_NO_CAPTURA;
@@ -107,7 +107,7 @@ void Maquina::jugar() {
 				estado = NO_AMNZ;
 			break;
 			*/
-		case Maquina::SI_AMNZ_NO_CAPTURA:
+		case IA::SI_AMNZ_NO_CAPTURA:
 			mover_rndm(lista_amenazas[0].pieza_amenazada);
 			if (fin_turno)
 				// si se ha podido mover la pieza amenazada
@@ -125,7 +125,7 @@ void Maquina::jugar() {
 	}
 }
 
-void Maquina::mover_rndm(Pieza* pieza) {
+void IA::mover_rndm(Pieza* pieza) {
 	vector<Vector2D> posibles_mov;
 	if (puede_mover(pieza, posibles_mov)) {
 		mover_pieza(pieza->GetPosicion(), posibles_mov[GetRandom(posibles_mov.size())], tablero);
@@ -133,7 +133,7 @@ void Maquina::mover_rndm(Pieza* pieza) {
 	}
 }
 
-void Maquina::obtener_amenazas() {
+void IA::obtener_amenazas() {
 	// obtiene las amenazas posibles y las ordena por su puntuacion
 	amenaza amnz{};
 	for (auto i : piezas_rival) {
@@ -150,7 +150,7 @@ void Maquina::obtener_amenazas() {
 	sort(lista_amenazas.begin(), lista_amenazas.end(), [](int a, int b) {return a > b; });
 }
 
-void Maquina::obtener_capturas() {
+void IA::obtener_capturas() {
 	// obtiene las capturas posibles y las ordena por puntuacion
 	captura cptr{};
 	for (auto i : piezas_propias) {
@@ -166,7 +166,7 @@ void Maquina::obtener_capturas() {
 	sort(lista_posibles_capturas.begin(), lista_posibles_capturas.end(), comparar_capturas);
 }
 
-int Maquina::puntuacion_captura(Pieza* pieza_atacada) {
+int IA::puntuacion_captura(Pieza* pieza_atacada) {
 	// Evalua una captura en funcion de la puntuacion de las piezas que intervienen y si la pieza atacada en la captura interviene en una amenaza
 	int puntuacion_cptr = puntuacion_pieza(pieza_atacada); 
 	for (auto& i : lista_amenazas)
@@ -176,19 +176,19 @@ int Maquina::puntuacion_captura(Pieza* pieza_atacada) {
 	return puntuacion_cptr;			
 }
 
-bool Maquina::puede_mover(Pieza* pieza, vector<Vector2D> posibles_mov)
+bool IA::puede_mover(Pieza* pieza, vector<Vector2D> posibles_mov)
 {
 	posibles_mov = obtener_posibles_movimientos(*pieza, tablero);
 	if (posibles_mov.size() == 0) return false;
 	else return true;
 }
 
-bool Maquina::comparar_amenazas(const amenaza& amnz1, const amenaza& amnz2)
+bool IA::comparar_amenazas(const amenaza& amnz1, const amenaza& amnz2)
 {
 	return amnz1.puntuacion > amnz2.puntuacion;
 }
 
-bool Maquina::comparar_capturas(const captura& cptr1, const captura& cptr2)
+bool IA::comparar_capturas(const captura& cptr1, const captura& cptr2)
 {
 	return cptr1.puntuacion > cptr2.puntuacion;
 }

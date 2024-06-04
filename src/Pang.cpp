@@ -29,7 +29,7 @@ void lista_piezas_privada(Tablero tab);
 void probar_movimientos_pieza(Pieza& p, Tablero& tab);
 
 int main(){
-	Maquina maquina;
+	IA maquina;
 	while (true)
 	{
 		maquina.jugar();

@@ -1,7 +1,7 @@
 #pragma once
 #include "LogicaAjedrez.h"
 
-class Maquina
+class IA
 {
 	Tablero& tablero;
 
@@ -73,7 +73,7 @@ class Maquina
 
 public:
 
-	Maquina();
+	IA();
 
 	void jugar(); // gestion de la máquina de estados
 };
