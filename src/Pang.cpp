@@ -51,12 +51,11 @@ void lista_posibles_movimientos(Pieza p,Tablero tab, vector<Vector2D>& lista) {
 
 void imprime_info_tablero(Tablero tab) {
 	tab.dibujar();
-	lista_piezas(tab);
+	tab.mostrar_lista_de_piezas();
 }
 void imprime_info_tablero_completa(Tablero tab) {
 	
 	imprime_info_tablero(tab);
-	lista_piezas_privada(tab);
 
 	scene.init(); //reempleza a (habilitar luces)
 
@@ -69,17 +68,16 @@ void imprime_info_tablero_completa(Tablero tab) {
 	//pasarle el control a GLUT,que llamara a los callbacks
 	glutMainLoop();
 
-	return 0;
 }
-void imprime_movimientos_pieza(Pieza p, Tablero tab,vector<Vector2D>&lista) {
-	
+void imprime_movimientos_pieza(Pieza p, Tablero tab, vector<Vector2D>& lista) {
+
 	//vector<Vector2D>v{};
 	Vector2D posicion_pieza = p.GetPosicion();
 	Vector2D posicion_actual;
 	auto movimientos = obtener_posibles_movimientos(posicion_pieza, tab);
 	bool posible_movimiento = false;
 
-
+}
 
 /////////TODO LO DE PRINCIPAL.CPP//////////////////////////////
 void OnDraw(void)

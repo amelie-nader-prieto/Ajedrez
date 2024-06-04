@@ -45,8 +45,6 @@ public:
 	// llamar a esta función si la pieza promociona (sólo si es un peón)
 	inline void set_promocion() { if (tipo == P)promocionado = true; }
 	// actualiza las coordenadas de la pieza
-	inline void set_promocion() { if (tipo == P)promocionado = true; }
-	// actualiza las coordenadas de la pieza
 	inline void actualizar_coordenadas(const Vector2D& _posicion) {
 		posicion = _posicion;
 	}
