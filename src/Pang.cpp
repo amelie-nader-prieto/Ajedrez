@@ -34,9 +34,7 @@ int main(){
 	{
 		maquina.jugar();
 	}
-	
-}
-
+  
 void dibujar(Tablero tab) {
 	for (int i = 0; i < FILA; i++) {
 		for (int j = 0; j < COLUMNA; j++) {
@@ -81,6 +79,8 @@ void lista_posibles_movimientos(Pieza p,Tablero tab, vector<Vector2D>& lista) {
 	//cout << "\n\n";
 	lista = movimientos;
 }
+
+
 void lista_piezas_privada(Tablero tab) {
 	auto lista_bla = tab.get_piezas_bla();
 	auto lista_neg = tab.get_piezas_neg();

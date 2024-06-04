@@ -1,66 +1,13 @@
+
 #pragma once
 
 #include "Tablero.h"
-#include <iostream>
-
-using std::cout;
-
-// OPERADORES
-/* Imprime el tipo de pieza */
-inline std::ostream& operator<<(std::ostream& co, const Tipo& t) {
-
-    switch (t) {
-    case no_hay:co << " "; break;
-    case R:co << "R"; break;
-    case D:co << "D"; break;
-    case C:co << "C"; break;
-    case A:co << "A"; break;
-    case T:co << "T"; break;
-    case P:co << "P"; break;
-    default:break;
-    }
-
-    return co;
-
-}
-/* Imprime el color de la pieza */
-inline std::ostream& operator<<(std::ostream& co, const Jugador& _jugador) {
-
-    switch (_jugador) {
-    case B:co << "n"; break; // negro
-    case W:co << "b"; break; // blanco
-    default:break;
-    }
-
-    return co;
-
-}
-/* Imprime las coordenadas con número y letra */
-inline std::ostream& operator<<(std::ostream& co, const Vector2D& _casilla) {
-
-    vector<char>letras_columnas = { 'a','b','c','d','e','f','g','h','i','j','k' };
-    int num_fila_0 = 10;
-    co << letras_columnas.at(_casilla.y) << num_fila_0 - _casilla.x;
-
-    return co;
-
-}
-// operador para imprimir toda la info de la pieza
-// Imprime tipo, color y casilla en la que está
-inline std::ostream& operator<<(std::ostream& co, Pieza& _pieza) {
-    if (_pieza.GetTipo() == no_hay) return co;
-    co << (_pieza.GetTipo()) << (_pieza.GetJugador()) << " en " << (_pieza.GetPosicion());
-    if (_pieza.GetCapturada()) co << " (capturada)";
-    else if (_pieza.GetPromocionado())co << "(promocionado)";
-    //else co << "       ";
-    return co;
-}
 
 // DIRECCIONES
 /*
 * Las ocho direcciones del espacio
-* UP es sumar uno a la fila y es SUBIR, los peones BLANCOS avanzan en esta dirección
-* DOWN es restar uno a la fila y en BAJAR, los peones NEGROS avanzan en esta dirección
+* UP = sumar 1 a la fila, DOWN = restar 1 a la fila
+* RIGHT = sumar a la columna, LEFT = restar a la columna
 */
 static enum class Dir_t {
     LEFT, UPLEFT, UP, UPRIGHT, RIGHT, RIGHTDOWN, DOWN, DOWNLEFT
@@ -118,13 +65,51 @@ esta función para evaluar la posibilidad del jugador opuesto de capturar dicho p
 * Es un vector en caso de que por un casual haya varios posibles capturadores
 */
 bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vector<Vector2D>posicion_posible_capturador);
-
 /* CONDICIONES DE PROMOCIÓN DEL PEÓN
 * Promociona sólo a caballo o alfil si llega a la fila última en las columnas c, i (columnas 2 y 8)
 * Promociona a caballo, alfil, dama o torre si llega a la fila última en las columnas d-h (columnas 3-7)
 * En las columnas a y k (columnas 0 y 9) no hay promoción.
 */
 bool condiciones_promocion(Pieza peon);
+/* Verifica si un rey está amenazado
+* Está amenazado si su posición actual se encuentra entre los
+* posibles movimientos de alguna de las piezas del rival
+*/
+bool amenazado(Vector2D casilla, Tablero tab);
+// Esta sobrecarga además te da un vector con las posiciones de las piezas que están amenazando a tu rey
+// la manera de salir del jaque es o moviendo a tu rey o capturando a alguna de esas piezas
+bool amenazado(Vector2D casilla, Tablero tab, vector<Vector2D>& piezas_que_lo_amenazan);
+/*
+* Al iniciar el turno, verifica si hay jaque mate
+* Hay jaque mate si alguno de los reyes:
+* - Está amenazado en su posición actual
+* - No tiene forma posible de dejar de estar amenazado
+*/
+bool condiciones_jaque_mate(Tablero tab,Jugador&derrotado);
+/* Para saber si alguna de tus piezas (comprobando entre todas tus piezas) puede moverse a una casilla determinada
+* (se usa para evaluar si hay jaque mate)
+*/
+bool casilla_accesible(Vector2D casilla, Jugador jugador, Tablero tab);
+/*
+* Te dice si un jugador determinado está ahogado
+* (El ahogado se produce si el jugador de quien es el turno no tiene jugadas legales y su rey no está en jaque)
+*/
+bool ahogado(Jugador jugador, Tablero tab);
+
+// FUNCIONES QUE HACEN COPIAS DEL TABLERO
+/*
+* Si un rey está amenazado, esta función te dará los lugares a los que éste se puede mover legalmente
+* (es decir, los lugares en los que dejará de estar amenazado, entre sus posibles movimientos)
+* ARGUMENTOS:
+* - casilla: posición del rey amenazado
+* - el tablero
+*/
+vector<Vector2D>sitios_sin_amenaza(Vector2D casilla, Tablero tab);
+/*
+* Te da todas las casillas a las que podría moverse una pieza QUE SEAN LEGALES
+* (es decir, de entre sus posibles movimientos, aquellos que no pongan a su propio rey en jaque)
+*/
+vector<Vector2D>obtener_movimientos_legales(Vector2D casilla, Tablero tab);
 
 // FUNCIONES DE MOVIMIENTO
 /*
@@ -148,6 +133,7 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab);
 * Incluye la lógica de la captura (tienen que coincidir dos piezas opuestas en la posición de destino)
 */
 void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab);
+
 
 // INICIALIZAR PIEZAS
 /*

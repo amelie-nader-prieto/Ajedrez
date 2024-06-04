@@ -248,3 +248,21 @@ void Tablero::crear_pieza(Tipo _tipo, Jugador _jugador, Vector2D _posicion) {
 		break;
 	}
 }
+
+Vector2D Tablero::get_rey(Jugador _jugador) {
+	Vector2D posicion_rey;
+	switch (_jugador) {
+	case B:/*negro*/
+		for (const auto& pn : piezas_neg) {
+			if (pn.GetTipo() == R) posicion_rey = pn.GetPosicion();
+		}
+		break;
+	case W:/*blanco*/
+		for (const auto& pb : piezas_bla) {
+			if (pb.GetTipo() == R) posicion_rey = pb.GetPosicion();
+		}
+		break;
+	default:break;
+	}
+	return posicion_rey;
+}
