@@ -42,6 +42,8 @@ public:
 	inline void set_ha_movido() { primer_movimiento = false; }
 	// llamar a esta función si la pieza es capturada
 	inline void set_captura() { capturada = true; }
+	// llamar a esta función si la pieza promociona (sólo si es un peón)
+	inline void set_promocion() { if (tipo == P)promocionado = true; }
 	// actualiza las coordenadas de la pieza
 	inline void set_promocion() { if (tipo == P)promocionado = true; }
 	// actualiza las coordenadas de la pieza

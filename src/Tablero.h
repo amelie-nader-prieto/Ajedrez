@@ -17,8 +17,10 @@
 using std::vector; using std::cout;
 
 /*Imprime el color de la pieza*/
-inline std::ostream& operator<<(std::ostream& co, const Tipo& t) {
 
+// OPERADORES
+/* Operador para imprimir el tipo de pieza */
+inline std::ostream& operator<<(std::ostream& co, const Tipo& t) {
 	switch (t) {
 	case no_hay:co << " "; break;
 	case R:co << "R"; break;
@@ -33,8 +35,7 @@ inline std::ostream& operator<<(std::ostream& co, const Tipo& t) {
 	return co;
 
 }
-
-/*operador para imprimir el color de la pieza*/
+/* Operador para imprimir el color de la pieza */
 inline std::ostream& operator<<(std::ostream& co, const Jugador& _jugador) {
 
 	switch (_jugador) {
@@ -46,8 +47,7 @@ inline std::ostream& operator<<(std::ostream& co, const Jugador& _jugador) {
 	return co;
 
 }
-
-/* Imprime las coordenadas con número y letra */
+/* Operador para representar una casilla con número y letra */
 inline std::ostream& operator<<(std::ostream& co, const Vector2D& _casilla) {
 
 	vector<char>letras_columnas = { 'a','b','c','d','e','f','g','h','i','j','k' };
@@ -57,9 +57,8 @@ inline std::ostream& operator<<(std::ostream& co, const Vector2D& _casilla) {
 	return co;
 
 }
-
-// operador para imprimir toda la info de la pieza
-// (lo uso para comprobar que se han creado bien)
+/* operador para imprimir toda la info de la pieza
+(Imprime tipo, color y casilla en la que está) */
 inline std::ostream& operator<<(std::ostream& co, Pieza& _pieza) {
 	if (_pieza.GetTipo() == no_hay) return co;
 	co << (_pieza.GetTipo()) << (_pieza.GetJugador()) << " en " << (_pieza.GetPosicion());
@@ -68,7 +67,6 @@ inline std::ostream& operator<<(std::ostream& co, Pieza& _pieza) {
 	//else co << "       ";
 	return co;
 }
-
 
 class Tablero
 {
@@ -82,27 +80,26 @@ class Tablero
 
 public:
 	Pieza* tablero[FILA][COLUMNA] = { nullptr }; /* Esto es como la interfaz.
-	Tanto las funciones l�gicas como las de dibujo acceder�n S�LO a este dato.
+	Tanto las funciones lógicas como las de dibujo accederán SÓLO a este dato.
 	Con lo que hay en este dato basta para gestionar todo
 	*/
-
-	
+  
 	Tablero(); // constructor
 
 	// operador para indexar con un vector
 	inline Pieza* operator[](const Vector2D& posicion)const {
 		return tablero[posicion.x][posicion.y];
 	}
-
+  
 	void mover_pieza(Vector2D p_ini, Vector2D p_fin);
 	void mover_pieza(Pieza& _p, Vector2D p_fin);
 	void activar_captura(Vector2D _posicion);
 	void activar_promocion(Vector2D _posicion);
 	void activar_promocion(Vector2D _posicion, Tipo nuevo_tipo);
 	void borrar_pieza_capturada(Jugador _jugador);
-
-
-
+  /* Retorna la posición de uno de los reyes */
+	Vector2D get_rey(Jugador _jugador);
+  
 	// Funciones de prueba
 	/* Estas funciones son para hacer pruebas.
 	* NO SE USAN durante la partida.
@@ -121,11 +118,10 @@ public:
 	// Función para que aparezca en la consola una lista de las piezas que hay en el tablero.
 	// Usar esta función para verificar que las piezas y sus coordenadas se actualizan correctamente
 	void mostrar_lista_de_piezas();
-
-	//void cambiarTurno() { //Solo para probar si cambia de turno, despues borrar
+  //void cambiarTurno() { //Solo para probar si cambia de turno, despues borrar
 		//es solo para las pruebas de movimiento
 		//turnoActual = (turnoActual == W) ? B : W;
 	//}
 
-};
 
+};

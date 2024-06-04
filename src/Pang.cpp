@@ -2,7 +2,6 @@
 #include "LogicaAjedrez.h"
 #include "GLTablero.h"
 
-
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
@@ -23,46 +22,41 @@ bool seleccionado = true;
 
 
 int main(int argc, char* argv[]){
-	// vamos a crear un tablero para ver si funciona bien
 
-	/*
-for (int i = 0; i < FILA; i++) {
-		for (int j = 0; j < COLUMNA; j++) {
-			// vamos a comprobar si est�n bien las posiciones de memoria
-			if (tab.tablero[i][j])
-			{
-				cout << (tab.tablero[i][j]->GetPosicion()) << ":\t";
-				cout << tab.tablero[i][j] << '\n';
-			}
-		}
-		cout << '\n';
-	}
-
-	for (int i = 0; i < FILA; i++) {
-		for (int j = 0; j < COLUMNA; j++) {
-			// comprobamos si se han creado las piezas correctamente
-			if (tab.tablero[i][j]) {
-				if (tab.tablero[i][j]->GetTipo() != no_hay){
-					cout << "(" << i << ',' << j << ")" << '\t';
-					cout << (*tab.tablero[i][j]) << '\n';
-				}
-			}
-		}
-	}
-	*/
 	
-
-	// por favor enlazador no me traiciones
-	std::cout << "Estado inicial del tablero" << std::endl;
-	//dibujar(tab); 
-
-
-
 //Inicializar el gestor de ventanas GLUT y crear la ventana
 	glutInit(&argc, argv);
 	glutInitWindowSize(800, 600);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutCreateWindow("Ajedrez BALBO");
+  
+}
+
+void lista_posibles_movimientos(Pieza p,Tablero tab, vector<Vector2D>& lista) {
+	//auto movimientos = obtener_posibles_movimientos(*(tab.tablero[5][5]), tab);
+	auto movimientos = obtener_posibles_movimientos(p.GetPosicion(), tab);
+	int indice = 1;
+	cout << "\n------------"<< p <<"------------\n";
+	cout << "---------puede moverse a:-------\n";
+	if (movimientos.size() == 0)cout << "...ningún sitio xd";
+	else for (const auto& p : movimientos) {
+		cout << indice << ". ";
+		cout << p << '\t';
+		indice++;
+	}
+	cout << "\n-----------------------------\n\n";
+	//cout << "\n\n";
+	lista = movimientos;
+}
+
+void imprime_info_tablero(Tablero tab) {
+	tab.dibujar();
+	lista_piezas(tab);
+}
+void imprime_info_tablero_completa(Tablero tab) {
+	
+	imprime_info_tablero(tab);
+	lista_piezas_privada(tab);
 
 	scene.init(); //reempleza a (habilitar luces)
 
@@ -77,6 +71,14 @@ for (int i = 0; i < FILA; i++) {
 
 	return 0;
 }
+void imprime_movimientos_pieza(Pieza p, Tablero tab,vector<Vector2D>&lista) {
+	
+	//vector<Vector2D>v{};
+	Vector2D posicion_pieza = p.GetPosicion();
+	Vector2D posicion_actual;
+	auto movimientos = obtener_posibles_movimientos(posicion_pieza, tab);
+	bool posible_movimiento = false;
+
 
 
 /////////TODO LO DE PRINCIPAL.CPP//////////////////////////////

@@ -5,13 +5,13 @@ struct Vector2D
 	int y{};
 	Vector2D(int fila=0, int columna=0) :x(fila), y(columna) {}
 
-	// asignación
+	// asignaciÃ³n
 	Vector2D operator=(const Vector2D& v) {
 		x = v.x;
 		y = v.y;
 		return *this;
 	}
-	// comparación
+	// comparaciÃ³n
 	bool operator==(const Vector2D& v) {
 		return (x == v.x && y == v.y ? true : false);
 	}
@@ -19,7 +19,7 @@ struct Vector2D
 	Vector2D operator+(const Vector2D& v) {
 		return Vector2D(x + v.x, y + v.y);
 	}
-	
+	// resta
 	Vector2D operator-(const Vector2D& v) {
 		return Vector2D(x - v.x, y - v.y);
 	}
