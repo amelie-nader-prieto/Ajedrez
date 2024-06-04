@@ -15,7 +15,7 @@ class GLTablero
 
 public:
 	float x_ojo, y_ojo, z_ojo;	
-	bool activar_musica=true;
+
 	//GLTablero() : x_ojo(5), y_ojo(5), z_ojo (17){}
 
 public:
@@ -25,7 +25,7 @@ public:
 	std::vector<Vector2D> movimientosPosibles;
 
 	void init();
-	void dibuja(const int&);
+	void dibuja_casillas(const int&);
 
 	float width = 1.0f; //ancho de la casilla
 	void MouseButton(int x, int y, int button, bool down, Vector2D&, Vector2D&, bool&);

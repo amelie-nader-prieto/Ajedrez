@@ -15,36 +15,36 @@ void GLTablero::init() {
 	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
 }
 
-void GLTablero::dibuja(const int &Estadoskin) {
+
+void GLTablero::dibuja_casillas(const int &Estadoskin) {
 
 	int r_oscuro, g_oscuro, b_oscuro;
 	int r_claro, g_claro, b_claro;
-	std::string skin = "default";
-	std::string direccionF = "";
+//	std::string skin = "default";
+//	std::string direccionF = "";
 
 
 	switch (Estadoskin)
 	{
 	case 1: //Default
-		skin = "default";
+	//	skin = "default";
 		r_oscuro = 187; g_oscuro = 190; b_oscuro = 215;
 		r_claro = 64; g_claro = 65; b_claro = 77;
 		break;
 	case 2: //StarWars
-		skin = "StarWars";
+		//skin = "StarWars";
 		r_oscuro = 249; g_oscuro = 245; b_oscuro = 220;
 		r_claro = 0; g_claro = 100; b_claro = 162;
 		break;
 	case 3: //AnimalCrossing
-		skin = "AnimalCrossing";
+		//skin = "AnimalCrossing";
 		r_oscuro = 255; g_oscuro = 227; b_oscuro = 232;
 		r_claro = 107; g_claro = 142; b_claro = 35;
 		break;
 	}
 
-	direccionF = "bin/imagenes/" + skin + "/Fondo.png";
-	const char* rutaF = direccionF.c_str();
-
+	//direccionF = "bin/imagenes/" + skin + "/Fondo.png";
+//	const char* rutaF = direccionF.c_str();
 
 	int sum = 0;
 	for (int i = 0; i < COLUMNA; i++) {
@@ -69,22 +69,6 @@ void GLTablero::dibuja(const int &Estadoskin) {
 		}
 	}
 
-
-	////////////Imagen de fondo////////////////
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(rutaF).id);
-	glDisable(GL_LIGHTING);
-	glBegin(GL_POLYGON);
-	glColor3f(1, 1, 1);
-	glTexCoord2d(0, 1); glVertex2d(-3.33, -1.2);
-	glTexCoord2d(1, 1); glVertex2d(13.24, -1.2);
-	glTexCoord2d(1, 0); glVertex2d(13.24, 11.18);
-	glTexCoord2d(0, 0); glVertex2d(-3.33, 11.18);
-	glEnd();
-	glEnable(GL_LIGHTING);
-	glDisable(GL_TEXTURE_2D);
-	//////////////////////////////////////////////////////
-
 	///////////////////FUENTES///////////////////////////
 	float despx = 0.25f, despy = 0.65f;
 	ETSIDI::setTextColor(0.84f, 0.45f, 0.1f);//(1, 0, 0.5);//(1,0.6,1); //85.0f, 224.0f, 68.0f
@@ -107,19 +91,6 @@ void GLTablero::dibuja(const int &Estadoskin) {
 
 	dibujaCasillasPosibles(movimientosPosibles, Vector2D{xcell_sel, ycell_sel});
 	////////////////////////////////////////////////////
-
-
-
-	///////////////////MÚSICA///////////////////////////
-
-	std::string direccionM = "";
-	direccionM = "bin/sonidos/" + skin + "/Fondo.WAV";
-	const char* rutaM = direccionM.c_str();
-	
-		if (activar_musica == true) {
-			ETSIDI::play(rutaM);
-		activar_musica=false;
-		}
 
 }
 

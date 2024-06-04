@@ -1,6 +1,7 @@
 #include "freeglut.h"
 #include "LogicaAjedrez.h"
-#include "GLTablero.h"
+//#include "GLTablero.h"
+#include "Coordinador.h"
 
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
@@ -9,8 +10,13 @@ void OnMouseClick(int button, int state, int x, int y); //para eventos del mouse
 
 
 Tablero tab; //Para la gestión de la lógica
-GLTablero scene; //Para el dibujo del tablero, casillas y piezas
-int EstadoSkin = 2;
+
+//Creamos el coordinador que gestionará los tableros y piezas
+Coordinador coordinador;
+//GLTablero scene; //Para el dibujo del tablero, casillas y piezas
+//int EstadoSkin = 2;
+
+
 
 //Variables globales para la gestión de los clicks
 Vector2D click_inicial{ -1, -1 };
@@ -29,7 +35,42 @@ int main(int argc, char* argv[]){
 	glutInitWindowSize(800, 600);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutCreateWindow("Ajedrez BALBO");
-  
+
+	/**///////habilitar luces y definir perspectiva
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_COLOR_MATERIAL);
+	glMatrixMode(GL_PROJECTION);
+	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
+
+
+	//Registrar los callbacks
+	glutDisplayFunc(OnDraw);
+	glutTimerFunc(25, OnTimer, 0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
+	glutKeyboardFunc(OnKeyboardDown);
+	glutMouseFunc(OnMouseClick);///////////////PRUEBA MOUSE
+	//POSIBLE INICIALIZACION
+	//coordinador.iniciar();
+
+	//pasarle el control a GLUT,que llamara a los callbacks
+	glutMainLoop();
+
+	coordinador.iniciar();
+
+	/*int i = 1;
+	unsigned char key;
+	while (i == 1) {
+		coordinador.dibuja();
+
+		std::cin >> key;
+		coordinador.tecla(key);
+	}
+	*/
+
+	return 0;
+
+
 }
 
 void lista_posibles_movimientos(Pieza p,Tablero tab, vector<Vector2D>& lista) {
@@ -53,11 +94,15 @@ void imprime_info_tablero(Tablero tab) {
 	tab.dibujar();
 	tab.mostrar_lista_de_piezas();
 }
+
 void imprime_info_tablero_completa(Tablero tab) {
 	
 	imprime_info_tablero(tab);
 
-	scene.init(); //reempleza a (habilitar luces)
+	
+	coordinador.iniciar();//Inicia el estado y la escena
+	//scene.init(); //reempleza a (habilitar luces)
+
 
 	//Registrar los callbacks
 	glutDisplayFunc(OnDraw);
@@ -96,9 +141,9 @@ void OnDraw(void)
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)  
 
 
-	scene.dibuja(3);
-	scene.drawPieces(tab, 3);
-	
+//	scene.dibuja(3);
+//	scene.drawPieces(tab, 3);
+	coordinador.dibuja(tab);
 
 
 	//no borrar esta linea ni poner nada despues
@@ -107,7 +152,7 @@ void OnDraw(void)
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
 	//poner aqui el código de teclado
-
+	coordinador.tecla(key);
 	glutPostRedisplay();
 }
 
@@ -130,7 +175,8 @@ void OnMouseClick(int b, int state, int x, int y) {
 		button = MOUSE_LEFT_BUTTON;
 	}
 
-	scene.MouseButton(x, y, b, down, click_inicial, click_final, seleccionado);
+	//scene.MouseButton(x, y, b, down, click_inicial, click_final, seleccionado);
+	coordinador.MouseBottom(x, y, b, down, click_inicial, click_final, seleccionado);
 
 	Pieza seleccionada; // se inicializará con la pieza que hay en la posición que seleccionemos con el mouse
 

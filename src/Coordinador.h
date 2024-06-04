@@ -1,18 +1,35 @@
 #pragma once
 #include "GLTablero.h"
 #include "ETSIDI.h"
-
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::string;
 
 class Coordinador
 {
-	enum Estado { INICIO, OPCIONES, JUEGO, GAMEOBER, FIN} estado=JUEGO;
-	enum Tipo_Tablero{TIPO1, TIPO2, TIPO3}graf_tablero;
+	//GLTablero mundo_grafico;
+	enum Estado { MENU1, MENU2, GRAFICOS, EXPLICACION, JUEGO, PAUSA, GAMEOVER, FIN } estado = MENU1;
+	enum Tipo_Tablero { classic = 1, starwors, animal }graficas_tablero = classic;
+	enum Modalida { maquina, jugadores }modalidad = jugadores;
+	enum Volumen { ON, OFF } volumen = ON;
+
+
+	string imagen = "bin/Menu/menu1.png";
+	
 	GLTablero mundo_grafico;
 
 public:
-	void tecla_especial(unsigned char key);
+	//Coordinador();
+	//virtual ~Coordinador();
+	//void mueve();
+	//void tecla_especial(unsigned char key);
+	void imagenes(const char* ruta);
+
+	void iniciar();	
 	void tecla(unsigned char key);
-	void mueve();
-	void dibuja();
-	void MouseBottom(int b, int state, int x, int y);
+	void dibuja(Tablero tab);
+	void dibujar_Tablero(const int& Estadoskin);
+	void MouseBottom(int x, int y, int button, bool down, Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado);
+	void musica();
 };

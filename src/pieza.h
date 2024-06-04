@@ -26,7 +26,7 @@ public:
 	}
 
 	// funciones de interfaz
-	inline Tipo GetTipo()const { return tipo; }
+	inline Tipo GetTipo() const { return tipo; }
 	inline Jugador GetJugador()const { return jugador; }
 	inline Vector2D GetPosicion()const { return posicion; }
 	inline bool GetCapturada()const { return capturada; }
