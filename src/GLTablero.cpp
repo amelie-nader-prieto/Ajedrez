@@ -22,7 +22,7 @@ void GLTablero::dibuja_casillas(const int &Estadoskin) {
 	int r_claro, g_claro, b_claro;
 //	std::string skin = "default";
 //	std::string direccionF = "";
-
+	modo_musica_mov = Estadoskin; //Pra poner el sonido de movimiento de la pieza
 
 	switch (Estadoskin)
 	{
@@ -135,6 +135,19 @@ void GLTablero::MouseButton(int x, int y, int button, bool down, Vector2D& click
 				chess.mover_pieza(click_inicial, click_final); //intenta mover la pieza
 			//	std::cout << "Espera movimiento......Debería haber movido" << std::endl;
 				movimientosPosibles.clear();
+
+				switch (modo_musica_mov)
+				{
+				case 1: ETSIDI::play("bin/sonidos/Movimiento_pieza.wav");
+					break;
+				case 2: ETSIDI::play("bin/sonidos/StarWars/Matar.wav");
+					break;
+				case 3: ETSIDI::play("bin/sonidos/AnimalCrossing/Matar.wav");
+					break;
+				default:
+					break;
+				}
+				
 			}
 			//std::cout << "(" << xcell_sel << "," << ycell_sel << ")" << std::endl;
 		}

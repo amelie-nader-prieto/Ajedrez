@@ -86,13 +86,13 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) { // Usad esta
 	}
 
 	//auto jugador = tablero[p_ini.x][p_ini.y]->GetJugador();
-	auto jugador = turnoActual; // jugador del cual es el turno
+	//auto jugador = turnoActual; // jugador del cual es el turno
   
 	tablero[p_fin.x][p_fin.y] = tablero[p_ini.x][p_ini.y]; // la posición final apuntará a lo que apuntaba la posición inicial
 	tablero[p_ini.x][p_ini.y] = &ninguna; // la posición inicial se queda vacía
 
 	// busca la pieza que ha movido para actualizar sus coordenadas
-	switch (jugador) {
+	switch (turnoActual) {
 	case B: /*negro*/
 		for (auto& p : piezas_neg) {
 			if (p.GetPosicion() == p_ini)p.actualizar_coordenadas(p_fin);

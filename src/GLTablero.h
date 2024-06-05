@@ -4,7 +4,7 @@
 #include "LogicaAjedrez.h" //la uso para omitir casillas fuera del tablero
 #include "Tablero.h"
 
-
+static int modo_musica_mov;
 using ETSIDI::SpriteSequence;
 
 //enums to eliminate dependency of glut
@@ -53,6 +53,5 @@ public:
 protected:
 	//mouse	
 	int xcell_sel=0, ycell_sel=0;			//cell selected with mouse
-
 };
 

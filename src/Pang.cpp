@@ -134,7 +134,7 @@ void OnDraw(void)
 
 	//funciones de dibujo
 	//gluLookAt(scene.x_ojo, scene.y_ojo, scene.z_ojo,  // posicion del ojo
-	gluLookAt( 5, 5, 17,
+	gluLookAt( 5, 5, 16.25,
 	5.0, 5.0, 0.0,      // hacia que punto mira  (0,0,0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)  
 
@@ -187,7 +187,7 @@ void OnMouseClick(int b, int state, int x, int y) {
 	* - dicha pieza se puede mover 
 	*/
 
-	/*
+	
 	if (tab[click_inicial] && tab[click_inicial]->GetTipo() != no_hay && 
 		obtener_posibles_movimientos(click_inicial, tab).size() > 0) {
 
@@ -208,7 +208,7 @@ void OnMouseClick(int b, int state, int x, int y) {
 			}
 		}
 	}
-	*/
+	
 
 
 	glutPostRedisplay();

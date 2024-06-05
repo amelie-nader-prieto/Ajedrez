@@ -1,7 +1,7 @@
 #include "Coordinador.h"
 
 
-void Coordinador::dibuja(Tablero tab)
+void Coordinador::dibuja(Tablero &tab)
 {
 	string skin;
 	switch (estado) {
