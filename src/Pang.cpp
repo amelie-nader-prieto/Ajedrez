@@ -2,6 +2,7 @@
 #include "LogicaAjedrez.h"
 //#include "GLTablero.h"
 #include "Coordinador.h"
+#include "IA.h"
 
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
@@ -16,15 +17,12 @@ Coordinador coordinador;
 //GLTablero scene; //Para el dibujo del tablero, casillas y piezas
 //int EstadoSkin = 2;
 
-
-
 //Variables globales para la gestión de los clicks
 Vector2D click_inicial{ -1, -1 };
 Vector2D click_final{ -1,-1 };
 bool seleccionado = true;
 //true cuando estamos seleccionando la pieza inicial
 //false cuando estamos seleccionando la posicion final
-
 
 
 int main(int argc, char* argv[]){
@@ -188,6 +186,8 @@ void OnMouseClick(int b, int state, int x, int y) {
 	* - hay una pieza en la casilla
 	* - dicha pieza se puede mover 
 	*/
+
+	/*
 	if (tab[click_inicial] && tab[click_inicial]->GetTipo() != no_hay && 
 		obtener_posibles_movimientos(click_inicial, tab).size() > 0) {
 
@@ -208,7 +208,7 @@ void OnMouseClick(int b, int state, int x, int y) {
 			}
 		}
 	}
-
+	*/
 
 
 	glutPostRedisplay();

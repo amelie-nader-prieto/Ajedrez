@@ -3,10 +3,12 @@
 
 class IA
 {
-	Tablero& tablero;
+	//Tablero& tablero; 
+	Tablero tablero; // representa el tablero en el que está transcurriendo la partida
 
 	enum Estado { INICIO, AMENAZAS, NO_AMNZ, NO_AMNZ_POSIBLE_CAPTURA, CAPTURA, MOVER_RNDM, SI_AMNZ, SI_AMNZ_POSIBLE_CAPTURA, SI_AMNZ_NO_CAPTURA} estado = INICIO;
 
+	Jugador jugador; // la IA jugará con las piezas blancas o negras
 	vector<Pieza*>piezas_propias{}, piezas_rival{};
 
 	bool fin_turno = false;
@@ -73,9 +75,16 @@ class IA
 
 public:
 
-	IA();
-
+	/*
+	* Para realizar una jugada completa
+	Revisa todo el tablero, toma una decisión y mueve una pieza
+	*/
 	void jugar(); // gestion de la máquina de estados
+	/*Esta sobrecarga recibe un tablero externo como argumento y
+	retorna la variable fin_turno (así, indica al objeto que llamó a la función
+	que el turno se ha realizado con éxito) */
+	bool jugar(Tablero&tab);
+
 };
 
 
