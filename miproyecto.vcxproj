@@ -24,6 +24,7 @@
     <ClCompile Include="src\Coordinador.cpp" />
     <ClCompile Include="src\dama.cpp" />
     <ClCompile Include="src\GLTablero.cpp" />
+    <ClCompile Include="src\IA.cpp" />
     <ClCompile Include="src\LogicaAjedrez.cpp" />
     <ClCompile Include="src\No_pieza.cpp" />
     <ClCompile Include="src\Pang.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="src\Coordinador.h" />
     <ClInclude Include="src\dama.h" />
     <ClInclude Include="src\GLTablero.h" />
+    <ClInclude Include="src\IA.h" />
     <ClInclude Include="src\LogicaAjedrez.h" />
     <ClInclude Include="src\No_pieza.h" />
     <ClInclude Include="src\peon.h" />

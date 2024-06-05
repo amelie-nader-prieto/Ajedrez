@@ -21,28 +21,23 @@ class IA
 	enum Estado { INICIO, AMENAZAS, NO_AMNZ, NO_AMNZ_POSIBLE_CAPTURA, CAPTURA, MOVER_RNDM, SI_AMNZ, SI_AMNZ_POSIBLE_CAPTURA, SI_AMNZ_NO_CAPTURA} estado = INICIO;
 
 	Jugador jugador; // la IA jugará con las piezas blancas o negras
-	vector<Pieza*>piezas_propias{}, piezas_rival{};
+	vector<Pieza>piezas_propias{}, piezas_rival{};
 
 	bool fin_turno = false; // esta variable se usa para gestionar el final del turno
 	
-	struct amenaza
+	struct evento // Un evento puede ser una captura o una amenaza
 	{
-		Pieza* pieza_amenazada; // Pieza tuya que podría ser capturada en el turno siguiente
-		Pieza* pieza_atacante; // Pieza del rival que podría capturarla
+		Pieza pieza_amenazada; // Pieza amenazada en el evento, puede ser propia o del rival
+		Pieza pieza_atacante; // Pieza atacante en el evento, puede ser propia o del rival
 		int puntuacion; // atribuimos a cada amenaza una puntuación
 	};
-	struct captura
-	{
-		Pieza* pieza_atacante; // Pieza tuya que puede realizar una captura en el turno siguiente
-		Pieza* pieza_amenazada; // Pieza del rival a la que puedes capturar
-		int puntuacion; // atribuimos a cada captura una puntuacion
-	};
 
-	vector<amenaza>lista_amenazas{};
-	vector<captura>lista_posibles_capturas{};
+	vector<evento>lista_amenazas{};
+	vector<evento>lista_posibles_capturas{};
 
 	/* Para saber si una pieza puede moverse */
-	bool puede_mover(Pieza* pieza, vector<Vector2D> posibles_mov);
+	bool puede_mover(Pieza pieza, vector<Vector2D> posibles_mov);
+	void ordenar_eventos(vector<evento> lista);
 	// obtiene las amenazas posibles y las ordena por su puntuacion
 	void obtener_amenazas();
 	void obtener_amenazas(Tablero tab);
@@ -50,23 +45,22 @@ class IA
 	void obtener_capturas();
 	void obtener_capturas(Tablero tab);
 	/* Mueve una pieza (pasada como argumento) a una casilla al azar */
-	void mover_rndm(Pieza* pieza);
+	void mover_rndm(Pieza pieza);
 	/* Esta sobrecarga hace lo mismo pero con un tablero externo */
-	void mover_rndm(Pieza* pieza, Tablero tab);
+	void mover_rndm(Pieza pieza, Tablero tab);
 	/*
 	* Para obtener la puntuación de una captura
 	* Evalúa una captura en función de la puntuación de las piezas que intervienen y de si
 	* la pieza atacada en la captura interviene en una amenaza
 	*/
-	int puntuacion_captura(Pieza* pieza_atacada);
-	// se atribuye a cada pieza un valor en función de su importancia
-	static int puntuacion_pieza(Pieza* pieza)
+
+	static int puntuacion_pieza(Pieza pieza)
 	{
 		
-		switch (pieza->GetTipo())
+		switch (pieza.GetTipo())
 		{
 		case R:
-			return 100;
+			return 10;
 			break;
 		case D:
 			return 9;
@@ -88,16 +82,6 @@ class IA
 			break;
 		}
 	}
-	/*
-	* Compara 2 amenazas
-	TRUE si la primera es de mayor puntuación que la segunda, false si no
-	*/
-	bool comparar_amenazas(const amenaza& amnz1, const amenaza& amnz2); // condicion de ordenacion de lista de menazas
-	/*
-	* Compara 2 capturas
-	* TRUE si la primera es de mayor puntuación que la segunda, false si no
-	*/
-	bool comparar_capturas(const captura& cptr1, const captura& cptr2); // condicion de ordenación de lista de capturas
 
 public:
 
@@ -112,5 +96,12 @@ public:
 	bool jugar(Tablero&tab);
 
 };
+
+static int GetRandom(int max)
+{
+	// Usa la hora actual como semilla para el generador de números aleatorios
+	srand(time(0));
+	return (rand() % max);
+}
 
 
