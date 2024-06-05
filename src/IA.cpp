@@ -170,3 +170,5 @@ void IA::ordenar_eventos(vector<evento> lista) {
 		}
 	}
 }
+
+IA::IA(Jugador j) :jugador(j) {};

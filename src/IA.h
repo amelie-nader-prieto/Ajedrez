@@ -86,12 +86,12 @@ class IA
 
 public:
 
+	IA(Jugador j);
 	/*
 	* Para realizar una jugada completa
 	Revisa todo el tablero, toma una decisión y mueve una pieza
 	*/
-	void jugar(); // gestion de la máquina de estados
-	/*Esta sobrecarga recibe un tablero externo como argumento y
+	/*Gestiona la maquina de estados de la IA. Recibe un tablero externo como argumento y
 	retorna la variable fin_turno (así, indica al objeto que llamó a la función
 	que el turno se ha realizado con éxito) */
 	bool jugar(Tablero&tab);
