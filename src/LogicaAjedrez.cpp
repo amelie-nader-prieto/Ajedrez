@@ -265,6 +265,13 @@ bool ahogado(Jugador jugador, Tablero tab) {
     }
     return true;
 }
+bool condiciones_tablas(Tablero tab) {
+    return (ahogado(B, tab) || ahogado(W, tab));
+}
+bool condiciones_final_de_la_partida(Tablero tab) {
+    Jugador derrotado;
+    return (condiciones_jaque_mate(tab, derrotado) || condiciones_tablas(tab));
+}
 
 
 // FUNCIONES QUE HACEN COPIAS DEL TABLERO
@@ -336,7 +343,6 @@ void siguienteCasilla(Dir_t dir, Vector2D ini, Vector2D& fin) {
         break;
     }
 }
-
 vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
     vector<Vector2D>posibles_movimientos{}; // aquí almacenará los posibles movimientos
     vector<Dir_t>direcciones{}; // se inicializa según el tipo de pieza (excepto caballo)
@@ -565,13 +571,14 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
 
 }
 void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab) {
+    if (condiciones_final_de_la_partida(tab)) return void{}; // si hay jaque mate o tablas, no se realiza la jugada
+    
     auto jugador = tab[p_ini]->GetJugador();
-    if (hay_pieza_rival(p_fin, jugador, tab)) tab.activar_captura(p_fin); // sólo activa la captura si hay pieza rival en el destino
+    if (hay_pieza_rival(p_fin, jugador, tab)) tab.activar_captura(p_fin); // activa la captura si hay pieza rival en el destino
     
     tab.mover_pieza(p_ini, p_fin);
 
     // Aquí se comprueba la promoción del peón
-    //if (condiciones_promocion(*tab[p_fin]))tab.activar_promocion(p_fin);
     if (condiciones_promocion(*tab[p_fin])) {
         // elegir nuevo tipo
         Tipo nuevo_tipo;

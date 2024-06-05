@@ -95,6 +95,15 @@ bool casilla_accesible(Vector2D casilla, Jugador jugador, Tablero tab);
 * (El ahogado se produce si el jugador de quien es el turno no tiene jugadas legales y su rey no está en jaque)
 */
 bool ahogado(Jugador jugador, Tablero tab);
+/* Si algún jugador está ahogado, hay tablas */
+bool condiciones_tablas(Tablero tab);
+/*
+* Evalúa si se cumplen las condiciones para finalizar la partida
+* El final de la partida ocurre si:
+* - Un jugador hace jaque mate y gana
+* - Los jugadores empatan y hacen tablas
+*/
+bool condiciones_final_de_la_partida(Tablero tab);
 
 
 // FUNCIONES QUE HACEN COPIAS DEL TABLERO
@@ -119,7 +128,6 @@ vector<Vector2D>obtener_movimientos_legales(Vector2D casilla, Tablero tab);
 * de la posición siguiente
 */
 void siguienteCasilla(Dir_t dir, Vector2D ini, Vector2D& fin);
-
 /*
 * Te da todas las posiciones a las que podría moverse una pieza
 * A partir de su posición y del tablero
