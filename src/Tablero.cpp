@@ -8,6 +8,7 @@ Tablero::Tablero(): turnoActual(W){
 	// CREACIÓN DE LAS PIEZAS
 	// inicializa sus datos internos
 
+
 	// Creación de los peones
 	for (int i = 2; i < COLUMNA - 2; i++) {
 		piezas_neg.push_back(Pieza(Vector2D(2, i), B, P));

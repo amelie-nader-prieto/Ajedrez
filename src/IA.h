@@ -18,14 +18,14 @@ class IA
 	enum Estado { INICIO, AMENAZAS, NO_AMNZ, NO_AMNZ_POSIBLE_CAPTURA, CAPTURA, MOVER_RNDM, SI_AMNZ, SI_AMNZ_POSIBLE_CAPTURA, SI_AMNZ_NO_CAPTURA} estado = INICIO;
 
 	Jugador jugador; // la IA jugará con las piezas blancas o negras
-	vector<Pieza>piezas_propias{}, piezas_rival{};
+	vector<Pieza*>piezas_propias{}, piezas_rival{};
 
 	bool fin_turno = false; // esta variable se usa para gestionar el final del turno
 	
 	struct evento // Un evento puede ser una captura o una amenaza
 	{
-		Pieza pieza_amenazada; // Pieza amenazada en el evento, puede ser propia o del rival
-		Pieza pieza_atacante; // Pieza atacante en el evento, puede ser propia o del rival
+		Pieza* pieza_amenazada; // Pieza amenazada en el evento, puede ser propia o del rival
+		Pieza* pieza_atacante; // Pieza atacante en el evento, puede ser propia o del rival
 		int puntuacion; // atribuimos a cada amenaza una puntuación
 	};
 
@@ -33,7 +33,7 @@ class IA
 	vector<evento>lista_posibles_capturas{};
 
 	/* Para saber si una pieza puede moverse */
-	bool puede_mover(Pieza pieza, vector<Vector2D> posibles_mov, Tablero& tab);
+	bool puede_mover(Pieza* pieza, vector<Vector2D> posibles_mov, Tablero& tab);
 	// ordena los eventos en funcuón de la puntaución asignada
 	void ordenar_eventos(vector<evento> lista);
 	// obtiene las amenazas posibles y las ordena por su puntuacion
@@ -41,17 +41,17 @@ class IA
 	// obtiene las capturas posibles y las ordena por puntuacion
 	void obtener_capturas(Tablero tab);
 	/* Mueve una pieza aleatoria de forma aleatoria entre de sus movimientos posbles*/
-	void mover_rndm(Pieza pieza, Tablero tab);
+	void mover_rndm(Pieza* pieza, Tablero tab);
 	/*
 	* Para obtener la puntuación de una captura
 	* Evalúa una captura en función de la puntuación de las piezas que intervienen y de si
 	* la pieza atacada en la captura interviene en una amenaza
 	*/
 
-	static int puntuacion_pieza(Pieza pieza)
+	static int puntuacion_pieza(Pieza* pieza)
 	{
 		
-		switch (pieza.GetTipo())
+		switch (pieza->GetTipo())
 		{
 		case R:
 			return 10;
@@ -86,7 +86,9 @@ class IA
 
 public:
 
-	IA(Jugador j);
+	IA(Jugador j) {
+		jugador = j;
+	}
 	/*
 	* Para realizar una jugada completa
 	Revisa todo el tablero, toma una decisión y mueve una pieza
@@ -94,7 +96,7 @@ public:
 	/*Gestiona la maquina de estados de la IA. Recibe un tablero externo como argumento y
 	retorna la variable fin_turno (así, indica al objeto que llamó a la función
 	que el turno se ha realizado con éxito) */
-	bool jugar(Tablero&tab);
+	void jugar(Tablero&tab);
 };
 
 

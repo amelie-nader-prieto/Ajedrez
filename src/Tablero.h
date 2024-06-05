@@ -10,6 +10,7 @@
 #include "No_pieza.h"
 #include <vector>
 #include <iostream>
+#include <IA.cpp>
 
 #define FILA 10
 #define COLUMNA 11
@@ -77,6 +78,7 @@ class Tablero
 
 	Jugador turnoActual; //Variable para gestionar el turno actual en la partida 
 
+
 public:
 	Pieza* tablero[FILA][COLUMNA] = { nullptr }; /* Esto es como la interfaz.
 	Tanto las funciones lógicas como las de dibujo accederán SÓLO a este dato.
@@ -84,6 +86,7 @@ public:
 	*/
   
 	Tablero(); // constructor
+
 
 	// operador para indexar con un vector
 	inline Pieza* operator[](const Vector2D& posicion)const {
@@ -127,5 +130,7 @@ public:
 	// Usar esta función para verificar que las piezas y sus coordenadas se actualizan correctamente
 	void mostrar_lista_de_piezas();
 
+	void setTurno(Jugador turno) { turnoActual = turno; }
+	Jugador getTurno() { return turnoActual; }
 
 };

@@ -30,10 +30,17 @@ public:
 	//void tecla_especial(unsigned char key);
 	void imagenes(const char* ruta);
 
-	void iniciar();	
+	void iniciar();
+
+	void turnos_ia(IA& jugador_blanco, IA& jugador_negro, Tablero& tab);
+
 	void tecla(unsigned char key);
 	void dibuja(Tablero tab);
 	void dibujar_Tablero(const int& Estadoskin);
 	void MouseBottom(int x, int y, int button, bool down, Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado);
 	void musica();
+
+	int getModalidad() {
+		return modalidad == jugadores ? 1 : 2;
+	}
 };

@@ -158,7 +158,6 @@ void OnTimer(int value)
 {
 	//poner aqui el código de animacion
 
-
 		//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);
 	glutPostRedisplay();
@@ -187,7 +186,7 @@ void OnMouseClick(int b, int state, int x, int y) {
 	* - dicha pieza se puede mover 
 	*/
 
-	/*
+	
 	if (tab[click_inicial] && tab[click_inicial]->GetTipo() != no_hay && 
 		obtener_posibles_movimientos(click_inicial, tab).size() > 0) {
 
@@ -208,7 +207,6 @@ void OnMouseClick(int b, int state, int x, int y) {
 			}
 		}
 	}
-	*/
 
 
 	glutPostRedisplay();
