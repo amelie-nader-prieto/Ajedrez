@@ -151,6 +151,9 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
 	//poner aqui el código de teclado
 	coordinador.tecla(key);
+	// si al ejecutar el coordinador la modalidad elegida es "maquina" 
+	if (coordinador.getModalidad() == 2) 
+		IA maquina(B);
 	glutPostRedisplay();
 }
 

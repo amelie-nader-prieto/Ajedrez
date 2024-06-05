@@ -220,3 +220,10 @@ void Coordinador::musica() {
 		break;
 	}
 }
+
+int Coordinador::getModalidad() // función para obtener la modalidad elegida
+{
+	// se atribuye el valor entero 1 a la modalidad jugadores y 2 a la modadlidad maquina
+	if (modalidad == jugadores) return 1;
+	if (modalidad == maquina) return 2;
+}
