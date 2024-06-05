@@ -12,9 +12,12 @@ class Coordinador
 	enum Estado { MENU1, MENU2, GRAFICOS, EXPLICACION, JUEGO, PAUSA, GAMEOVER, FIN } estado = MENU1;
 	enum Tipo_Tablero { classic = 1, starwors, animal }graficas_tablero = classic;
 	enum Modalida { maquina, jugadores }modalidad = jugadores;
-	enum Volumen { ON, OFF } volumen = ON;
+	enum Volumen { ON, OFF } volumen = OFF;
 	bool inicial=true;
-	bool posible = true;
+
+
+	void iniciarMusica();
+	void pararMusica();
 
 	string imagen = "bin/Menu/menu1.png";
 	

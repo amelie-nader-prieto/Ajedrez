@@ -35,6 +35,9 @@ void Coordinador::dibuja(Tablero tab)
 
 	case PAUSA:
 		imagen = "Menu/6.png";
+		if (volumen == OFF) {
+			pararMusica();
+		}
 		break;
 
 	case GRAFICOS:
@@ -42,13 +45,11 @@ void Coordinador::dibuja(Tablero tab)
 		
 		break;
 	case JUEGO:
-
-		if ((inicial == true) && (volumen == ON)&&(posible==true))
-		{
-			musica();
+		if (inicial==true) {
+			iniciarMusica();
 			inicial = false;
 		}
-		
+
 		std::string skin = "default";
 		std::string direccion = "";
 
@@ -62,7 +63,6 @@ void Coordinador::dibuja(Tablero tab)
 			break;
 		case 3: //AnimalCrossing
 			skin = "AnimalCrossing";
-		
 			break;
 		}
 		imagen = skin + "/Fondo.png";
@@ -71,26 +71,49 @@ void Coordinador::dibuja(Tablero tab)
 		mundo_grafico.dibuja_casillas(graficas_tablero);
 		mundo_grafico.drawPieces(tab, graficas_tablero);
 
-	
-	
 		break;
 	}
-
-
-	
-
-
-	FREEGLUT::stopMusic();
-
 
 	string direccion = "bin/imagenes/" + imagen;
 	const char* ruta = direccion.c_str();
 	imagenes(ruta);
 
-
-
 }
 
+
+
+void Coordinador::iniciarMusica() {
+	if (volumen == OFF) {
+		switch (graficas_tablero)
+		{
+		case classic:
+
+			//ETSIDI::playMusica("bin/sonidos/Classic.WAV", true);
+			ETSIDI::play("bin/sonidos/Classic.WAV");
+			break;
+		case starwors:
+
+			//ETSIDI::playMusica("bin/sonidos/Star_Wars.WAV", true);
+			ETSIDI::play("bin/sonidos/Star_Wars.WAV");
+			break;
+		case animal:
+
+			//ETSIDI::playMusica("bin/sonidos/Animal_Crossing.WAV", true);
+			ETSIDI::play("bin/sonidos/Animal_Crossing.WAV");
+			break;
+		default:
+			break;
+		}
+	}
+	volumen = ON;
+}
+
+void Coordinador::pararMusica() {
+	if (volumen == ON) {
+		ETSIDI::stopMusica();
+		volumen = OFF;
+	}
+}
 
 
 
@@ -144,15 +167,12 @@ void Coordinador::tecla(unsigned char key)
 			estado = JUEGO;
 		if (key == 'e')
 			estado = MENU1;
-		if (key == 'v') {
+		if (key == 'v') 
 			volumen = ON;
-		}
-		
-		if (key == 's') {
+		if (key == 's')
 			volumen = OFF;
-		}
-		
 		break;
+
 	case GAMEOVER:
 		if (key == 'r')
 			estado = MENU2;
@@ -199,35 +219,4 @@ void Coordinador::iniciar()
 }
 
 
-void Coordinador::musica() {
 
-	if (volumen == OFF) {
-		ETSIDI::stopMusica();
-	}
-
-
-	if (volumen == ON) {
-		switch (graficas_tablero)
-		{
-		case classic:
-
-			//ETSIDI::playMusica("bin/sonidos/Classic.WAV", true);
-			ETSIDI::play("bin/sonidos/Classic.WAV");
-			break;
-		case starwors:
-
-			//ETSIDI::playMusica("bin/sonidos/Star_Wars.WAV", true);
-			ETSIDI::play("bin/sonidos/Star_Wars.WAV");
-			break;
-		case animal:
-
-			//ETSIDI::playMusica("bin/sonidos/Animal_Crossing.WAV", true);
-			ETSIDI::play("bin/sonidos/Animal_Crossing.WAV");
-			break;
-		default:
-			break;
-		}
-		posible = false;
-	}
-
-}
