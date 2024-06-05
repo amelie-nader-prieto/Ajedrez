@@ -100,6 +100,8 @@ class IA
 	bool comparar_capturas(const captura& cptr1, const captura& cptr2); // condicion de ordenación de lista de capturas
 
 public:
+	// constructor por defecto
+	IA(Jugador _jugador=W) :jugador(_jugador) {}
 
 	/*
 	* Para realizar una jugada completa
