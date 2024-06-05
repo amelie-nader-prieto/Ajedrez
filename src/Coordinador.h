@@ -13,7 +13,8 @@ class Coordinador
 	enum Tipo_Tablero { classic = 1, starwors, animal }graficas_tablero = classic;
 	enum Modalida { maquina, jugadores }modalidad = jugadores;
 	enum Volumen { ON, OFF } volumen = ON;
-
+	bool inicial=true;
+	bool posible = true;
 
 	string imagen = "bin/Menu/menu1.png";
 	

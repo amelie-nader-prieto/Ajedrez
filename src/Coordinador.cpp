@@ -7,6 +7,7 @@ void Coordinador::dibuja(Tablero tab)
 	switch (estado) {
 	case MENU1://Imprimir el menu inicial
 		imagen = "Menu/1.png";
+		
 		//	cout << "Pulsa S para jugar" << endl;
 		//	cout << "Pulsa E para salir" << endl;
 		break;
@@ -21,7 +22,8 @@ void Coordinador::dibuja(Tablero tab)
 		{
 		case 2: //StarWars
 			imagen= "Menu/5.png";
-				break;
+		
+			break;
 		case 3: //AnimalCrossing
 			imagen = "Menu/4.png";
 			break;
@@ -33,24 +35,20 @@ void Coordinador::dibuja(Tablero tab)
 
 	case PAUSA:
 		imagen = "Menu/6.png";
-		//cout << "Pulsa C para volver a jugar" << endl;
-		//cout << "Pulsa E para volver a menu inicial" << endl;
-		//cout << "Pulsa V para poner volumen en ON" << endl;
-		//cout << "Pulsa S para poner volumen en OFF" << endl;
 		break;
 
 	case GRAFICOS:
 		imagen = "Menu/3.png";
-		//cout << "PULSE LA TECLA -1- PARA JUEGO MODO BÁSICO" << endl;
-		//cout << "PULSE LA TECLA -2- PARA JUAGO MODO STAR WORS" << endl;
-		//cout << "PULSE LA TECLA -3- PARA JUAGO MODO ANIMAL CROSSING" << endl;
-		//cout << "PULSE LA TECLA -E- PARA VOLVER" << endl;
+		
 		break;
-		;
 	case JUEGO:
-		//musica();
-		//cout << "Se esta jugando al: " << graficas_tablero << endl;
-		//cout << "Pulsa M para ir a pausa" << endl;
+
+		if ((inicial == true) && (volumen == ON)&&(posible==true))
+		{
+			musica();
+			inicial = false;
+		}
+		
 		std::string skin = "default";
 		std::string direccion = "";
 
@@ -64,28 +62,33 @@ void Coordinador::dibuja(Tablero tab)
 			break;
 		case 3: //AnimalCrossing
 			skin = "AnimalCrossing";
+		
 			break;
 		}
-		imagen =  skin + "/Fondo.png";
+		imagen = skin + "/Fondo.png";
 
-		///////////////////MÚSICA///////////////////////////
 
-		std::string direccionM = "";
-		direccionM = "bin/sonidos/" + skin + "/Fondo.WAV";
-		const char* rutaM = direccionM.c_str();
-
-		if (volumen == ON) {
-			ETSIDI::play(rutaM);
-		}
-		///////////////////////////////////////////////////
 		mundo_grafico.dibuja_casillas(graficas_tablero);
 		mundo_grafico.drawPieces(tab, graficas_tablero);
 
+	
+	
 		break;
 	}
+
+
+	
+
+
+	FREEGLUT::stopMusic();
+
+
 	string direccion = "bin/imagenes/" + imagen;
 	const char* ruta = direccion.c_str();
 	imagenes(ruta);
+
+
+
 }
 
 
@@ -132,6 +135,7 @@ void Coordinador::tecla(unsigned char key)
 			estado = JUEGO;
 		break;
 	case JUEGO:
+		
 		if (key == 'm') estado = PAUSA;
 		//mundo_grafico.tecla(key);
 		break;
@@ -140,10 +144,14 @@ void Coordinador::tecla(unsigned char key)
 			estado = JUEGO;
 		if (key == 'e')
 			estado = MENU1;
-		if (key == 'v')
+		if (key == 'v') {
 			volumen = ON;
-		if (key == 's')
+		}
+		
+		if (key == 's') {
 			volumen = OFF;
+		}
+		
 		break;
 	case GAMEOVER:
 		if (key == 'r')
@@ -173,18 +181,6 @@ void Coordinador::imagenes(const char* ruta) {
 
 }
 
-/*
-void Coordinador::tecla_especial(unsigned char key)
-{
-	if (estado == JUEGO)
-		mundo_grafico.tecla_especial(key);
-}
-void Coordinador::mueve()
-{
-	if (estado == JUEGO)
-		mundo_grafico.mueve();
-}
-*/
 
 void Coordinador::MouseBottom(int x, int y, int button, bool down, Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado)
 {
@@ -199,24 +195,39 @@ void Coordinador::iniciar()
 {
 	estado = MENU1;
 	mundo_grafico.init();
+	volumen = OFF;
 }
-
-//Coordinador::~Coordinador() {}
 
 
 void Coordinador::musica() {
-	switch (graficas_tablero)
-	{
-	case classic:
-		ETSIDI::play("bin/sonidos/Classic.WAV");
-		break;
-	case starwors:
-		ETSIDI::play("bin/sonidos/Star_Wars.WAV");
-		break;
-	case animal:
-		ETSIDI::play("bin/sonidos/Animal_Crossing.WAV");
-		break;
-	default:
-		break;
+
+	if (volumen == OFF) {
+		ETSIDI::stopMusica();
 	}
+
+
+	if (volumen == ON) {
+		switch (graficas_tablero)
+		{
+		case classic:
+
+			//ETSIDI::playMusica("bin/sonidos/Classic.WAV", true);
+			ETSIDI::play("bin/sonidos/Classic.WAV");
+			break;
+		case starwors:
+
+			//ETSIDI::playMusica("bin/sonidos/Star_Wars.WAV", true);
+			ETSIDI::play("bin/sonidos/Star_Wars.WAV");
+			break;
+		case animal:
+
+			//ETSIDI::playMusica("bin/sonidos/Animal_Crossing.WAV", true);
+			ETSIDI::play("bin/sonidos/Animal_Crossing.WAV");
+			break;
+		default:
+			break;
+		}
+		posible = false;
+	}
+
 }

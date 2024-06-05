@@ -35,6 +35,7 @@
     <ClCompile Include="src\torre.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lib\ETSIDI.h" />
     <ClInclude Include="src\alfil.h" />
     <ClInclude Include="src\caballo.h" />
     <ClInclude Include="src\Casilla.h" />
