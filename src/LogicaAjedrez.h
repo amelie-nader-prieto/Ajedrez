@@ -82,9 +82,10 @@ bool amenazado(Vector2D casilla, Tablero tab);
 bool amenazado(Vector2D casilla, Tablero tab, vector<Vector2D>& piezas_que_lo_amenazan);
 /*
 * Al iniciar el turno, verifica si hay jaque mate
-* Hay jaque mate si alguno de los reyes:
-* - Está amenazado en su posición actual
-* - No tiene forma posible de dejar de estar amenazado
+* Concretamente, comprueba:
+* - Si el rey está amenazado
+* - Si tiene jugadas legales
+* En caso de que esté amenazado y NO tenga jugadas legales, hay jaque mate
 */
 bool condiciones_jaque_mate(Tablero tab,Jugador&derrotado);
 /* Para saber si alguna de tus piezas (comprobando entre todas tus piezas) puede moverse a una casilla determinada
@@ -131,14 +132,14 @@ bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vect
 */
 bool condiciones_promocion(Pieza peon);
 
+
+
 // FUNCIONES DE MOVIMIENTO
 /*
 * A partir de una posición y una dirección, te da las coordenadas
 * de la posición siguiente
 */
 void siguienteCasilla(Dir_t dir, Vector2D ini, Vector2D& fin);
-
-
 /*
 * Te da todas las posiciones a las que podría moverse dicha pieza
 * Hay que pasarle también el tablero, ya que necesitará revisar
@@ -155,14 +156,6 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab);
 * Incluye la lógica de la captura (tienen que coincidir dos piezas opuestas en la posición de destino)
 */
 void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab);
-
-/*
-* Te da todas las posiciones a las que podría moverse una pieza
-* A partir de su posición y del tablero
-* USAD ESTA si podéis. A mí al menos me ha dado menos problemas
-*/
-vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab);
-
 /* Para mover una pieza
 * Incluye la lógica de la captura (tienen que coincidir dos piezas opuestas en la posición de destino)
 */

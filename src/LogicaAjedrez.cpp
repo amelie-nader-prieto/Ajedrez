@@ -7,13 +7,11 @@ bool hay_pieza_tuya(Vector2D _posicion, Jugador _jugador, Tablero tab) {
     else if (tab.tablero[_posicion.x][_posicion.y]->GetJugador() == _jugador)return true;
     else return false;
 }
-
 bool hay_pieza_rival(Vector2D _posicion, Jugador _jugador, Tablero tab) {
     if (tab.tablero[_posicion.x][_posicion.y]->GetTipo() == no_hay)return false;
     else if (tab.tablero[_posicion.x][_posicion.y]->GetJugador() != _jugador)return true;
     else return false;
 }
-
 bool condiciones_captura_peon(Pieza _peon, Tablero tab) {
     vector<Dir_t>direcciones_diagonal{}; // direcciones en las que el peón puede capturar. se inicializa según el color
     Vector2D posicion_siguiente;
