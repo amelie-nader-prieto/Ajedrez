@@ -3,9 +3,6 @@
 
 class IA
 {
-	//Tablero& tablero; 
-	Tablero tablero; // representa el tablero en el que está transcurriendo la partida
-
 	// Estados de la máquina
 	/*
 	* INICIO: Inicio del turno
@@ -36,17 +33,14 @@ class IA
 	vector<evento>lista_posibles_capturas{};
 
 	/* Para saber si una pieza puede moverse */
-	bool puede_mover(Pieza pieza, vector<Vector2D> posibles_mov);
+	bool puede_mover(Pieza pieza, vector<Vector2D> posibles_mov, Tablero& tab);
+	// ordena los eventos en funcuón de la puntaución asignada
 	void ordenar_eventos(vector<evento> lista);
 	// obtiene las amenazas posibles y las ordena por su puntuacion
-	void obtener_amenazas();
 	void obtener_amenazas(Tablero tab);
 	// obtiene las capturas posibles y las ordena por puntuacion
-	void obtener_capturas();
 	void obtener_capturas(Tablero tab);
-	/* Mueve una pieza (pasada como argumento) a una casilla al azar */
-	void mover_rndm(Pieza pieza);
-	/* Esta sobrecarga hace lo mismo pero con un tablero externo */
+	/* Mueve una pieza aleatoria de forma aleatoria entre de sus movimientos posbles*/
 	void mover_rndm(Pieza pieza, Tablero tab);
 	/*
 	* Para obtener la puntuación de una captura
@@ -83,6 +77,13 @@ class IA
 		}
 	}
 
+	static int GetRandom(int max)
+	{
+		// Usa la hora actual como semilla para el generador de números aleatorios
+		srand(time(0));
+		return (rand() % max);
+	}
+
 public:
 
 	/*
@@ -94,14 +95,8 @@ public:
 	retorna la variable fin_turno (así, indica al objeto que llamó a la función
 	que el turno se ha realizado con éxito) */
 	bool jugar(Tablero&tab);
-
 };
 
-static int GetRandom(int max)
-{
-	// Usa la hora actual como semilla para el generador de números aleatorios
-	srand(time(0));
-	return (rand() % max);
-}
+
 
 

@@ -61,7 +61,7 @@ bool IA::jugar(Tablero&tab) {
 				vector<Vector2D>posibles_mov;
 				Pieza pieza = piezas_propias[GetRandom(piezas_propias.size())];
 				// si se puede mover, mover aleatoriamente y salir del bucle
-				if (puede_mover(pieza, posibles_mov)) {
+				if (puede_mover(pieza, posibles_mov, tab)) {
 					mover_pieza(pieza.GetPosicion(), posibles_mov[GetRandom(posibles_mov.size())], tab);
 					fin_turno = true;
 				}
@@ -99,18 +99,9 @@ bool IA::jugar(Tablero&tab) {
 	return fin_turno;
 }
 
-
-void IA::mover_rndm(Pieza pieza) {
-	vector<Vector2D> posibles_mov;
-	if (puede_mover(pieza, posibles_mov)) {
-		mover_pieza(pieza.GetPosicion(), posibles_mov[GetRandom(posibles_mov.size())], tablero);
-		fin_turno = true;
-	}
-}
-
 void IA::mover_rndm(Pieza pieza, Tablero tab) {
 	vector<Vector2D>posibles_mov;
-	if (puede_mover(pieza, posibles_mov)) {
+	if (puede_mover(pieza, posibles_mov, tab)) {
 		mover_pieza(pieza.GetPosicion(), posibles_mov[GetRandom(posibles_mov.size())], tab);
 		fin_turno = true;
 	}
@@ -148,7 +139,7 @@ void IA::obtener_capturas(Tablero tab) {
 
 	for (auto i : piezas_propias) {
 		// obtener posibles movimientos de la pieza rival
-		vector<Vector2D>posibles_mov = obtener_posibles_movimientos(i.GetPosicion(), tablero);
+		vector<Vector2D>posibles_mov = obtener_posibles_movimientos(i.GetPosicion(), tab);
 		for (auto j : posibles_mov) {
 			for (auto k : piezas_rival)
 				if (k.GetPosicion() == j) {
@@ -160,9 +151,9 @@ void IA::obtener_capturas(Tablero tab) {
 	ordenar_eventos(lista_posibles_capturas); // ordena las posibles capturas en función de su puntuación
 }
 
-bool IA::puede_mover(Pieza pieza, vector<Vector2D> posibles_mov)
+bool IA::puede_mover(Pieza pieza, vector<Vector2D> posibles_mov, Tablero& tab)
 {
-	posibles_mov = obtener_posibles_movimientos(pieza.GetPosicion(), tablero);
+	posibles_mov = obtener_posibles_movimientos(pieza.GetPosicion(), tab);
 	if (posibles_mov.size() == 0) return false;
 	else return true;
 }
