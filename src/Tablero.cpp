@@ -70,10 +70,7 @@ Tablero::Tablero(): turnoActual(W){
 
 }
 
-/* La función de mover pieza está sobrecargada porque:
-* Puedes pasarle la pieza; si es externa, se volverá parte del tablero
-* Puedes pasarle la ubicación, ya que el tablero sabe qué pieza hay ahí
-*/
+
 void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) { // Usad esta
 	// se asegura de que no intentes mover una pieza que no existe
 	if (
@@ -81,7 +78,7 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) { // Usad esta
 		)return void{};
 
 	//Termina la ejecución del método "mover_pieza" si se detecta que no es el jugador al que le toca
-  //mover la pieza (al que le toca el turno). Impide que el movimiento de la pieza se realice
+	//mover la pieza (al que le toca el turno). Impide que el movimiento de la pieza se realice
 	if (tablero[p_ini.x][p_ini.y]->GetJugador() != turnoActual) {
 		//No es el turno del Jugador que intenta mover la pieza
 		std::cout << "No es tu turno! " << std::endl;
@@ -89,7 +86,7 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) { // Usad esta
 	}
 
 	//auto jugador = tablero[p_ini.x][p_ini.y]->GetJugador();
-  auto jugador = turnoActual; // jugador del cual es el turno
+	auto jugador = turnoActual; // jugador del cual es el turno
   
 	tablero[p_fin.x][p_fin.y] = tablero[p_ini.x][p_ini.y]; // la posición final apuntará a lo que apuntaba la posición inicial
 	tablero[p_ini.x][p_ini.y] = &ninguna; // la posición inicial se queda vacía
@@ -110,7 +107,7 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) { // Usad esta
 	}
 
 	//Cambia el turno al otro jugador: Despues de mover la pieza y actualizar las coordenadas
-  //el turno se cambia al otro jugador, despues de cada movimiento válido el turno pasa al otro jugador
+	//el turno se cambia al otro jugador, despues de cada movimiento válido el turno pasa al otro jugador
 	turnoActual = (turnoActual == W) ? B : W;
   
 }
@@ -137,34 +134,10 @@ void Tablero::mover_pieza(Pieza&_p, Vector2D p_fin) {
 	}
 
 }
-// activa el evento captura en una posición determinada
 void Tablero::activar_captura(Vector2D _posicion) { 
 	tablero[_posicion.x][_posicion.y]->set_captura(); // la pieza que estaba primero en esa posición será capturada
 	tablero[_posicion.x][_posicion.y] = &ninguna; // cuando la pieza es capturada, ningún puntero volverá a apuntar a ella
 }
-/*esta función está desactualizada, usad la otra*/
-void Tablero::activar_promocion(Vector2D _posicion) {
-	auto jugador = (*this)[_posicion]->GetJugador();
-
-	//tablero[_posicion.x][_posicion.y] = &ninguna; // la casilla que antes apuntaba al peón ahora apunta a ningún sitio (se vacía la casilla)
-
-	// se crea una nueva pieza en dicha casilla
-
-	// CASILLAS PARA SÓLO CABALLO Y ALFIL - columnas 2 y 8
-	auto columna = _posicion.y;
-	if (columna == 2 || columna == 8) /*promociona a alfil o caballo*/ {
-		// que se pueda elegir entre C y A
-		crear_pieza(C, jugador, _posicion);
-	}
-
-	// CASILLAS PARA LAS CUATRO PIEZAS POSIBLES - columnas de la 3 a la 7
-	if (columna >= 3 && columna <= 7) {
-		// que se pueda elegir entre D, C T y A
-		crear_pieza(D, jugador, _posicion);
-	}
-
-}
-/*Sobrecarga para promocionar y escoger el nuevo tipo, USAD ESTA*/
 void Tablero::activar_promocion(Vector2D _posicion, Tipo nuevo_tipo) {
 	auto jugador = (*this)[_posicion]->GetJugador();
 	auto columna = _posicion.y;
@@ -191,106 +164,6 @@ void Tablero::activar_promocion(Vector2D _posicion, Tipo nuevo_tipo) {
 
 
 }
-// esta función está mal hecha, hay que borrarla
-void Tablero::borrar_pieza_capturada(Jugador _jugador) {
-	int num_capturadas = 0, nuevo_num_piezas;
-	vector<Pieza>piezas_copia{};
-
-	switch (_jugador) {
-	case W:
-		nuevo_num_piezas = piezas_bla.size() - num_capturadas;
-		piezas_copia = piezas_bla; // hacemos una copia de las piezas
-		piezas_bla.clear(); // borramos el vector de piezas
-
-		// volvemos a llenar el vector, sólo con las que no están capturadas
-		for (auto p : piezas_copia) {
-			if (!p.GetCapturada()) {
-				piezas_bla.push_back(p);
-			}
-		}
-		// nos cargamos los puestos libres que quedan al final
-		while (piezas_bla.size() > nuevo_num_piezas) piezas_bla.pop_back();
-		break;
-
-	case B:
-		nuevo_num_piezas = piezas_neg.size() - num_capturadas;
-		piezas_copia = piezas_neg; // copiamos el vector y borramos el original
-		piezas_neg.clear();
-
-		// volvemos a llenar el vector, sólo con las que no están capturadas
-		for (auto p : piezas_copia) {
-			if (!p.GetCapturada()) {
-				piezas_neg.push_back(p);
-			}
-		}
-		// nos cargamos los puestos libres que quedan al final
-		while (piezas_neg.size() > nuevo_num_piezas) piezas_neg.pop_back();
-		break;
-
-	default:break;
-	}
-
-}
-
-
-// Funciones de prueba
-
-void Tablero::vaciar() {
-	// vacía el tablero
-	for (int i = 0; i < FILA; i++) {
-		for (int j = 0; j < COLUMNA; j++) {
-			if (tablero[i][j] == nullptr)continue;
-			else tablero[i][j] = &ninguna;
-		}
-	}
-	// borra todas la piezas;
-	piezas_bla.clear();
-	piezas_neg.clear();
-}
-
-void Tablero::crear_pieza(Tipo _tipo, Jugador _jugador, Vector2D _posicion) {
-	if (_tipo == no_hay) return void{};
-	switch (_jugador) {
-	case B: piezas_neg.push_back(Pieza(_posicion, _jugador, _tipo));
-		tablero[_posicion.x][_posicion.y] = &(piezas_neg.at(piezas_neg.size() - 1));
-		break;
-	case W: piezas_bla.push_back(Pieza(_posicion, _jugador, _tipo));
-		tablero[_posicion.x][_posicion.y] = &(piezas_bla.at(piezas_bla.size() - 1));
-		break;
-	}
-}
-
-void Tablero::dibujar() {
-	for (int i = 0; i < FILA; i++) {
-		for (int j = 0; j < COLUMNA; j++) {
-			if (tablero[i][j]) 
-				cout << "[" << tablero[i][j]->GetTipo() << "]";
-			else // si es null es porque no se usa
-				cout << "   ";
-		}
-		cout << ' ' << FILA - i << '\n';
-	}
-	cout << " a  b  c  d  e  f  g  h  i  j  k" << '\n';
-}
-
-void Tablero::mostrar_lista_de_piezas() {
-	int num_piezas_max = (piezas_bla.size() > piezas_neg.size() ? piezas_bla.size() : piezas_neg.size());
-
-	cout << "  BLANCO\t  NEGRO\n";
-	for (int i = 0; i < num_piezas_max; i++) {
-		if (i < piezas_bla.size()){
-			cout << i + 1 << ". " << piezas_bla.at(i);
-		}
-		cout << "\t";
-		if (i < piezas_neg.size()) {
-			cout << i + 1 << ". " << piezas_neg.at(i);
-		}
-		cout << '\n';
-	}
-	/*cout << "  total blancas: " << piezas_bla.size();
-	cout << "  total negras: " << piezas_neg.size();*/
-}
-
 Vector2D Tablero::get_rey(Jugador _jugador) {
 	Vector2D posicion_rey;
 	switch (_jugador) {
@@ -307,4 +180,59 @@ Vector2D Tablero::get_rey(Jugador _jugador) {
 	default:break;
 	}
 	return posicion_rey;
+}
+
+// Funciones para alterar manualmente el tablero
+
+void Tablero::vaciar() {
+	// vacía el tablero
+	for (int i = 0; i < FILA; i++) {
+		for (int j = 0; j < COLUMNA; j++) {
+			if (tablero[i][j] == nullptr)continue;
+			else tablero[i][j] = &ninguna;
+		}
+	}
+	// borra todas la piezas;
+	piezas_bla.clear();
+	piezas_neg.clear();
+}
+void Tablero::crear_pieza(Tipo _tipo, Jugador _jugador, Vector2D _posicion) {
+	if (_tipo == no_hay) return void{};
+	switch (_jugador) {
+	case B: piezas_neg.push_back(Pieza(_posicion, _jugador, _tipo));
+		tablero[_posicion.x][_posicion.y] = &(piezas_neg.at(piezas_neg.size() - 1));
+		break;
+	case W: piezas_bla.push_back(Pieza(_posicion, _jugador, _tipo));
+		tablero[_posicion.x][_posicion.y] = &(piezas_bla.at(piezas_bla.size() - 1));
+		break;
+	}
+}
+void Tablero::dibujar() {
+	for (int i = 0; i < FILA; i++) {
+		for (int j = 0; j < COLUMNA; j++) {
+			if (tablero[i][j]) 
+				cout << "[" << tablero[i][j]->GetTipo() << "]";
+			else // si es null es porque no se usa
+				cout << "   ";
+		}
+		cout << ' ' << FILA - i << '\n';
+	}
+	cout << " a  b  c  d  e  f  g  h  i  j  k" << '\n';
+}
+void Tablero::mostrar_lista_de_piezas() {
+	int num_piezas_max = (piezas_bla.size() > piezas_neg.size() ? piezas_bla.size() : piezas_neg.size());
+
+	cout << "  BLANCO\t  NEGRO\n";
+	for (int i = 0; i < num_piezas_max; i++) {
+		if (i < piezas_bla.size()){
+			cout << i + 1 << ". " << piezas_bla.at(i);
+		}
+		cout << "\t";
+		if (i < piezas_neg.size()) {
+			cout << i + 1 << ". " << piezas_neg.at(i);
+		}
+		cout << '\n';
+	}
+	/*cout << "  total blancas: " << piezas_bla.size();
+	cout << "  total negras: " << piezas_neg.size();*/
 }
