@@ -119,13 +119,14 @@ public:
 	/* Devuelven una copia de los datos privados de la clase.
 	* Las uso para comprobar si todos los datos se actualizan correctamente
 	*/
-	inline auto get_piezas_bla() { return piezas_bla; }
-	inline auto get_piezas_neg() { return piezas_neg; }
+	inline auto get_piezas_bla()const { return piezas_bla; }
+	inline auto get_piezas_neg()const { return piezas_neg; }
 	// FUNCIÓN PARA IMPRIMIR EL TABLERO POR LA CONSOLA
 	void dibujar();
 	// Función para que aparezca en la consola una lista de las piezas que hay en el tablero.
 	// Usar esta función para verificar que las piezas y sus coordenadas se actualizan correctamente
 	void mostrar_lista_de_piezas();
-
+	// para consultar de quién es el turno
+	inline auto get_turnoActual()const { return turnoActual; }
 
 };
