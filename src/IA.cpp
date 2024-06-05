@@ -127,7 +127,7 @@ void IA::jugar(){
 }
 bool IA::jugar(Tablero&tab) {
 
-	tablero = tab;
+	//tablero = tab;
 
 	obtener_amenazas();
 	obtener_capturas();
@@ -166,7 +166,7 @@ bool IA::jugar(Tablero&tab) {
 			break;
 		case IA::CAPTURA:
 			// realiza la captura más conveniente
-			mover_pieza(lista_posibles_capturas[0].pieza_atacante->GetPosicion(), lista_posibles_capturas[0].pieza_amenazada->GetPosicion(), tablero);
+			mover_pieza(lista_posibles_capturas[0].pieza_atacante->GetPosicion(), lista_posibles_capturas[0].pieza_amenazada->GetPosicion(), tab);
 			fin_turno = true;
 			estado = INICIO;
 			break;
@@ -179,7 +179,7 @@ bool IA::jugar(Tablero&tab) {
 				Pieza* pieza = piezas_propias[GetRandom(piezas_propias.size())];
 				// si se puede mover, mover aleatoriamente y salir del bucle
 				if (puede_mover(pieza, posibles_mov)) {
-					mover_pieza(pieza->GetPosicion(), posibles_mov[GetRandom(posibles_mov.size())], tablero);
+					mover_pieza(pieza->GetPosicion(), posibles_mov[GetRandom(posibles_mov.size())], tab);
 					fin_turno = true;
 				}
 			}
@@ -224,9 +224,16 @@ void IA::mover_rndm(Pieza* pieza) {
 		fin_turno = true;
 	}
 }
+void IA::mover_rndm(Pieza* pieza, Tablero tab) {
+	vector<Vector2D>posibles_mov;
+	if (puede_mover(pieza, posibles_mov)) {
+		mover_pieza(pieza->GetPosicion(), posibles_mov[GetRandom(posibles_mov.size())], tab);
+		fin_turno = true;
+	}
+}
 
 void IA::obtener_amenazas() {
-	// obtiene las amenazas posibles y las ordena por su puntuacion
+	
 	amenaza amnz{};
 	for (auto i : piezas_rival) {
 		vector<Vector2D>posibles_mov = obtener_posibles_movimientos(*i, tablero); // obtener posibles movimientos de la pieza rival
@@ -243,7 +250,7 @@ void IA::obtener_amenazas() {
 }
 
 void IA::obtener_capturas() {
-	// obtiene las capturas posibles y las ordena por puntuacion
+	
 	captura cptr{};
 	for (auto i : piezas_propias) {
 		vector<Vector2D>posibles_mov = obtener_posibles_movimientos(*i, tablero); // obtener posibles movimientos de la pieza rival
@@ -259,7 +266,7 @@ void IA::obtener_capturas() {
 }
 
 int IA::puntuacion_captura(Pieza* pieza_atacada) {
-	// Evalua una captura en funcion de la puntuacion de las piezas que intervienen y si la pieza atacada en la captura interviene en una amenaza
+	
 	int puntuacion_cptr = puntuacion_pieza(pieza_atacada); 
 	for (auto& i : lista_amenazas)
 		if (i.pieza_atacante == pieza_atacada) {
