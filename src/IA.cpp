@@ -126,14 +126,20 @@ void IA::jugar(){
 	}
 }
 bool IA::jugar(Tablero&tab) {
+	// Inicializa sus piezas y las del rival
+	piezas_propias = (jugador == B ? tab.get_piezas_neg() : tab.get_piezas_bla());
+	piezas_rival = (jugador == B ? tab.get_piezas_bla() : tab.get_piezas_neg());
 
-	//tablero = tab;
-
-	obtener_amenazas();
-	obtener_capturas();
+	// Analiza la situación del tablero que le has pasado, para saber:
+	// - cuáles que sus piezas están en peligro
+	// - qué piezas rivales podría capturas
+	obtener_amenazas(tab);
+	obtener_capturas(tab);
 	bool hay_amenazas = lista_amenazas.size();
 	bool puede_capturar = lista_posibles_capturas.size();
+
 	fin_turno = false;
+	// Utiliza la máquina de estado para tomar una decisión (realizar una jugada)
 	while (!fin_turno)
 	{
 		switch (estado)
@@ -248,6 +254,30 @@ void IA::obtener_amenazas() {
 	//ordenar amenazas de mayor a menor en funcion de su puntuacion
 	sort(lista_amenazas.begin(), lista_amenazas.end(), [](int a, int b) {return a > b; });
 }
+void IA::obtener_amenazas(Tablero tab) {
+	amenaza amnz{};
+
+	// Inicializa tus piezas propias y las del rival a partir del tablero que se ha pasado por argumento
+	/*piezas_propias = (jugador == B ? tab.get_piezas_neg() : tab.get_piezas_bla());
+	piezas_rival = (jugador == B ? tab.get_piezas_bla() : tab.get_piezas_neg());
+	*/
+	for (auto i : piezas_rival) {
+		// obtener posibles movimientos de cada pieza rival
+		vector<Vector2D>posibles_mov_rival = obtener_posibles_movimientos(*i, tab); 
+		for (auto j : posibles_mov_rival) {
+			// Para cada posible movimiento de la pieza rival...
+			for (auto k : piezas_propias)
+				if (k->GetPosicion() == j) { // Si coincide con la posición de alguna de tus piezas, dicha pieza está amenazada
+					amnz = { k,i,puntuacion_pieza(k) };
+					lista_amenazas.push_back(amnz); // lo añade a la lista de amenazas
+				}
+		}
+	}
+
+	//ordenar amenazas de mayor a menor en funcion de su puntuacion
+	sort(lista_amenazas.begin(), lista_amenazas.end(), [](int a, int b) {return a > b; });
+
+}
 
 void IA::obtener_capturas() {
 	
@@ -262,6 +292,26 @@ void IA::obtener_capturas() {
 				}					
 		}
 	}
+	sort(lista_posibles_capturas.begin(), lista_posibles_capturas.end(), comparar_capturas);
+}
+void IA::obtener_capturas(Tablero tab) {
+	captura cptr{};
+
+	/*piezas_propias = (jugador == B ? tab.get_piezas_neg() : tab.get_piezas_bla());
+	piezas_rival = (jugador == B ? tab.get_piezas_bla() : tab.get_piezas_neg());*/
+
+	for (auto i : piezas_propias) {
+		// obtener posibles movimientos de la pieza rival
+		vector<Vector2D>posibles_mov = obtener_posibles_movimientos(*i, tablero); 
+		for (auto j : posibles_mov) {
+			for (auto k : piezas_rival)
+				if (k->GetPosicion() == j) {
+					cptr = { i,k, puntuacion_pieza(k) };
+					lista_posibles_capturas.push_back(cptr);
+				}
+		}
+	}
+
 	sort(lista_posibles_capturas.begin(), lista_posibles_capturas.end(), comparar_capturas);
 }
 

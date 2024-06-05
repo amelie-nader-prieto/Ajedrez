@@ -6,6 +6,18 @@ class IA
 	//Tablero& tablero; 
 	Tablero tablero; // representa el tablero en el que está transcurriendo la partida
 
+	// Estados de la máquina
+	/*
+	* INICIO: Inicio del turno
+	* AMENAZAS: Evaluando posibles amenazas
+	* SI_AMNZ: Se han encontrado piezas amenazadas
+	* NO_AMNZ: No tienes ninguna pieza amenazada
+	* NO_AMN_POSIBLE_CAPTURA: No tienes piezas amenazadas, y puedes realizar alguna captura
+	* CAPTURA: Evaluando la captura más conveniente
+	* MOVER_RNDM: Seleccionando una pieza para realizar un movimiento al azar
+	* SI_AMNZ_POSIBLE_CAPTURA: Tienes piezas amenazadas y puedes capturar - evaluará la opción más conveniente
+	* SI_AMNZ_NO_CAPTURA: Tienes piezas amenazadas y no puedes capturar (supongo)
+	*/
 	enum Estado { INICIO, AMENAZAS, NO_AMNZ, NO_AMNZ_POSIBLE_CAPTURA, CAPTURA, MOVER_RNDM, SI_AMNZ, SI_AMNZ_POSIBLE_CAPTURA, SI_AMNZ_NO_CAPTURA} estado = INICIO;
 
 	Jugador jugador; // la IA jugará con las piezas blancas o negras
@@ -29,12 +41,14 @@ class IA
 	vector<amenaza>lista_amenazas{};
 	vector<captura>lista_posibles_capturas{};
 
+	/* Para saber si una pieza puede moverse */
 	bool puede_mover(Pieza* pieza, vector<Vector2D> posibles_mov);
 	// obtiene las amenazas posibles y las ordena por su puntuacion
 	void obtener_amenazas();
+	void obtener_amenazas(Tablero tab);
 	// obtiene las capturas posibles y las ordena por puntuacion
 	void obtener_capturas();
-	
+	void obtener_capturas(Tablero tab);
 	/* Mueve una pieza (pasada como argumento) a una casilla al azar */
 	void mover_rndm(Pieza* pieza);
 	/* Esta sobrecarga hace lo mismo pero con un tablero externo */
