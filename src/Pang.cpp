@@ -186,20 +186,19 @@ void OnMouseClick(int b, int state, int x, int y) {
 	* - hay una pieza en la casilla
 	* - dicha pieza se puede mover
 	*/
-	if (condiciones_final_de_la_partida(tab)) return void{};
 	if (tab[click_inicial]->GetTipo() == no_hay) cout << " CABRÓN AHÍ NO HAY NADA \n";
 	if ((tab[click_inicial] != nullptr) &&
 		tab[click_inicial]->GetTipo() != no_hay &&
-		/*obtener_posibles_movimientos*/obtener_movimientos_legales(click_inicial, tab).size() > 0) {
+		obtener_movimientos_legales(click_inicial, tab).size() > 0) {
 
 		seleccionada = *tab[click_inicial];
 		cout << "  (pieza seleccionada: " << seleccionada << ")   \n";
-		for (auto p : /*obtener_posibles_movimientos*/obtener_movimientos_legales(click_inicial, tab)) {
+
+		for (auto p : obtener_movimientos_legales(click_inicial, tab)) {
 			if (p == click_final) { // simplemente verificamos que el sitio en el que has hecho click está entre los posibles movimientos
 
 				// mover pieza al lugar seleccionado
 				mover_pieza(click_inicial, click_final, tab);
-				//seleccionada = *tab[click_final];
 				tab.dibujar();
 				cout << '\n';
 				tab.mostrar_lista_de_piezas();
@@ -209,11 +208,11 @@ void OnMouseClick(int b, int state, int x, int y) {
 				if (amenazado(tab.get_rey(W), tab))cout << "   (Rb está amenazado)\n";
 
 				if (condiciones_final_de_la_partida(tab)) {
-					cout << "\nFIN DE LA PARTIDA\n";
+					coordinador.fin = true;
+					//cout << "\nFIN DE LA PARTIDA\n";
 					return void{};
-
-					break;
 				}
+
 			}
 		}
 

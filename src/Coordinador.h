@@ -30,6 +30,7 @@ public:
 	//void tecla_especial(unsigned char key);
 	void imagenes(const char* ruta);
 
+	bool fin=false;
 	void iniciar();	
 	void tecla(unsigned char key);
 	void dibuja(Tablero &tab);
