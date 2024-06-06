@@ -4,11 +4,11 @@
 
 class IA
 {
-	vector<Pieza*>piezas_propias{}, piezas_rival{};
+	vector<Pieza> piezas_propias{}, piezas_rival{};
 
 	bool fin_turno = false;	
 
-	bool puede_mover(Pieza& pieza, vector<Vector2D> posibles_mov, Tablero& tab);
+	bool puede_mover(Pieza& pieza, vector<Vector2D> &posibles_mov, Tablero& tab);
 
 public:
 
