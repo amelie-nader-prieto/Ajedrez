@@ -130,7 +130,7 @@ void GLTablero::MouseButton(int x, int y, int button, bool down,Tablero&tab,
 				click_final = { xcell_sel, ycell_sel };
 				click_inicial = { xcell_sel, ycell_sel };
 				seleccionado = false; //Para pasar a la seleccion de la posicion final
-				movimientosPosibles = obtener_posibles_movimientos(click_inicial, chess);
+				movimientosPosibles = /*obtener_posibles_movimientos*/obtener_movimientos_legales(click_inicial, chess);
 				//	std::cout << "Casilla inicial: "   <<std::endl;
 			}
 			else {

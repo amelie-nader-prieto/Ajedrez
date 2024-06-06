@@ -164,8 +164,8 @@ void OnTimer(int value)
 }
 
 void OnMouseClick(int b, int state, int x, int y) {
-//captura los clicks del mouse
-//da el control a la escena del tablero 
+	//captura los clicks del mouse
+	//da el control a la escena del tablero 
 	bool down = (state == GLUT_DOWN);
 	int button;
 	if (b == GLUT_LEFT_BUTTON) {
@@ -184,18 +184,19 @@ void OnMouseClick(int b, int state, int x, int y) {
 	* La casilla es válida si:
 	* - está dentro del tablero
 	* - hay una pieza en la casilla
-	* - dicha pieza se puede mover 
+	* - dicha pieza se puede mover
 	*/
+	if (condiciones_final_de_la_partida(tab)) return void{};
 	if (tab[click_inicial]->GetTipo() == no_hay) cout << " CABRÓN AHÍ NO HAY NADA \n";
-	if ((tab[click_inicial]!=nullptr) &&
-		tab[click_inicial]->GetTipo() != no_hay && 
-		obtener_posibles_movimientos(click_inicial, tab).size() > 0) {
+	if ((tab[click_inicial] != nullptr) &&
+		tab[click_inicial]->GetTipo() != no_hay &&
+		/*obtener_posibles_movimientos*/obtener_movimientos_legales(click_inicial, tab).size() > 0) {
 
 		seleccionada = *tab[click_inicial];
 		cout << "  (pieza seleccionada: " << seleccionada << ")   \n";
-		for (auto p : obtener_posibles_movimientos(click_inicial, tab)) {
+		for (auto p : /*obtener_posibles_movimientos*/obtener_movimientos_legales(click_inicial, tab)) {
 			if (p == click_final) { // simplemente verificamos que el sitio en el que has hecho click está entre los posibles movimientos
-				
+
 				// mover pieza al lugar seleccionado
 				mover_pieza(click_inicial, click_final, tab);
 				//seleccionada = *tab[click_final];
@@ -204,13 +205,21 @@ void OnMouseClick(int b, int state, int x, int y) {
 				tab.mostrar_lista_de_piezas();
 				cout << '\n';
 
-				break;
+				if (amenazado(tab.get_rey(B), tab)) cout << "   (Rn está amenazado)\n";
+				if (amenazado(tab.get_rey(W), tab))cout << "   (Rb está amenazado)\n";
+
+				if (condiciones_final_de_la_partida(tab)) {
+					cout << "\nFIN DE LA PARTIDA\n";
+					return void{};
+
+					break;
+				}
 			}
 		}
+
+
+
+		glutPostRedisplay();
+
 	}
-	
-
-
-	glutPostRedisplay();
-
 }
