@@ -202,13 +202,7 @@ void Coordinador::imagenes(const char* ruta) {
 }
 
 
-void Coordinador::MouseBottom(int x, int y, int button, bool down, Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado)
-{
-	if (estado == JUEGO)
-	{
-		mundo_grafico.MouseButton(x, y, button, down, click_inicial, click_final, seleccionado);
-	}
-}
+
 void Coordinador::MouseBottom(int x, int y, int button, bool down, Tablero& tab,
 	Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado){
 

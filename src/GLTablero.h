@@ -28,7 +28,6 @@ public:
 	void dibuja_casillas(const int&);
 
 	float width = 1.0f; //ancho de la casilla
-	void MouseButton(int x, int y, int button, bool down, Vector2D&, Vector2D&, bool&);
 	void MouseButton(int x, int y, int button, bool down,Tablero&tab,
 		Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado);
 	void world2cell(double x, double y, int& cell_x, int& cell_y) {
