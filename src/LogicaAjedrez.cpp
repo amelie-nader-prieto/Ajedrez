@@ -530,7 +530,7 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
 }
 void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab) {
     //if (condiciones_final_de_la_partida(tab)) return void{}; // si hay jaque mate o tablas, no se realiza la jugada
-    if (condiciones_jaque_mate(tab, tab[p_ini]->GetJugador())) return;
+    //if (condiciones_jaque_mate(tab, tab[p_ini]->GetJugador())) return;
     auto jugador = tab[p_ini]->GetJugador();
     if (hay_pieza_rival(p_fin, jugador, tab)) tab.activar_captura(p_fin); // activa la captura si hay pieza rival en el destino
     

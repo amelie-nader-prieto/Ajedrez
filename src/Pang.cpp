@@ -196,25 +196,25 @@ void OnMouseClick(int b, int state, int x, int y) {
 
 		for (auto p : obtener_movimientos_legales(click_inicial, tab)) {
 			if (p == click_final) { // simplemente verificamos que el sitio en el que has hecho click está entre los posibles movimientos
-
+				
 				// mover pieza al lugar seleccionado
 				mover_pieza(click_inicial, click_final, tab);
 				tab.dibujar();
 				cout << '\n';
 				tab.mostrar_lista_de_piezas();
 				cout << '\n';
-
-				//if (amenazado(tab.get_rey(B), tab)) cout << "   (Rn está amenazado)\n";
-				//if (amenazado(tab.get_rey(W), tab))cout << "   (Rb está amenazado)\n";
-				if (condiciones_final_de_la_partida(tab)) {
-					coordinador.fin = true;
-					//cout << "\nFIN DE LA PARTIDA\n";
-					return void{};
-				}
+				break;
+				
+				
 
 			}
 		}
 
+		if (condiciones_final_de_la_partida(tab)) {
+			coordinador.fin = true;
+			//cout << "\nFIN DE LA PARTIDA\n";
+			return void{};
+		}
 
 
 		glutPostRedisplay();

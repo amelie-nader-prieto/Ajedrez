@@ -81,7 +81,7 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) { // Usad esta
 	//mover la pieza (al que le toca el turno). Impide que el movimiento de la pieza se realice
 	if (tablero[p_ini.x][p_ini.y]->GetJugador() != turnoActual) {
 		//No es el turno del Jugador que intenta mover la pieza
-		std::cout << "No es tu turno! " << std::endl;
+		//std::cout << "No es tu turno! " << std::endl;
 		return;
 	}
 
