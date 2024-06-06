@@ -154,6 +154,8 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 	//poner aqui el código de teclado
 	coordinador.tecla(key);
 	tab.setModalidad(coordinador.getModalidad()); // guarda la modalidad en una variable de teclado
+	if (coordinador.getModalidad() == 2)
+		maquina.inicializar(B);
 	glutPostRedisplay();
 }
 
@@ -188,7 +190,6 @@ void OnMouseClick(int b, int state, int x, int y) {
 	* - hay una pieza en la casilla
 	* - dicha pieza se puede mover 
 	*/
-
 	
 	if (tab[click_inicial] && tab[click_inicial]->GetTipo() != no_hay && 
 		obtener_posibles_movimientos(click_inicial, tab).size() > 0) {
@@ -200,7 +201,8 @@ void OnMouseClick(int b, int state, int x, int y) {
 				
 				// mover pieza al lugar seleccionado
 				mover_pieza(click_inicial, click_final, tab);
-				maquina.mover_rndm(tab);
+				if (coordinador.getModalidad() == 2)
+					maquina.jugar(tab);
 				//seleccionada = *tab[click_final];
 				tab.dibujar();
 				cout << '\n';
