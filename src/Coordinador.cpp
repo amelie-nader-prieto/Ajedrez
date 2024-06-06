@@ -17,7 +17,6 @@ void Coordinador::dibuja(Tablero &tab)
 		//cout << "Pulsa 2 para jugar contra máquina" << endl;
 		break;
 	case EXPLICACION:
-
 		switch (graficas_tablero)
 		{
 		case 2: //StarWars
@@ -42,7 +41,21 @@ void Coordinador::dibuja(Tablero &tab)
 
 	case GRAFICOS:
 		imagen = "Menu/3.png";
-		
+		break;
+	case VER:
+		switch (graficas_tablero)
+		{
+		case 1:
+			imagen = "Menu/9.png";
+			break;
+		case 2: //StarWars
+			imagen = "Menu/5.png";
+
+			break;
+		case 3: //AnimalCrossing
+			imagen = "Menu/4.png";
+			break;
+		}
 		break;
 	case GAMEOVER://Imprimir el menu de gameover
 		imagen = "Menu/7.png";
@@ -130,8 +143,8 @@ void Coordinador::tecla(unsigned char key)
 {
 	switch (estado) {
 	case MENU1:
-		if (key == 'e') exit(0);
-		if (key == 's')
+		if (key == 'e'|| key=='E') exit(0);
+		if (key == 's' || key == 'S')
 		{
 			estado = MENU2;
 		}
@@ -146,7 +159,7 @@ void Coordinador::tecla(unsigned char key)
 		break;
 
 	case GRAFICOS:
-		if (key == 'e') {
+		if (key == 'e' || key == 'E') {
 			estado = MENU1; //Se irá al menu inicial
 			break;
 		}
@@ -163,27 +176,30 @@ void Coordinador::tecla(unsigned char key)
 		break;
 
 	case EXPLICACION:
-		if (key == 'c')
+		if (key == 'c' || key == 'C')
 			estado = JUEGO;
 		break;
 	case JUEGO:
 		if (fin == true) estado = GAMEOVER;
-		if (key == 'p') estado = PAUSA;
+		if (key == 'p' || key == 'P') estado = PAUSA;
 		//mundo_grafico.tecla(key);
 		break;
 	case PAUSA:
-		if (key == 'c')
+		if (key == 'c' || key == 'C')
 			estado = JUEGO;
-		if (key == 'e')
+		if (key == 'e' || key == 'E')
 			estado = MENU1;
-		if (key == 'v') 
-			volumen = ON;
-		if (key == 's')
+		if (key == 'v' || key == 'V')
+			estado = VER;
+		if (key == 's' || key == 'S')
 			volumen = OFF;
 		break;
-
+	case VER:
+		if (key == 'c' || key == 'C')
+			estado = JUEGO;
+		break;
 	case GAMEOVER:
-		if (key == 'r')
+		if (key == 'r' || key == 'R')
 			estado = MENU1;
 		if (key == 'e')
 			estado = FIN;

@@ -9,7 +9,7 @@ using std::string;
 class Coordinador
 {
 	//GLTablero mundo_grafico;
-	enum Estado { MENU1, MENU2, GRAFICOS, EXPLICACION, JUEGO, PAUSA, GAMEOVER, FIN } estado = MENU1;
+	enum Estado { MENU1, MENU2, GRAFICOS, EXPLICACION, JUEGO, PAUSA, VER, GAMEOVER, FIN } estado = MENU1;
 	enum Tipo_Tablero { classic = 1, starwors, animal }graficas_tablero = classic;
 	enum Modalida { maquina, jugadores }modalidad = jugadores;
 	enum Volumen { ON, OFF } volumen = OFF;
