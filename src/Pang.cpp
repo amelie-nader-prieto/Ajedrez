@@ -204,8 +204,8 @@ void OnMouseClick(int b, int state, int x, int y) {
 				tab.mostrar_lista_de_piezas();
 				cout << '\n';
 
-				if (amenazado(tab.get_rey(B), tab)) cout << "   (Rn está amenazado)\n";
-				if (amenazado(tab.get_rey(W), tab))cout << "   (Rb está amenazado)\n";
+				//if (amenazado(tab.get_rey(B), tab)) cout << "   (Rn está amenazado)\n";
+				//if (amenazado(tab.get_rey(W), tab))cout << "   (Rb está amenazado)\n";
 
 				if (condiciones_final_de_la_partida(tab)) {
 					coordinador.fin = true;

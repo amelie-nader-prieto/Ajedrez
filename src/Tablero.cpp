@@ -135,6 +135,13 @@ void Tablero::mover_pieza(Pieza&_p, Vector2D p_fin) {
 
 }
 void Tablero::activar_captura(Vector2D _posicion) { 
+	
+	// Será que no te pueden capturar en TU turno?????
+	// o en otras palabras no puedes capturar si no es tu turno
+	if (tablero[_posicion.x][_posicion.y]->GetJugador() == turnoActual) {
+		return;
+	}
+
 	tablero[_posicion.x][_posicion.y]->set_captura(); // la pieza que estaba primero en esa posición será capturada
 	tablero[_posicion.x][_posicion.y] = &ninguna; // cuando la pieza es capturada, ningún puntero volverá a apuntar a ella
 }

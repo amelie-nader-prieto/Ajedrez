@@ -249,7 +249,7 @@ bool casilla_accesible(Vector2D casilla, Jugador jugador, Tablero tab) {
     // Itera sobre todas tus piezas
     for (const auto& p : tus_piezas) {
         // Para cada una de tus piezas, itera sobre sus posibles movimientos
-        for (const auto& u : obtener_posibles_movimientos(p.GetPosicion(), tab)) {
+        for (const auto& u : obtener_movimientos_legales(p.GetPosicion(), tab)) {
             if (casilla == u) return true;
         }
     }
@@ -544,6 +544,8 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
         * Sabemos que es su primer movimiento porque está en su fila de origen.
         */
         if (
+            (!hay_pieza_tuya(posicion_siguiente,jugador,tab))&&
+            (!hay_pieza_rival(posicion_siguiente,jugador,tab))&&
             (posicion_actual.x == 2 && jugador == B) ||
             (posicion_actual.x == 7 && jugador == W)
             ) {
