@@ -41,6 +41,13 @@ inline bool omitir_posicion(const Vector2D& _posicion) {
         no_se_usa(_posicion.x, _posicion.y)) ? true : false;
 }
 
+// PROMOCIÓN DEL PEÓN
+/* 
+* Promociona sólo a caballo o alfil si llega a la fila última en las columnas c, i (columnas 2 y 8)
+* Promociona a caballo, alfil, dama o torre si llega a la fila última en las columnas d-h (columnas 3-7)
+* En las columnas a y k (columnas 0 y 9) no hay promoción.
+*/
+bool condiciones_promocion(Pieza peon);
 
 // FUNCIONES QUE REVISAN EL TABLERO
 /* Revisan los datos públicos de la clase Tablero
@@ -64,12 +71,6 @@ esta función para evaluar la posibilidad del jugador opuesto de capturar dicho 
 * Es un vector en caso de que por un casual haya varios posibles capturadores
 */
 bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vector<Vector2D>posicion_posible_capturador);
-/* CONDICIONES DE PROMOCIÓN DEL PEÓN
-* Promociona sólo a caballo o alfil si llega a la fila última en las columnas c, i (columnas 2 y 8)
-* Promociona a caballo, alfil, dama o torre si llega a la fila última en las columnas d-h (columnas 3-7)
-* En las columnas a y k (columnas 0 y 9) no hay promoción.
-*/
-bool condiciones_promocion(Pieza peon);
 /* Verifica si un rey está amenazado
 * Está amenazado si su posición actual se encuentra entre los
 * posibles movimientos de alguna de las piezas del rival

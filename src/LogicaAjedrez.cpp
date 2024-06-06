@@ -1,5 +1,33 @@
  #include "LogicaAjedrez.h"
 
+bool condiciones_promocion(Pieza peon) {
+    if (peon.GetTipo() != P)return false; // sólo promocionan los peones
+
+    auto jugador = peon.GetJugador();
+    auto columna = peon.GetPosicion().y;
+    auto fila = peon.GetPosicion().x;
+
+    switch (jugador) {
+    case W:
+        // Blanco - las filas últimas son 0, 1 y 2 (la 2 sólo para caballo o alfil)
+        if (
+            ((columna == 2 || columna == 8) && fila == 2) ||
+            ((columna == 3 || columna == 7) && fila == 1) ||
+            ((columna > 3 && columna < 7) && fila == 0))return true;
+        break;
+    case B:
+        // Negro - las filas últimas son 7, 8 y 9 (la 7 sólo para caballo o alfil)
+        if (
+            ((columna == 2 || columna == 8) && fila == 7) ||
+            ((columna == 3 || columna == 7) && fila == 8) ||
+            ((columna > 3 && columna < 7) && fila == 9))return true;
+        break;
+    default:break;
+    }
+
+    return false;
+
+}
 
 // FUNCIONES QUE REVISAN EL TABLERO
 bool hay_pieza_tuya(Vector2D _posicion, Jugador _jugador, Tablero tab) {
@@ -57,34 +85,6 @@ bool condiciones_captura_al_paso(Pieza posible_peon_capturado, Tablero tab, vect
     }
 
     return false;
-}
-bool condiciones_promocion(Pieza peon) {
-    if (peon.GetTipo() != P)return false; // sólo promocionan los peones
-    
-    auto jugador = peon.GetJugador();
-    auto columna = peon.GetPosicion().y;
-    auto fila = peon.GetPosicion().x;
-
-    switch (jugador) {
-    case W:
-        // Blanco - las filas últimas son 0, 1 y 2 (la 2 sólo para caballo o alfil)
-        if (
-            ((columna == 2 || columna == 8) && fila == 2) ||
-            ((columna == 3 || columna == 7) && fila == 1) ||
-            ((columna > 3 && columna < 7) && fila == 0))return true;
-        break;
-    case B:
-        // Negro - las filas últimas son 7, 8 y 9 (la 7 sólo para caballo o alfil)
-        if (
-            ((columna == 2 || columna == 8) && fila == 7) ||
-            ((columna == 3 || columna == 7) && fila == 8) ||
-            ((columna > 3 && columna < 7) && fila == 9))return true;
-        break;
-    default:break;
-    }
-
-    return false;
-
 }
 bool amenazado(Vector2D casilla, Tablero tab) {
     vector<Pieza>piezas_rival{}; // se inicializa con las piezas que pertenecen al color opuesto
