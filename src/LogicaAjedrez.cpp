@@ -216,7 +216,7 @@ bool casilla_accesible(Vector2D casilla, Jugador jugador, Tablero tab) {
     return false;
 }
 bool ahogado(Jugador jugador, Tablero tab) {
-    if(!amenazado(tab.get_rey(jugador),tab)) return false;
+    if (amenazado(tab.get_rey(jugador), tab)) return false;
     // Comprobar si tiene jugadas legales
     auto tus_piezas = (jugador == B ? tab.get_piezas_neg() : tab.get_piezas_bla());
     for (const auto& p : tus_piezas) {
