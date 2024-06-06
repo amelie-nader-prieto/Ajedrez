@@ -17,6 +17,8 @@ Coordinador coordinador;
 //GLTablero scene; //Para el dibujo del tablero, casillas y piezas
 //int EstadoSkin = 2;
 
+IA maquina;
+
 //Variables globales para la gestión de los clicks
 Vector2D click_inicial{ -1, -1 };
 Vector2D click_final{ -1,-1 };
@@ -151,6 +153,7 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
 	//poner aqui el código de teclado
 	coordinador.tecla(key);
+	tab.setModalidad(coordinador.getModalidad()); // guarda la modalidad en una variable de teclado
 	glutPostRedisplay();
 }
 
@@ -197,6 +200,7 @@ void OnMouseClick(int b, int state, int x, int y) {
 				
 				// mover pieza al lugar seleccionado
 				mover_pieza(click_inicial, click_final, tab);
+				maquina.mover_rndm(tab);
 				//seleccionada = *tab[click_final];
 				tab.dibujar();
 				cout << '\n';
@@ -206,8 +210,8 @@ void OnMouseClick(int b, int state, int x, int y) {
 				break;
 			}
 		}
-	}
 
+	}
 
 	glutPostRedisplay();
 

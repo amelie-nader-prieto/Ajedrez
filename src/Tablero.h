@@ -10,7 +10,6 @@
 #include "No_pieza.h"
 #include <vector>
 #include <iostream>
-#include <IA.cpp>
 
 #define FILA 10
 #define COLUMNA 11
@@ -78,6 +77,8 @@ class Tablero
 
 	Jugador turnoActual; //Variable para gestionar el turno actual en la partida 
 
+	int modalidad; // representa la modalidad elegida 1: j vs j, 2 j vs m;
+
 
 public:
 	Pieza* tablero[FILA][COLUMNA] = { nullptr }; /* Esto es como la interfaz.
@@ -130,7 +131,12 @@ public:
 	// Usar esta función para verificar que las piezas y sus coordenadas se actualizan correctamente
 	void mostrar_lista_de_piezas();
 
-	void setTurno(Jugador turno) { turnoActual = turno; }
-	Jugador getTurno() { return turnoActual; }
+	// Gestion del cambio de turno según la modalidad elegida
+
+	// Devuelve el turno actual
+	Jugador getTurno() const { return turnoActual; }
+
+	// da un valor a la variable modaliadad
+	void setModalidad(int n) { modalidad = n; }
 
 };

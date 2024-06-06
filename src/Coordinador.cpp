@@ -219,18 +219,6 @@ void Coordinador::iniciar()
 	volumen = OFF;
 }
 
-void Coordinador::turnos_ia(IA& jugador_blanco, IA& jugador_negro, Tablero& tab)
-{
-	do {
-		switch (tab.getTurno()) {
-		case B: jugador_negro.jugar(tab); break;
-		case W: jugador_blanco.jugar(tab); break;
-		default:
-			break;
-		}
-	} while (!condiciones_final_de_la_partida(tab));
-}
-
 
 
 

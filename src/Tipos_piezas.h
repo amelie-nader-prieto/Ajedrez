@@ -10,5 +10,5 @@ enum Tipo
 
 enum Jugador
 {
-	ninguno=-1,B,W
+	ninguno = -1, B, W
 };
