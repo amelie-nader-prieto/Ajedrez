@@ -167,8 +167,8 @@ void Coordinador::tecla(unsigned char key)
 			estado = JUEGO;
 		break;
 	case JUEGO:
-		
-		if (key == 'm') estado = PAUSA;
+		if (fin == true) estado = GAMEOVER;
+		if (key == 'p') estado = PAUSA;
 		//mundo_grafico.tecla(key);
 		break;
 	case PAUSA:
@@ -184,7 +184,7 @@ void Coordinador::tecla(unsigned char key)
 
 	case GAMEOVER:
 		if (key == 'r')
-			estado = MENU2;
+			estado = MENU1;
 		if (key == 'e')
 			estado = FIN;
 		break;
