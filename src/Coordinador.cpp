@@ -44,11 +44,16 @@ void Coordinador::dibuja(Tablero &tab)
 		imagen = "Menu/3.png";
 		
 		break;
+	case GAMEOVER://Imprimir el menu de gameover
+		imagen = "Menu/7.png";
+
+		break;
 	case JUEGO:
 		if (inicial==true) {
 			iniciarMusica();
 			inicial = false;
 		}
+		
 
 		std::string skin = "default";
 		std::string direccion = "";
@@ -70,6 +75,10 @@ void Coordinador::dibuja(Tablero &tab)
 
 		mundo_grafico.dibuja_casillas(graficas_tablero);
 		mundo_grafico.drawPieces(tab, graficas_tablero);
+
+		if (condiciones_final_de_la_partida(tab) == true) {
+			estado = GAMEOVER;
+		}
 
 		break;
 	}
