@@ -90,6 +90,7 @@ void GLTablero::dibuja_casillas(const int &Estadoskin) {
 	glTranslatef(0.0f, despy, 0.0f);
 
 	dibujaCasillasPosibles(movimientosPosibles, Vector2D{xcell_sel, ycell_sel});
+	
 	////////////////////////////////////////////////////
 
 }
@@ -155,7 +156,69 @@ void GLTablero::MouseButton(int x, int y, int button, bool down, Vector2D& click
 		}
 	}
 }
+void GLTablero::MouseButton(int x, int y, int button, bool down,Tablero&tab,
+	Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado) {
 
+	chess = tab;
+
+	GLint viewport[4];
+	GLdouble modelview[16];
+	GLdouble projection[16];
+	GLfloat winX, winY, winZ;
+	GLdouble posX, posY, posZ;
+
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+	glGetDoublev(GL_PROJECTION_MATRIX, projection);
+	glGetIntegerv(GL_VIEWPORT, viewport);
+
+	winX = (float)x;
+	winY = (float)viewport[3] - (float)y;
+	glReadPixels(x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+
+
+	//finally cell coordinates
+	world2cell(posX, posY, xcell_sel, ycell_sel); //método para pasar las coordenadas a posiciones de las casillas
+
+	//catura eventos del mouse
+	//***WRITE ACTIONS CONNECTED TO MOUSE STATE HERE
+
+	if (button == MOUSE_LEFT_BUTTON) {
+		if (down)
+		{
+			if (seleccionado) {
+				click_final = { xcell_sel, ycell_sel };
+				click_inicial = { xcell_sel, ycell_sel };
+				seleccionado = false; //Para pasar a la seleccion de la posicion final
+				movimientosPosibles = obtener_posibles_movimientos(click_inicial, chess);
+				//	std::cout << "Casilla inicial: "   <<std::endl;
+			}
+			else {
+				click_final = { xcell_sel, ycell_sel };
+				seleccionado = true; //Para volver a seleccionar una pieza
+				//	std::cout << "Casilla final: "<<click_final << std::endl;
+				chess.mover_pieza(click_inicial, click_final); //intenta mover la pieza
+				//	std::cout << "Espera movimiento......Debería haber movido" << std::endl;
+				movimientosPosibles.clear();
+
+				switch (modo_musica_mov)
+				{
+				case 1: ETSIDI::play("bin/sonidos/Movimiento_pieza.wav");
+					break;
+				case 2: ETSIDI::play("bin/sonidos/StarWars/Matar.wav");
+					break;
+				case 3: ETSIDI::play("bin/sonidos/AnimalCrossing/Matar.wav");
+					break;
+				default:
+					break;
+
+				}
+				//click_final = { 0,0 };
+			}
+			//std::cout << "(" << xcell_sel << "," << ycell_sel << ")" << std::endl;
+		}
+	}
+}
 
 void GLTablero::drawPieces(Tablero& chess, const int& Estadoskin) {
 

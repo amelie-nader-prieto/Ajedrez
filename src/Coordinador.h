@@ -35,5 +35,7 @@ public:
 	void dibuja(Tablero &tab);
 	void dibujar_Tablero(const int& Estadoskin){}
 	void MouseBottom(int x, int y, int button, bool down, Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado);
+	void MouseBottom(int x, int y, int button, bool down, Tablero& tab,
+		Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado);
 	void musica();
 };

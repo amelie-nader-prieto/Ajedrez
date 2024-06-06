@@ -26,7 +26,6 @@ bool seleccionado = true;
 
 
 int main(int argc, char* argv[]){
-
 	
 //Inicializar el gestor de ventanas GLUT y crear la ventana
 	glutInit(&argc, argv);
@@ -174,7 +173,8 @@ void OnMouseClick(int b, int state, int x, int y) {
 	}
 
 	//scene.MouseButton(x, y, b, down, click_inicial, click_final, seleccionado);
-	coordinador.MouseBottom(x, y, b, down, click_inicial, click_final, seleccionado);
+	//coordinador.MouseBottom(x, y, b, down, click_inicial, click_final, seleccionado);
+	coordinador.MouseBottom(x, y, b, down, tab, click_inicial, click_final, seleccionado);
 
 	Pieza seleccionada; // se inicializará con la pieza que hay en la posición que seleccionemos con el mouse
 
@@ -186,9 +186,9 @@ void OnMouseClick(int b, int state, int x, int y) {
 	* - hay una pieza en la casilla
 	* - dicha pieza se puede mover 
 	*/
-
-	
-	if (tab[click_inicial] && tab[click_inicial]->GetTipo() != no_hay && 
+	if (tab[click_inicial]->GetTipo() == no_hay) cout << " CABRÓN AHÍ NO HAY NADA \n";
+	if ((tab[click_inicial]!=nullptr) &&
+		tab[click_inicial]->GetTipo() != no_hay && 
 		obtener_posibles_movimientos(click_inicial, tab).size() > 0) {
 
 		seleccionada = *tab[click_inicial];
