@@ -204,25 +204,32 @@ void OnMouseClick(int b, int state, int x, int y) {
 				
 				// mover pieza al lugar seleccionado
 				mover_pieza(click_inicial, click_final, tab);
-				if (coordinador.getModalidad() == 2)
-					// si la modalidad es J vs IA, juega la máquina
-					maquina.jugar(tab);
 				tab.dibujar();
 				cout << '\n';
 				tab.mostrar_lista_de_piezas();
 				cout << '\n';
+				if (coordinador.getModalidad() == 2) {
+					// si la modalidad es J vs IA, juega la máquina
+					maquina.jugar(tab);
+					tab.dibujar();
+					cout << '\n';
+					tab.mostrar_lista_de_piezas();
+					cout << '\n';
+				}
 				break;			
 				
+				if (amenazado(tab.get_rey(B), tab) || amenazado(tab.get_rey(W), tab)) cout << "  cuidao \n";
+
+				if (condiciones_final_de_la_partida(tab)) {
+					coordinador.fin = true;
+					cout << "\nFIN DE LA PARTIDA\n";
+					return void{};
+				}
 
 			}
 		}
 
-		if (condiciones_final_de_la_partida(tab)) {
-			coordinador.fin = true;
-			//cout << "\nFIN DE LA PARTIDA\n";
-			return void{};
-		}
-
+		
 
 		glutPostRedisplay();
 

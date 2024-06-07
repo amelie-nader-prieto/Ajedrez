@@ -249,20 +249,22 @@ vector<Vector2D>sitios_sin_amenaza(Vector2D casilla, Tablero tab) {
 
 }
 vector<Vector2D>obtener_movimientos_legales(Vector2D casilla, Tablero tab) {
-    vector<Vector2D>movimientos_legales{};
-    auto jugador = tab[casilla]->GetJugador();
-    auto tu_rey = tab.get_rey(jugador);
-    auto tab_copia = new Tablero; // se usa para hacer una copia del tablero
-    *tab_copia = tab;
-    // Itera sobre los posibles movimientos de la pieza en cuestión
-    for (const auto& p_fin : obtener_posibles_movimientos(casilla, tab)) {
-        mover_pieza(casilla, p_fin, *tab_copia);
-        if (!amenazado(tu_rey, *tab_copia)) movimientos_legales.push_back(p_fin); // si al mover la pieza no hay jaque, la añade a los movimientos legales
-        *tab_copia = tab; // resetea el tablero copiado
-    }
-    delete tab_copia;
     
-    return movimientos_legales;
+    //vector<Vector2D>movimientos_legales{};
+    //auto jugador = tab[casilla]->GetJugador();
+    //auto tu_rey = tab.get_rey(jugador);
+    //auto tab_copia = new Tablero; // se usa para hacer una copia del tablero
+    //*tab_copia = tab;
+    //// Itera sobre los posibles movimientos de la pieza en cuestión
+    //for (const auto& p_fin : obtener_posibles_movimientos(casilla, tab)) {
+    //    mover_pieza(casilla, p_fin, *tab_copia);
+    //    if (!amenazado(tu_rey, *tab_copia)) movimientos_legales.push_back(p_fin); // si al mover la pieza no hay jaque, la añade a los movimientos legales
+    //    *tab_copia = tab; // resetea el tablero copiado
+    //}
+    //delete tab_copia;
+    //return movimientos_legales;
+
+    return obtener_posibles_movimientos(casilla, tab);
 
 }
 
@@ -529,13 +531,14 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
 
 }
 void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab) {
-    //if (condiciones_final_de_la_partida(tab)) return void{}; // si hay jaque mate o tablas, no se realiza la jugada
-    //if (condiciones_jaque_mate(tab, tab[p_ini]->GetJugador())) return;
+    auto tab_copia = tab; // creamos una copia del tablero
+    
     auto jugador = tab[p_ini]->GetJugador();
     if (hay_pieza_rival(p_fin, jugador, tab)) tab.activar_captura(p_fin); // activa la captura si hay pieza rival en el destino
-    
     tab.mover_pieza(p_ini, p_fin);
-
+    
+    if (amenazado(tab.get_rey(jugador), tab)) tab = tab_copia;
+    
     // Aquí se comprueba la promoción del peón
     if (condiciones_promocion(*tab[p_fin])) {
         // elegir nuevo tipo
