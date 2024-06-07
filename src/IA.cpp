@@ -244,7 +244,7 @@ void IA::obtener_amenazas(Tablero tab) {
 					}
 			}		
 	}
-
+	if (condiciones_jaque_mate(tab, B)) return;
 	//ordenar amenazas de mayor a menor en funcion de su puntuacion
 	ordenar_eventos(lista_amenazas);
 }
@@ -270,8 +270,9 @@ void IA::obtener_capturas(Tablero tab) {
 
 void IA::ordenar_eventos(vector<evento>& lista) {
 	// ordena los evento en función de su puntuación de forma decreciente
+	if (lista.size() <= 1) return;
 	for (int i = 1; i < lista.size(); i++) {
-		for (int j = 0; i < lista.size() - 1; j++) {
+		for (int j = 0; j < lista.size() - 1; j++) {
 			if (lista[j].puntuacion > lista[j + 1].puntuacion) {
 				evento aux = lista[j + 1];
 				lista[j + 1] = lista[j];

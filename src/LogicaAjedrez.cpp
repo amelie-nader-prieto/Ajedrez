@@ -145,7 +145,7 @@ bool amenazado(Vector2D casilla, Tablero tab, vector<Vector2D>& piezas_que_lo_am
     return(v.size() == 0 ? false : true);
 
 }
-bool condiciones_jaque_mate(Tablero tab, Jugador posible_derrotado) {
+bool condiciones_jaque_mate(Tablero&tab, Jugador posible_derrotado) {
     // si tu rey NO está amenazado, no hay mate
     auto posicion_rey = tab.get_rey(posible_derrotado);
     vector<Vector2D>posiciones_amenaza{}; // se inicializa con las posiciones en las que están las piezas que te amenazan

@@ -87,7 +87,7 @@ bool amenazado(Vector2D casilla, Tablero tab, vector<Vector2D>& piezas_que_lo_am
 * En caso de que esté amenazado y NO tenga jugadas legales, hay jaque mate
 */
 //bool condiciones_jaque_mate(Tablero tab);
-bool condiciones_jaque_mate(Tablero tab, Jugador posible_derrotado);
+bool condiciones_jaque_mate(Tablero&tab, Jugador posible_derrotado);
 /* Para saber si alguna de tus piezas (comprobando entre todas tus piezas) puede moverse a una casilla determinada
 * (se usa para evaluar si hay jaque mate)
 */
