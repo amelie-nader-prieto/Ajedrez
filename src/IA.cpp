@@ -74,12 +74,19 @@ void IA::jugar(Tablero& tab) {
 		case IA::SI_AMNZ:
 			// Si hay amenazas. Evalua si puede capturar o no
 			cout << "SI_AMNZ" << endl;
-			if (puede_capturar)
-				// Si hay capturas posibles voy a...
-				estado = SI_AMNZ_POSIBLE_CAPTURA;
-			else
-				// Si no hay capturas posibles voy a...
-				estado = SI_AMNZ_NO_CAPTURA;
+			if (lista_amenazas.back().puntuacion == 10) {
+				estado = DEFENDER_JAQUE;
+				cout << "IA en JAQUE" << endl;
+				break;
+			}
+			else {
+				if (puede_capturar)
+					// Si hay capturas posibles voy a...
+					estado = SI_AMNZ_POSIBLE_CAPTURA;
+				else
+					// Si no hay capturas posibles voy a...
+					estado = SI_AMNZ_NO_CAPTURA;
+			}			
 			break;
 		case IA::SI_AMNZ_POSIBLE_CAPTURA:
 			// Si hay amenazas y posibles capturas
@@ -96,7 +103,6 @@ void IA::jugar(Tablero& tab) {
 			// Hay amenazas y no hay capturas posibles
 			cout << "SI_AMNZ_NO_CAPTURA" << endl;
 			// Si la IA está en jaque imprime un mensage por consola
-			if (lista_amenazas.back().pieza_amenazada.GetTipo() == R) cout << "IA en jaque" << endl;
 			if (puede_mover(lista_amenazas.back().pieza_amenazada, posibles_mov, tab)) {
 				//Si puede mover la pieza amenazada de mayor puntuacioin se mueve
 				// de forma aleatoria dentro de sus posibles movimientos
@@ -105,17 +111,10 @@ void IA::jugar(Tablero& tab) {
 				estado = INICIO;
 			}
 			else {
-				// La pieza amemnazada de mayor puntuación no se puede mover
-				if (lista_amenazas.back().pieza_amenazada.GetTipo() == R) {
-					// Si el rey está en jaque, voy a...
-					estado = DEFENDER_JAQUE;
-				}
-				else {
-					// Si la pieza amenazada no se puede mover la elimino de la lista de amenazas y vuelvo a analizar
+				// Si la pieza amenazada no se puede mover la elimino de la lista de amenazas y vuelvo a analizar
 					// las posibles amenazas. Voy a ...
-					lista_amenazas.pop_back();
-					estado = AMENAZAS;
-				}				
+				lista_amenazas.pop_back();
+				estado = AMENAZAS;
 			}
 			break;
 		case IA::DEFENDER_JAQUE:
