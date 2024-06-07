@@ -153,8 +153,8 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
 	//poner aqui el código de teclado
 	coordinador.tecla(key);
-	tab.setModalidad(coordinador.getModalidad()); // guarda la modalidad en una variable de teclado
 	if (coordinador.getModalidad() == 2)
+		// Si la modalidad es J vs IA inicializa la IA como negras
 		maquina.inicializar(B);
 	glutPostRedisplay();
 }

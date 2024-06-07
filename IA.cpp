@@ -8,7 +8,9 @@ void IA::jugar(Tablero& tab) {
 	lista_amenazas.clear();
 	lista_posibles_capturas.clear();
 	// Igualo los vectores de la IA, piezas_propias y piezas_rival, a los vectores del tablero según la variable jugador
+	
 	inicializar(tab, jugador);
+	
 	/*jugador == W ?
 		piezas_propias = tab.piezas_bla, piezas_rival = tab.piezas_neg :
 		piezas_propias = tab.piezas_neg, piezas_rival = tab.piezas_bla;*/

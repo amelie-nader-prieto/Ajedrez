@@ -43,7 +43,7 @@ class IA
 	void obtener_capturas(Tablero tab);
 	/* Mueve una pieza aleatoria de forma aleatoria entre de sus movimientos posbles*/
 	void mover_rndm(Tablero& tab);	
-	/* Función para tapar el jaque en caso de no poder mover el rey ni poder capturar la pieza atacante*/
+	/* Función que devuelve las posiciones donde se puede tapar el jaque*/
 	vector<Vector2D> posiciones_tapar_jaque(Tablero& tab, vector<Vector2D> posiciones_tapar_jaque);
 
 
@@ -52,8 +52,8 @@ public:
 	/*Gestion de la máquina de estados de la IA: Analiza la situación de las piezas y decide si capturar o mover*/
 	void jugar(Tablero& tab);
 	/*Inicialización de los vectores de piezas propieas y rivales*/
-	void inicializar(Tablero& tab, Jugador j); // incializa la IA con las piezas propias las del rival y el tablero
-	/*Sobrecarca de la función inicializar*/
+	void inicializar(Tablero& tab, Jugador j); 
+	/*Inicializar la IA pasandole el atributo jugador*/
 	void inicializar(Jugador J) { jugador = J; };
 };
 

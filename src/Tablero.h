@@ -77,9 +77,6 @@ class Tablero
 
 	Jugador turnoActual; //Variable para gestionar el turno actual en la partida 
 
-	int modalidad; // representa la modalidad elegida 1: j vs j, 2 j vs m;
-
-
 public:
 	Pieza* tablero[FILA][COLUMNA] = { nullptr }; /* Esto es como la interfaz.
 	Tanto las funciones lógicas como las de dibujo accederán SÓLO a este dato.
@@ -132,11 +129,5 @@ public:
 	void mostrar_lista_de_piezas();
 
 	// Gestion del cambio de turno según la modalidad elegida
-
-	// Devuelve el turno actual
-	Jugador getTurno() const { return turnoActual; }
-
-	// da un valor a la variable modaliadad
-	void setModalidad(int n) { modalidad = n; }
 
 };
