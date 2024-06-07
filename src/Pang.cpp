@@ -17,13 +17,15 @@ Coordinador coordinador;
 //GLTablero scene; //Para el dibujo del tablero, casillas y piezas
 //int EstadoSkin = 2;
 
+// Creación de la IA
+IA maquina;
+
 //Variables globales para la gestión de los clicks
 Vector2D click_inicial{ -1, -1 };
 Vector2D click_final{ -1,-1 };
 bool seleccionado = true;
 //true cuando estamos seleccionando la pieza inicial
 //false cuando estamos seleccionando la posicion final
-
 
 int main(int argc, char* argv[]){
 	
@@ -150,6 +152,9 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
 	//poner aqui el código de teclado
 	coordinador.tecla(key);
+	if (coordinador.getModalidad() == 2)
+		// Si la modalidad es J vs IA inicializa la IA como negras
+		maquina.inicializar(B);
 	glutPostRedisplay();
 }
 
@@ -199,12 +204,14 @@ void OnMouseClick(int b, int state, int x, int y) {
 				
 				// mover pieza al lugar seleccionado
 				mover_pieza(click_inicial, click_final, tab);
+				if (coordinador.getModalidad() == 2)
+					// si la modalidad es J vs IA, juega la máquina
+					maquina.jugar(tab);
 				tab.dibujar();
 				cout << '\n';
 				tab.mostrar_lista_de_piezas();
 				cout << '\n';
-				break;
-				
+				break;			
 				
 
 			}
