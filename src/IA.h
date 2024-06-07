@@ -15,7 +15,7 @@ class IA
 	* SI_AMNZ_POSIBLE_CAPTURA: Tienes piezas amenazadas y puedes capturar - evaluará la opción más conveniente
 	* SI_AMNZ_NO_CAPTURA: Tienes piezas amenazadas y no puedes capturar (supongo)
 	*/
-	enum Estado { INICIO, AMENAZAS, NO_AMNZ, NO_AMNZ_POSIBLE_CAPTURA, CAPTURA, MOVER_RNDM, SI_AMNZ, SI_AMNZ_POSIBLE_CAPTURA, SI_AMNZ_NO_CAPTURA, DEFENDER_JAQUE } estado = INICIO;
+	enum Estado { INICIO, AMENAZAS, NO_AMNZ, CAPTURA, MOVER_RNDM, SI_AMNZ, SI_AMNZ_POSIBLE_CAPTURA, SI_AMNZ_NO_CAPTURA, DEFENDER_JAQUE } estado = INICIO;
 	vector<Pieza> piezas_propias;
 	vector<Pieza> piezas_rival;
 

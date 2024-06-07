@@ -51,20 +51,7 @@ void IA::jugar(Tablero& tab) {
 			// Evaluar si se puede capturar o no
 			if (puede_capturar)	
 				// Si puede capturar voy a...
-				estado = NO_AMNZ_POSIBLE_CAPTURA;
-			else 
-				// Si no puede capturar voy a...
-				estado = MOVER_RNDM;
-			break;
-		case IA::NO_AMNZ_POSIBLE_CAPTURA:
-			// No hay amenazas. Evaluación de posibles capturas
-			cout << "NO_AMNZ_POSIBLE_CAPTURA" << endl;
-			// evalua la captura mas conveniente, si no compensa mueve
-			if (puede_capturar) {
-				// Si puede capturar, captura
 				estado = CAPTURA;
-				break;
-			}
 			else 
 				// Si no puede capturar voy a...
 				estado = MOVER_RNDM;
@@ -146,7 +133,7 @@ void IA::jugar(Tablero& tab) {
 			}
 			// Si no puedo caputurar intento tapar el jaque
 			// Obtengo las posiciones donde tengo que mover para tapar el jaque
-			posibles_mov = posiciones_tapar_jaque(tab, posibles_mov);
+			posibles_mov =  (tab, posibles_mov);
 			// Utilizo el vector creado al inicio de la función
 
 			if (posibles_mov.size() != 0) {
@@ -187,11 +174,9 @@ vector<Vector2D> IA::posiciones_tapar_jaque(Tablero& tab, vector<Vector2D> posic
 	// Creo un tablero auxiliar
 	Tablero tablero_aux;
 	// Creo una pieza del mismo tipo que la pieza atacante en la posicion donde estaba la pieza atacante
-	tablero_aux.crear_pieza(lista_amenazas.back().pieza_atacante.GetTipo(),
-		jugador == W ? B : W, lista_amenazas.back().pieza_atacante.GetPosicion());
+	tablero_aux.crear_pieza(lista_amenazas.back().pieza_atacante.GetTipo(), W, lista_amenazas.back().pieza_atacante.GetPosicion());
 	// Creo una pieza del mismo tipo que la pieza atacante en la posicion donde estaba mi rey
-	tablero_aux.crear_pieza(lista_amenazas.back().pieza_atacante.GetTipo(),
-		jugador == W ? B : W, lista_amenazas.back().pieza_amenazada.GetPosicion());
+	tablero_aux.crear_pieza(lista_amenazas.back().pieza_atacante.GetTipo(), W, lista_amenazas.back().pieza_amenazada.GetPosicion());
 	
 	// Obtengo los movimientos posibles de cada pieza
 	vector<Vector2D> posibles_mov_1 = obtener_movimientos_legales(lista_amenazas.back().pieza_amenazada.GetPosicion(), tablero_aux);
