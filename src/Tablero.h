@@ -85,6 +85,8 @@ public:
   
 	Tablero(); // constructor
 
+	void inicializar();
+
 	// operador para indexar con un vector
 	inline Pieza* operator[](const Vector2D& posicion)const {
 		return tablero[posicion.x][posicion.y];

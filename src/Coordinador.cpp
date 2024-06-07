@@ -6,10 +6,10 @@ void Coordinador::dibuja(Tablero &tab)
 	string skin;
 	switch (estado) {
 	case MENU1://Imprimir el menu inicial
-		imagen = "Menu/1.png";
-		
+		imagen = "Menu/1.png";		
 		//	cout << "Pulsa S para jugar" << endl;
 		//	cout << "Pulsa E para salir" << endl;
+		tab.inicializar(); // inicializa el tablero
 		break;
 	case MENU2://
 		imagen = "Menu/2.png";
