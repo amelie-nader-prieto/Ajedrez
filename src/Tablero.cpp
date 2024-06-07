@@ -145,6 +145,7 @@ void Tablero::inicializar() {
 }
 
 void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) { // Usad esta
+
 	// se asegura de que no intentes mover una pieza que no existe
 	if (
 		(!tablero[p_ini.x][p_ini.y]) || (tablero[p_ini.x][p_ini.y]->GetTipo() == no_hay)

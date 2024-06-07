@@ -141,6 +141,9 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab);
 */
 void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab);
 
+/*Función para determinar si un movimiento es válido o no cuando el rey está en jaque*/
+static bool movimiento_valido(Tablero& tab, Jugador J, Vector2D pos_ini, Vector2D pos_fin);
+
 
 
 // INICIALIZAR PIEZAS

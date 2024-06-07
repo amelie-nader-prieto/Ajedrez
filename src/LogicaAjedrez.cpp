@@ -531,6 +531,14 @@ vector<Vector2D>obtener_posibles_movimientos(Vector2D casilla, Tablero tab) {
 
 }
 void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab) {
+
+    if (amenazado(tab.get_rey(tab[p_ini]->GetJugador()), tab)) {
+        if (!movimiento_valido(tab, tab[p_ini]->GetJugador(), p_ini, p_fin)) {
+            cout << "El rey está en JAQUE" << std::endl;
+            return;
+        }
+    }    
+    
     auto tab_copia = tab; // creamos una copia del tablero
     
     auto jugador = tab[p_ini]->GetJugador();
@@ -563,7 +571,15 @@ void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab) {
 
 }
 
-
+static bool movimiento_valido(Tablero& tab, Jugador J, Vector2D pos_ini, Vector2D pos_fin) {
+    Tablero tablero_aux = tab; // creo un tablero auxiliar para probar el movimiento
+    tablero_aux.mover_pieza(pos_ini, pos_fin); // realizo el movimiento en el tablero auxiliar
+    if (amenazado(tablero_aux.get_rey(J), tablero_aux)) {
+        // si el rey está amenazado después del movimiento quiere decir que sigue en jaque
+        return false;
+    }
+    return true;
+}
 
 void liberar_memoria(Tablero tab) {
 }
