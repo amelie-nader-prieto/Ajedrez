@@ -19,7 +19,7 @@ void IA::jugar(Tablero& tab) {
 	obtener_capturas(tab);
 	bool hay_amenazas = lista_amenazas.size();
 	bool puede_capturar = lista_posibles_capturas.size();
-	vector<Vector2D> posibles_mov{};
+	vector<Vector2D> posibles_mov{}; // vector para analizar los movimientos posibles de las piezas durante el turno
 	fin_turno = false;
 	// Utiliza la máquina de estado para tomar una decisión (realizar una jugada)
 	while (!fin_turno) {
@@ -106,24 +106,102 @@ void IA::jugar(Tablero& tab) {
 		case IA::SI_AMNZ_NO_CAPTURA:
 			// Hay amenazas y no hay capturas posibles
 			cout << "SI_AMNZ_NO_CAPTURA" << endl;
+			// Si la IA está en jaque imprime un mensage por consola
+			if (lista_amenazas.back().pieza_amenazada.GetTipo() == R) cout << "IA en jaque" << endl;
 			if (puede_mover(lista_amenazas.back().pieza_amenazada, posibles_mov, tab)) {
-				//Si puede mover la pieza amenazada mueve la pieza amenazada de mayor puntuación
+				//Si puede mover la pieza amenazada de mayor puntuacioin se mueve
 				// de forma aleatoria dentro de sus posibles movimientos
 				mover_pieza(lista_amenazas.back().pieza_amenazada.GetPosicion(), posibles_mov[GetRandom(posibles_mov.size())], tab);
 				fin_turno = true; // Fin del turno
 				estado = INICIO;
 			}
 			else {
-				// Si la pieza amenazada no se puede mover la elimino de la lista de amenazas y vuelvo a analizar
-				// las posibles amenazas. Voy a ...
-				lista_amenazas.pop_back();
-				estado = AMENAZAS;
+				// La pieza amemnazada de mayor puntuación no se puede mover
+				if (lista_amenazas.back().pieza_amenazada.GetTipo() == R) {
+					// Si el rey está en jaque, voy a...
+					estado = DEFENDER_JAQUE;
+				}
+				else {
+					// Si la pieza amenazada no se puede mover la elimino de la lista de amenazas y vuelvo a analizar
+					// las posibles amenazas. Voy a ...
+					lista_amenazas.pop_back();
+					estado = AMENAZAS;
+				}				
+			}
+			break;
+		case IA::DEFENDER_JAQUE:
+			cout << "DEFENDER_JAQUE" << endl;
+			// Analiza si se puede caputar la pieza que amenaza al rey
+			// Recorro las posiles capturas de menor a mayor puntuacion
+			for (auto& i : lista_posibles_capturas) {
+				if (i.pieza_amenazada.GetPosicion() == lista_amenazas.back().pieza_atacante.GetPosicion()) {
+					// Si puedo capturar la pieza que ataca al rey, capturo
+					mover_pieza(i.pieza_atacante.GetPosicion(), i.pieza_amenazada.GetPosicion(), tab);
+					fin_turno = true;
+					estado = INICIO;
+					break;
+				}
+			}
+			// Si no puedo caputurar intento tapar el jaque
+			// Obtengo las posiciones donde tengo que mover para tapar el jaque
+			posibles_mov = posiciones_tapar_jaque(tab, posibles_mov);
+			// Utilizo el vector creado al inicio de la función
+
+			if (posibles_mov.size() != 0) {
+				// Si se puede tapar el jaque
+				for (auto& i : piezas_propias) {
+					vector<Vector2D> pieza_mov_posibles; // movimientos posibles de las piezas propias
+					if (puede_mover(i, pieza_mov_posibles, tab)) {
+						// Si la pieza puede mover
+						for (auto& j : pieza_mov_posibles) {
+							// recorro los movimientos que puede hacer la pieza
+							for (auto& k : posibles_mov) {
+								// recorro las posiciones donde se tapa el jaque
+								if (k == j) {
+									// Si ambas posiciones son las mismas, la pieza puede tapar el jaque. Entonces muevo
+									mover_pieza(i.GetPosicion(), k, tab);
+									fin_turno = true;
+									break;
+								}
+							}
+							if (fin_turno) break;
+						}
+					}
+					if (fin_turno) break;
+				}
+			}
+			else {
+				cout << "IA EN JAQUE MATE" << endl;
+				fin_turno = true;
 			}
 			break;
 		default:
 			break;
 		}
 	}
+}
+
+vector<Vector2D> IA::posiciones_tapar_jaque(Tablero& tab, vector<Vector2D> posiciones_tapar_jaque) {
+	// Creo un tablero auxiliar
+	Tablero tablero_aux;
+	// Creo una pieza del mismo tipo que la pieza atacante en la posicion donde estaba la pieza atacante
+	tablero_aux.crear_pieza(lista_amenazas.back().pieza_atacante.GetTipo(),
+		jugador == W ? B : W, lista_amenazas.back().pieza_atacante.GetPosicion());
+	// Creo una pieza del mismo tipo que la pieza atacante en la posicion donde estaba mi rey
+	tablero_aux.crear_pieza(lista_amenazas.back().pieza_atacante.GetTipo(),
+		jugador == W ? B : W, lista_amenazas.back().pieza_amenazada.GetPosicion());
+	
+	// Obtengo los movimientos posibles de cada pieza
+	vector<Vector2D> posibles_mov_1 = obtener_movimientos_legales(lista_amenazas.back().pieza_amenazada.GetPosicion(), tablero_aux);
+	vector<Vector2D> posibles_mov_2 = obtener_movimientos_legales(lista_amenazas.back().pieza_atacante.GetPosicion(), tablero_aux);
+	
+	// Si coinciden los movimientos psibles de las dos piezas los guardo en un vector. 
+	// Estas serían las posiciones a donde tengo que mover mis piezas para tapar el jaque.
+	for (auto& i : posibles_mov_1)
+		for (auto& j : posibles_mov_2)
+			if (i == j) posiciones_tapar_jaque.push_back(i);
+
+	return posiciones_tapar_jaque;
 }
 
 void IA::inicializar(Tablero& tab, Jugador J) {

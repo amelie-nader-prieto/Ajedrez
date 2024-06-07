@@ -1,4 +1,5 @@
 #include "Tablero.h"
+using namespace std;
 
 // constructor
 Tablero::Tablero(): turnoActual(W){
@@ -110,6 +111,7 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) { // Usad esta
 	//Cambia el turno al otro jugador: Despues de mover la pieza y actualizar las coordenadas
 	//el turno se cambia al otro jugador, despues de cada movimiento válido el turno pasa al otro jugador
 	turnoActual = turnoActual == W ? B : W;
+	turnoActual == W ? cout << "TURNO BLANCAS" << endl : cout << "TURNO NEGRAS" << endl;
 }
 void Tablero::mover_pieza(Pieza&_p, Vector2D p_fin) {
 

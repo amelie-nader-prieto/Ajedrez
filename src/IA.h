@@ -15,7 +15,7 @@ class IA
 	* SI_AMNZ_POSIBLE_CAPTURA: Tienes piezas amenazadas y puedes capturar - evaluará la opción más conveniente
 	* SI_AMNZ_NO_CAPTURA: Tienes piezas amenazadas y no puedes capturar (supongo)
 	*/
-	enum Estado { INICIO, AMENAZAS, NO_AMNZ, NO_AMNZ_POSIBLE_CAPTURA, CAPTURA, MOVER_RNDM, SI_AMNZ, SI_AMNZ_POSIBLE_CAPTURA, SI_AMNZ_NO_CAPTURA } estado = INICIO;
+	enum Estado { INICIO, AMENAZAS, NO_AMNZ, NO_AMNZ_POSIBLE_CAPTURA, CAPTURA, MOVER_RNDM, SI_AMNZ, SI_AMNZ_POSIBLE_CAPTURA, SI_AMNZ_NO_CAPTURA, DEFENDER_JAQUE } estado = INICIO;
 	vector<Pieza> piezas_propias;
 	vector<Pieza> piezas_rival;
 
@@ -35,7 +35,7 @@ class IA
 
 	/* Para saber si una pieza puede moverse */
 	bool puede_mover(Pieza& pieza, vector<Vector2D>& posibles_mov, Tablero& tab);
-	// ordena los eventos en funcuón de la puntaución asignada
+	// ordena los eventos en funcuón de la puntaución asignada de forma creciente. El ultimo elemento de la lista de eventos es el mas importante
 	void ordenar_eventos(vector<evento>& lista);
 	// obtiene las amenazas posibles y las ordena por su puntuacion
 	void obtener_amenazas(Tablero tab);
@@ -43,6 +43,9 @@ class IA
 	void obtener_capturas(Tablero tab);
 	/* Mueve una pieza aleatoria de forma aleatoria entre de sus movimientos posbles*/
 	void mover_rndm(Tablero& tab);	
+	/* Función para tapar el jaque en caso de no poder mover el rey ni poder capturar la pieza atacante*/
+	vector<Vector2D> posiciones_tapar_jaque(Tablero& tab, vector<Vector2D> posiciones_tapar_jaque);
+
 
 public:
 
