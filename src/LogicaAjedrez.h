@@ -143,15 +143,3 @@ void mover_pieza(Vector2D p_ini, Vector2D p_fin, Tablero&tab);
 
 /*Función para determinar si un movimiento es válido o no cuando el rey está en jaque*/
 static bool movimiento_valido(Tablero& tab, Jugador J, Vector2D pos_ini, Vector2D pos_fin);
-
-
-
-// INICIALIZAR PIEZAS
-
-/*
-* Esta función hace que cuando se quiera iniciar una pieza se manda el tipo y dirección
-*/
-static void iniciar(Tipo tipo, Vector2D posicion, Jugador j,Tablero tab);
-
-// Liberar la memoria al final del programa
-void liberar_memoria(Tablero tab);

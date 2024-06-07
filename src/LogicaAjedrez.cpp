@@ -580,6 +580,3 @@ static bool movimiento_valido(Tablero& tab, Jugador J, Vector2D pos_ini, Vector2
     }
     return true;
 }
-
-void liberar_memoria(Tablero tab) {
-}

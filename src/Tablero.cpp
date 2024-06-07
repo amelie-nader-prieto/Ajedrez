@@ -1,6 +1,5 @@
 #include "Tablero.h"
 
-// constructor
 Tablero::Tablero(): turnoActual(W){
 
 	// Crea las piezas y las pone sobre el tablero
@@ -143,7 +142,6 @@ void Tablero::inicializar() {
 		}
 	}
 }
-
 void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) { // Usad esta
 
 	// se asegura de que no intentes mover una pieza que no existe
@@ -184,29 +182,6 @@ void Tablero::mover_pieza(Vector2D p_ini, Vector2D p_fin) { // Usad esta
 	//el turno se cambia al otro jugador, despues de cada movimiento válido el turno pasa al otro jugador
 	turnoActual = (turnoActual == W) ? B : W;
   
-}
-void Tablero::mover_pieza(Pieza&_p, Vector2D p_fin) {
-
-  // Actualiza la interfaz
-	auto p_ini = _p.GetPosicion(); // posición inicial de la pieza
-	tablero[p_fin.x][p_fin.y] = tablero[p_ini.x][p_ini.y]; // la posición final apuntará a lo que apuntaba la posición inicial
-	tablero[p_ini.x][p_ini.y] = &ninguna; // la posición inicial se queda vacía
-
-	// busca la pieza que ha movido para actualizar sus coordenadas
-	switch (tablero[p_fin.x][p_fin.y]->GetJugador()) {
-	case B:
-		for (auto& p : piezas_neg) {
-			if (p.GetPosicion() == p_ini)p.actualizar_coordenadas(p_fin);
-		}
-		break;
-	case W:
-		for (auto& p : piezas_bla) {
-			if (p.GetPosicion() == p_ini)p.actualizar_coordenadas(p_fin);
-		}
-		break;
-	default:break;
-	}
-
 }
 void Tablero::activar_captura(Vector2D _posicion) { 
 	

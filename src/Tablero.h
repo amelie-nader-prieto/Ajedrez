@@ -75,7 +75,7 @@ class Tablero
 	vector<Pieza>piezas_bla{}; // piezas del jugador blanco
 	vector<Pieza>piezas_neg{}; // piezas del jugador negro
 
-	Jugador turnoActual; //Variable para gestionar el turno actual en la partida 
+	Jugador turnoActual; // Variable para gestionar el turno actual en la partida 
 
 public:
 	Pieza* tablero[FILA][COLUMNA] = { nullptr }; /* Esto es como la interfaz.
@@ -92,16 +92,8 @@ public:
 		return tablero[posicion.x][posicion.y];
 	}
 
-
-	/* La función de mover pieza está sobrecargada porque:
-	* Puedes pasarle la pieza; si es externa, se volverá parte del tablero
-	* Puedes pasarle la ubicación, ya que el tablero sabe qué pieza hay ahí
-	*/
-
 	/* Mueve una pieza de una casilla a otra y actualiza el turno */
 	void mover_pieza(Vector2D p_ini, Vector2D p_fin);
-	/*No uses esta. Usa la otra*/
-	void mover_pieza(Pieza& _p, Vector2D p_fin);
 	/* Activa el evento captura en una casilla determinada */
 	void activar_captura(Vector2D _posicion);
 	/* Activa el evento promoción en una casilla determinada */
@@ -111,9 +103,6 @@ public:
 
 
 	// Funciones para alterar manualmente el tablero
-	/* Estas funciones en su mayoría son para hacer pruebas
-	* NO SE USAN durante la partida.
-	*/
 	/* Vacía el tablero y borra las piezas */
 	void vaciar();
 	/* Para crear una pieza cualquiera en una casilla cualquiera */
@@ -123,6 +112,7 @@ public:
 	*/
 	inline auto get_piezas_bla()const { return piezas_bla; }
 	inline auto get_piezas_neg()const { return piezas_neg; }
+
 	// FUNCIÓN PARA IMPRIMIR EL TABLERO POR LA CONSOLA
 	void dibujar();
 	// Función para que aparezca en la consola una lista de las piezas que hay en el tablero.

@@ -72,57 +72,6 @@ int main(int argc, char* argv[]){
 
 }
 
-void lista_posibles_movimientos(Pieza p,Tablero tab, vector<Vector2D>& lista) {
-	//auto movimientos = obtener_posibles_movimientos(*(tab.tablero[5][5]), tab);
-	auto movimientos = obtener_posibles_movimientos(p.GetPosicion(), tab);
-	int indice = 1;
-	cout << "\n------------"<< p <<"------------\n";
-	cout << "---------puede moverse a:-------\n";
-	if (movimientos.size() == 0)cout << "...ningún sitio xd";
-	else for (const auto& p : movimientos) {
-		cout << indice << ". ";
-		cout << p << '\t';
-		indice++;
-	}
-	cout << "\n-----------------------------\n\n";
-	//cout << "\n\n";
-	lista = movimientos;
-}
-
-void imprime_info_tablero(Tablero tab) {
-	tab.dibujar();
-	tab.mostrar_lista_de_piezas();
-}
-
-void imprime_info_tablero_completa(Tablero tab) {
-	
-	imprime_info_tablero(tab);
-
-	
-	coordinador.iniciar();//Inicia el estado y la escena
-	//scene.init(); //reempleza a (habilitar luces)
-
-
-	//Registrar los callbacks
-	glutDisplayFunc(OnDraw);
-	glutTimerFunc(25, OnTimer, 0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
-	glutKeyboardFunc(OnKeyboardDown);
-	glutMouseFunc(OnMouseClick);//PRUEBA MOUSE funciona
-
-	//pasarle el control a GLUT,que llamara a los callbacks
-	glutMainLoop();
-
-}
-void imprime_movimientos_pieza(Pieza p, Tablero tab, vector<Vector2D>& lista) {
-
-	//vector<Vector2D>v{};
-	Vector2D posicion_pieza = p.GetPosicion();
-	Vector2D posicion_actual;
-	auto movimientos = obtener_posibles_movimientos(posicion_pieza, tab);
-	bool posible_movimiento = false;
-
-}
-
 /////////TODO LO DE PRINCIPAL.CPP//////////////////////////////
 void OnDraw(void)
 {
