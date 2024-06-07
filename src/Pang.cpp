@@ -202,6 +202,7 @@ void OnMouseClick(int b, int state, int x, int y) {
 				// mover pieza al lugar seleccionado
 				mover_pieza(click_inicial, click_final, tab);
 				if (coordinador.getModalidad() == 2)
+					// si la modalidad es J vs IA, juega la máquina
 					maquina.jugar(tab);
 				//seleccionada = *tab[click_final];
 				tab.dibujar();

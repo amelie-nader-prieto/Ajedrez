@@ -38,5 +38,6 @@ public:
 	void MouseBottom(int x, int y, int button, bool down, Vector2D& click_inicial, Vector2D& click_final, bool& seleccionado);
 	void musica();
 
+	/*devuelve 1 si la modalidad es J vs J, y 2 si es J vs IA*/
 	int getModalidad() {return (modalidad == jugadores ? 1 : 2);}
 };

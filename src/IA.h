@@ -49,7 +49,7 @@ class IA
 
 public:
 
-	/*Gestion de la máquina de estados de la IA: Analiza la situación de las piezas y decide si capturar o mover*/
+	/*Gestion de la máquina de estados de la IA : Analiza la situación de las piezas y decide si capturar o mover*/
 	void jugar(Tablero& tab);
 	/*Inicialización de los vectores de piezas propieas y rivales*/
 	void inicializar(Tablero& tab, Jugador j); 
